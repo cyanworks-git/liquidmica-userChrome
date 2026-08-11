@@ -1,0 +1,1190 @@
+/* =========================================================
+   MULTI-ACCOUNT CONTAINERS — PAGE ACTION LIQUID GLASS
+   ========================================================= */
+
+@-moz-document regexp(
+    "^moz-extension://[^/]+/pageActionPopup\\.html(?:[?#].*)?$"
+) {
+    :root,
+    html {
+        color-scheme:
+            dark !important;
+
+        background:
+            rgba(8, 10, 13, 0.01) !important;
+
+        background-color:
+            rgba(8, 10, 13, 0.01) !important;
+
+        background-image:
+            none !important;
+    }
+
+    body {
+        box-sizing:
+            border-box !important;
+
+        min-inline-size:
+            352px !important;
+
+        min-block-size:
+            300px !important;
+
+        margin:
+            0 !important;
+
+        color:
+            rgba(255, 255, 255, 0.95) !important;
+
+        /* Let the native extension panel provide the same Mica surface
+           used by the Tracking Protection popup. */
+        background:
+            rgba(8, 10, 13, 0.01) !important;
+
+        background-color:
+            rgba(8, 10, 13, 0.01) !important;
+
+        background-image:
+            none !important;
+
+        border:
+            0 !important;
+
+        border-radius:
+            12px !important;
+
+        box-shadow:
+            none !important;
+
+        backdrop-filter:
+            none !important;
+
+        -webkit-backdrop-filter:
+            none !important;
+
+        overflow:
+            hidden !important;
+    }
+
+    body > :is(
+        .panel,
+        main,
+        div
+    ) {
+        background:
+            transparent !important;
+
+        color:
+            inherit !important;
+    }
+
+    :is(
+        .panel-section-header,
+        header,
+        [class*="header"]
+    ) {
+        box-sizing:
+            border-box !important;
+
+        min-block-size:
+            49px !important;
+
+        margin:
+            0 !important;
+
+        padding:
+            0 18px !important;
+
+        display:
+            flex !important;
+
+        align-items:
+            center !important;
+
+        justify-content:
+            center !important;
+
+        background:
+            transparent !important;
+
+        border-block-end:
+            1px solid rgba(255, 255, 255, 0.10) !important;
+    }
+
+    :is(
+        .text-section-header,
+        h1,
+        h2
+    ) {
+        margin:
+            0 !important;
+
+        color:
+            rgba(255, 255, 255, 0.98) !important;
+
+        font-size:
+            14px !important;
+
+        font-weight:
+            650 !important;
+
+        text-align:
+            center !important;
+    }
+
+    :is(
+        .panel-section-separator,
+        hr
+    ) {
+        block-size:
+            1px !important;
+
+        margin:
+            0 !important;
+
+        border:
+            0 !important;
+
+        background:
+            rgba(255, 255, 255, 0.10) !important;
+    }
+
+    .panel-section-list {
+        box-sizing:
+            border-box !important;
+
+        inline-size:
+            100% !important;
+
+        padding:
+            6px 8px !important;
+
+        background:
+            transparent !important;
+    }
+
+    :is(
+        .panel-list-item,
+        .menu-item,
+        .container-item,
+        button,
+        [role="button"]
+    ) {
+        box-sizing:
+            border-box !important;
+
+        min-block-size:
+            38px !important;
+
+        inline-size:
+            100% !important;
+
+        max-inline-size:
+            100% !important;
+
+        margin:
+            2px 0 !important;
+
+        padding-inline:
+            6px !important;
+
+        color:
+            rgba(255, 255, 255, 0.94) !important;
+
+        background:
+            transparent !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            9px !important;
+
+        box-shadow:
+            none !important;
+
+        appearance:
+            none !important;
+    }
+
+    :is(
+        .panel-list-item,
+        .menu-item,
+        .container-item,
+        button,
+        [role="button"]
+    ):hover {
+        background:
+            rgba(255, 255, 255, 0.085) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.11) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+    }
+
+    :is(
+        .panel-list-item,
+        .menu-item,
+        .container-item,
+        button,
+        [role="button"]
+    ):active {
+        background:
+            rgba(255, 255, 255, 0.13) !important;
+
+        transform:
+            translateY(1px) !important;
+    }
+
+    * {
+        scrollbar-width:
+            thin !important;
+
+        scrollbar-color:
+            rgba(255, 255, 255, 0.22) transparent !important;
+    }
+}
+
+
+/* =========================================================
+   BUILT-IN DOWNLOADS PANEL - MICA SURFACE + GLASS ROWS
+   ========================================================= */
+
+@-moz-document url("chrome://browser/content/downloads/contentAreaDownloadsView.xhtml") {
+    :root,
+    #contentAreaDownloadsView {
+        color-scheme:
+            dark !important;
+
+        color:
+            rgba(255, 255, 255, 0.95) !important;
+
+        background:
+            rgba(8, 12, 16, 0.48) !important;
+
+        background-image:
+            linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.040),
+                rgba(255, 255, 255, 0.008) 48%,
+                rgba(0, 0, 0, 0.055)
+            ) !important;
+
+        backdrop-filter:
+            blur(22px)
+            saturate(118%)
+            brightness(84%)
+            !important;
+
+        -webkit-backdrop-filter:
+            blur(22px)
+            saturate(118%)
+            brightness(84%)
+            !important;
+    }
+
+    #contentAreaDownloadsView {
+        box-sizing:
+            border-box !important;
+
+        padding:
+            8px !important;
+    }
+
+    #downloadsListBox {
+        margin:
+            0 !important;
+
+        padding:
+            3px !important;
+
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        border:
+            0 !important;
+
+        border-radius:
+            12px !important;
+
+        box-shadow:
+            none !important;
+
+        scrollbar-color:
+            rgba(255, 255, 255, 0.24) transparent !important;
+    }
+
+    #downloadsListBox
+    > richlistitem {
+        min-block-size:
+            62px !important;
+
+        margin:
+            2px 0 !important;
+
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            10px !important;
+
+        outline:
+            none !important;
+
+        box-shadow:
+            none !important;
+
+        transition:
+            background-color 100ms ease,
+            border-color 100ms ease,
+            box-shadow 100ms ease
+            !important;
+    }
+
+    #downloadsListBox
+    > richlistitem:hover {
+        background:
+            rgba(255, 255, 255, 0.075) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.09) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+    }
+
+    #downloadsListBox
+    > richlistitem[selected],
+    #downloadsListBox:focus
+    > richlistitem[selected] {
+        color:
+            inherit !important;
+
+        background:
+            rgba(255, 255, 255, 0.125) !important;
+
+        background-image:
+            linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.09),
+                rgba(255, 255, 255, 0.018)
+            ) !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.15) !important;
+
+        border-radius:
+            10px !important;
+
+        outline:
+            none !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.11)
+            !important;
+    }
+
+    .downloadTypeIcon {
+        margin-inline:
+            10px 12px !important;
+
+        inline-size:
+            28px !important;
+
+        block-size:
+            28px !important;
+    }
+
+    .downloadDetails {
+        color:
+            rgba(255, 255, 255, 0.70) !important;
+
+        opacity:
+            1 !important;
+    }
+
+    .downloadButton {
+        margin-inline-end:
+            5px !important;
+
+        padding:
+            0 !important;
+
+        background:
+            transparent !important;
+
+        border:
+            0 !important;
+    }
+
+    .downloadButton
+    > .button-box {
+        padding:
+            8px !important;
+
+        background:
+            transparent !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            8px !important;
+    }
+
+    .downloadButton:hover
+    > .button-box {
+        background:
+            rgba(255, 255, 255, 0.10) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.12) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.08)
+            !important;
+    }
+
+    .downloadButton:hover:active
+    > .button-box {
+        background:
+            rgba(255, 255, 255, 0.17) !important;
+    }
+}
+
+/* =========================================================
+   BUILT-IN HISTORY / BOOKMARKS PANELS
+   Keep the Floorp panel Mica visible and restyle only controls/rows.
+   ========================================================= */
+
+@-moz-document url("chrome://browser/content/places/historySidebar.xhtml"),
+               url("chrome://browser/content/places/bookmarksSidebar.xhtml") {
+    :root {
+        --uc-sidebar-panel-surface:
+            rgba(8, 10, 13, 0.42) !important;
+
+        color-scheme:
+            dark !important;
+
+        color:
+            rgba(255, 255, 255, 0.94) !important;
+
+        background:
+            var(--uc-sidebar-panel-surface) !important;
+
+        background-image:
+            none !important;
+    }
+
+    .sidebar-panel,
+    #history-panel,
+    #bookmarks-panel {
+        color-scheme:
+            dark !important;
+
+        color:
+            rgba(255, 255, 255, 0.94) !important;
+
+        background:
+            transparent !important;
+
+        background-color:
+            transparent !important;
+
+        background-image:
+            none !important;
+    }
+
+    #sidebar-panel-header {
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        border-block-end:
+            1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    #sidebar-panel-close {
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            8px !important;
+    }
+
+    #sidebar-panel-close:hover {
+        background:
+            rgba(255, 255, 255, 0.09) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.10) !important;
+    }
+
+    #sidebar-search-container {
+        box-sizing:
+            border-box !important;
+
+        gap:
+            5px !important;
+
+        padding:
+            7px 6px !important;
+
+        background:
+            transparent !important;
+    }
+
+    #search-box,
+    #viewButton {
+        appearance:
+            none !important;
+
+        color:
+            rgba(255, 255, 255, 0.92) !important;
+
+        background:
+            rgba(5, 8, 11, 0.36) !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.13) !important;
+
+        border-radius:
+            8px !important;
+
+        outline:
+            none !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.04)
+            !important;
+    }
+
+    #search-box:focus-within,
+    #viewButton:focus-visible,
+    #viewButton[open] {
+        border-color:
+            rgba(0, 203, 226, 0.68) !important;
+
+        box-shadow:
+            0 0 0 1px rgba(0, 203, 226, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.055)
+            !important;
+    }
+
+    #viewButton {
+        min-block-size:
+            32px !important;
+
+        margin:
+            0 !important;
+
+        padding-inline:
+            9px 6px !important;
+    }
+
+    #viewButton:hover {
+        background:
+            rgba(255, 255, 255, 0.095) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .sidebar-placesTree {
+        appearance:
+            none !important;
+
+        margin:
+            0 !important;
+
+        padding:
+            2px 4px 6px !important;
+
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        border:
+            0 !important;
+
+        outline:
+            none !important;
+    }
+
+    .sidebar-placesTreechildren {
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        scrollbar-color:
+            rgba(255, 255, 255, 0.22) transparent !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-row {
+        min-block-size:
+            28px !important;
+
+        margin:
+            1px 2px !important;
+
+        background:
+            transparent !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            7px !important;
+
+        outline:
+            none !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-row(hover) {
+        background:
+            rgba(255, 255, 255, 0.065) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.075) !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-row(selected) {
+        background:
+            rgba(255, 255, 255, 0.11) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.13) !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-row(selected, focus) {
+        background:
+            rgba(255, 255, 255, 0.15) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.18) !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-cell-text,
+    .sidebar-placesTreechildren::-moz-tree-image,
+    .sidebar-placesTreechildren::-moz-tree-twisty {
+        color:
+            rgba(255, 255, 255, 0.91) !important;
+    }
+
+    .sidebar-placesTreechildren::-moz-tree-cell-text(selected),
+    .sidebar-placesTreechildren::-moz-tree-image(selected),
+    .sidebar-placesTreechildren::-moz-tree-twisty(selected) {
+        color:
+            rgba(255, 255, 255, 0.98) !important;
+    }
+
+    #viewButton
+    > menupopup {
+        --panel-background:
+            rgba(9, 12, 16, 0.76) !important;
+
+        --panel-color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        color:
+            var(--panel-color) !important;
+
+        background:
+            var(--panel-background) !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.12) !important;
+
+        border-radius:
+            10px !important;
+
+        box-shadow:
+            0 14px 36px rgba(0, 0, 0, 0.36),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+
+        backdrop-filter:
+            blur(20px)
+            saturate(116%)
+            brightness(82%)
+            !important;
+    }
+
+    #viewButton
+    > menupopup
+    > menuitem {
+        margin:
+            2px 4px !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            7px !important;
+    }
+
+    #viewButton
+    > menupopup
+    > menuitem:hover {
+        background:
+            rgba(255, 255, 255, 0.10) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.10) !important;
+    }
+}
+
+/* =========================================================
+   MODERN FIREFOX SIDEBAR PANELS - MICA / LIQUID GLASS
+
+   Password Manager is deliberately not included: it is a separate settings
+   document. These rules cover Customize, Bookmarks, History, Synced Tabs and
+   the built-in AI chat panel (plus the legacy Synced Tabs document).
+   ========================================================= */
+
+@-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html"),
+               url("chrome://browser/content/sidebar/sidebar-bookmarks.html"),
+               url("chrome://browser/content/sidebar/sidebar-history.html"),
+               url("chrome://browser/content/sidebar/sidebar-syncedtabs.html"),
+               url("chrome://browser/content/syncedtabs/sidebar.xhtml"),
+               url("chrome://browser/content/genai/chat.html") {
+    :root {
+        color-scheme:
+            dark !important;
+
+        --uc-sidebar-panel-surface:
+            rgba(8, 10, 13, 0.42) !important;
+
+        --uc-sidebar-panel-field:
+            rgba(0, 0, 0, 0.30) !important;
+
+        --uc-sidebar-panel-button:
+            rgba(18, 20, 25, 0.62) !important;
+
+        --uc-sidebar-panel-hover:
+            rgba(255, 255, 255, 0.11) !important;
+
+        --uc-sidebar-panel-active:
+            rgba(255, 255, 255, 0.17) !important;
+
+        --uc-sidebar-panel-border:
+            rgba(255, 255, 255, 0.13) !important;
+
+        --uc-sidebar-panel-text:
+            rgba(255, 255, 255, 0.96) !important;
+
+        --uc-sidebar-panel-radius:
+            10px !important;
+
+        /* Tokens inherited by Firefox's nested Lit/Shadow components. */
+        --sidebar-background-color:
+            transparent !important;
+
+        --sidebar-box-background:
+            rgba(18, 20, 25, 0.48) !important;
+
+        --sidebar-box-border-color:
+            var(--uc-sidebar-panel-border) !important;
+
+        --sidebar-box-border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        --sidebar-box-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --background-color-canvas:
+            transparent !important;
+
+        --background-color-box:
+            var(--uc-sidebar-panel-button) !important;
+
+        --background-color-overlay:
+            transparent !important;
+
+        --card-background-color:
+            rgba(18, 20, 25, 0.48) !important;
+
+        --border-color:
+            var(--uc-sidebar-panel-border) !important;
+
+        --border-color-deemphasized:
+            rgba(255, 255, 255, 0.16) !important;
+
+        --panel-separator-color:
+            rgba(255, 255, 255, 0.13) !important;
+
+        --button-background-color:
+            var(--uc-sidebar-panel-button) !important;
+
+        --button-background-color-hover:
+            var(--uc-sidebar-panel-hover) !important;
+
+        --button-background-color-active:
+            var(--uc-sidebar-panel-active) !important;
+
+        --border-width:
+            1px !important;
+
+        --button-border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        --button-border-radius:
+            var(--uc-sidebar-panel-radius) !important;
+
+        --button-border-color:
+            var(--uc-sidebar-panel-border) !important;
+
+        --button-border-color-hover:
+            rgba(255, 255, 255, 0.22) !important;
+
+        --button-border-color-active:
+            rgba(255, 255, 255, 0.27) !important;
+
+        --button-border-color-disabled:
+            rgba(255, 255, 255, 0.08) !important;
+
+        --button-border-color-ghost:
+            var(--uc-sidebar-panel-border) !important;
+
+        --button-border-color-ghost-hover:
+            rgba(255, 255, 255, 0.22) !important;
+
+        --button-border-color-ghost-active:
+            rgba(255, 255, 255, 0.27) !important;
+
+        --button-border-color-ghost-selected:
+            rgba(255, 255, 255, 0.27) !important;
+
+        --button-background-color-primary:
+            rgba(255, 255, 255, 0.16) !important;
+
+        --button-background-color-primary-hover:
+            rgba(255, 255, 255, 0.21) !important;
+
+        --button-background-color-primary-active:
+            rgba(255, 255, 255, 0.25) !important;
+
+        --button-border-color-primary:
+            var(--uc-sidebar-panel-border) !important;
+
+        --button-border-color-primary-hover:
+            rgba(255, 255, 255, 0.22) !important;
+
+        --button-border-color-primary-active:
+            rgba(255, 255, 255, 0.27) !important;
+
+        --button-background-color-ghost:
+            transparent !important;
+
+        --button-background-color-ghost-hover:
+            var(--uc-sidebar-panel-hover) !important;
+
+        --button-background-color-ghost-active:
+            var(--uc-sidebar-panel-active) !important;
+
+        --button-text-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --button-text-color-ghost:
+            var(--uc-sidebar-panel-text) !important;
+
+        --button-text-color-ghost-hover:
+            white !important;
+
+        --button-text-color-ghost-active:
+            white !important;
+
+        --button-text-color-primary:
+            white !important;
+
+        --fxview-text-primary-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --text-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --text-color-deemphasized:
+            rgba(255, 255, 255, 0.72) !important;
+
+        --link-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --link-color-hover:
+            white !important;
+
+        --link-color-visited:
+            var(--uc-sidebar-panel-text) !important;
+
+        --border-radius-small:
+            8px !important;
+
+        --border-radius-medium:
+            var(--uc-sidebar-panel-radius) !important;
+
+        --border-radius-circle:
+            var(--uc-sidebar-panel-radius) !important;
+
+        --input-text-background-color:
+            var(--uc-sidebar-panel-field) !important;
+
+        --input-text-color:
+            var(--uc-sidebar-panel-text) !important;
+
+        --input-text-border-color:
+            var(--uc-sidebar-panel-border) !important;
+
+        --focus-outline-color:
+            rgba(0, 203, 226, 0.82) !important;
+
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        background:
+            var(--uc-sidebar-panel-surface) !important;
+
+        background-image:
+            none !important;
+    }
+
+    html,
+    body,
+    .content-container,
+    .content-header,
+    .content-scrollable,
+    #template-container,
+    #browser-container {
+        color:
+            inherit !important;
+
+        background:
+            transparent !important;
+
+        background-image:
+            none !important;
+    }
+
+    body {
+        min-height:
+            100% !important;
+    }
+
+    :is(
+        input[type="text"],
+        input[type="search"],
+        select,
+        moz-input-search
+    ) {
+        appearance:
+            none !important;
+
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        background:
+            var(--uc-sidebar-panel-field) !important;
+
+        border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        border-radius:
+            var(--uc-sidebar-panel-radius) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.045) !important;
+    }
+
+    :is(
+        input[type="text"],
+        input[type="search"],
+        select,
+        moz-input-search
+    ):focus-visible {
+        border-color:
+            rgba(0, 203, 226, 0.72) !important;
+
+        outline:
+            1px solid rgba(0, 203, 226, 0.34) !important;
+
+        outline-offset:
+            0 !important;
+    }
+
+    /* Do not restyle the real HTML buttons nested inside <moz-button>.
+       The exported part="button" belongs to their inner background span,
+       while the actual buttons are #main-button / #chevron-button. */
+    :is(button, .button):not(#main-button, #chevron-button) {
+        appearance:
+            none !important;
+
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        background:
+            var(--uc-sidebar-panel-button) !important;
+
+        border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        border-radius:
+            var(--uc-sidebar-panel-radius) !important;
+
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.20),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+
+        transition:
+            background-color 120ms ease,
+            border-color 120ms ease,
+            transform 80ms ease !important;
+    }
+
+    :is(button, .button):not(#main-button, #chevron-button):hover {
+        background:
+            var(--uc-sidebar-panel-hover) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.22) !important;
+    }
+
+    :is(button, .button):not(#main-button, #chevron-button):active {
+        background:
+            var(--uc-sidebar-panel-active) !important;
+
+        transform:
+            translateY(1px) scale(0.985) !important;
+    }
+
+    input[type="checkbox"] {
+        accent-color:
+            rgb(0, 203, 226) !important;
+    }
+
+    a,
+    a:visited,
+    [is="text-link"] {
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        text-decoration-color:
+            rgba(255, 255, 255, 0.48) !important;
+    }
+
+    /* AI onboarding already had the desired darker hierarchy. Keep that
+       hierarchy while replacing its opaque canvas and choice/button colors
+       with the same glass tokens as the other sidebar panels. */
+    #multi-stage-message-root {
+        background:
+            transparent !important;
+    }
+
+    #multi-stage-message-root :is(.screen, .optin-wrapper) {
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        background:
+            rgba(8, 10, 13, 0.34) !important;
+
+        border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        border-radius:
+            12px !important;
+
+        box-shadow:
+            0 12px 32px rgba(0, 0, 0, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+    }
+
+    #multi-stage-message-root label {
+        color:
+            var(--uc-sidebar-panel-text) !important;
+
+        background:
+            var(--uc-sidebar-panel-field) !important;
+
+        border:
+            1px solid var(--uc-sidebar-panel-border) !important;
+
+        border-radius:
+            var(--uc-sidebar-panel-radius) !important;
+    }
+
+    #multi-stage-message-root label:hover {
+        background:
+            var(--uc-sidebar-panel-hover) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.22) !important;
+    }
+
+    #multi-stage-message-root label:has(.selected) {
+        background:
+            var(--uc-sidebar-panel-active) !important;
+
+        border-color:
+            rgba(0, 203, 226, 0.76) !important;
+    }
+}
+
+/* Keep only actual help/settings links cyan. History, Synced Tabs and
+   bookmark-row anchors remain white like ordinary sidebar rows. */
+@-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html"),
+               url("chrome://browser/content/genai/chat.html") {
+    :root {
+        --link-color:
+            rgb(0, 221, 235) !important;
+
+        --link-color-hover:
+            rgb(86, 235, 244) !important;
+
+        --link-color-visited:
+            rgb(0, 221, 235) !important;
+    }
+
+    a,
+    a:visited,
+    [is="text-link"] {
+        color:
+            var(--link-color) !important;
+    }
+}
+
+/* History options button: Firefox applies --space-small to the inner
+   background part. Zero it on the parent menu-button and put the same gap
+   outside the component, keeping #main-button square. */
+@-moz-document url("chrome://browser/content/sidebar/sidebar-history.html") {
+    moz-button.menu-button {
+        --space-small:
+            0px !important;
+
+        margin-inline-start:
+            8px !important;
+    }
+}

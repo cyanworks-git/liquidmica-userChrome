@@ -1,0 +1,506 @@
+/* =====================================================================
+   FIREFOX / FLOORP MENU ICONS — LIQUID MICA COMPAT
+   =====================================================================
+
+   userChrome.css 최상단:
+     @import url("menu_icons_fixed.css");
+     @import url("liquidmica_for_floorp.css");
+
+   이 파일은 import 순서와 관계없이 우클릭 메뉴 아이콘이
+   Liquid/Mica 쪽의 background/background-image 초기화에 지워지지
+   않도록 높은 specificity + !important로 작성했습니다.
+
+   about:config 권장:
+     svg.context-properties.content.enabled = true
+   ===================================================================== */
+
+:root {
+    --uc-popup-menu-icon-color:
+        currentColor;
+}
+
+
+/* =====================================================================
+   1. APP / HAMBURGER MENU — 아이콘 슬롯 복원
+   ===================================================================== */
+
+:is(
+    #appMenu-popup,
+    #customizationui-widget-panel
+)
+.subviewbutton:not(.subviewbutton-iconic, [checked="true"], [targetURI])
+> .toolbarbutton-icon {
+    display: -moz-box !important;
+
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+
+    /* 아이콘과 제목 사이 간격 */
+    margin-inline-end: 8px !important;
+
+    -moz-context-properties:
+        fill,
+        fill-opacity,
+        stroke,
+        stroke-opacity !important;
+
+    fill:
+        var(--uc-popup-menu-icon-color) !important;
+
+    stroke:
+        var(--uc-popup-menu-icon-color) !important;
+
+    fill-opacity:
+        1 !important;
+
+    stroke-opacity:
+        1 !important;
+}
+
+
+/* 메인 메뉴 */
+#appMenu-new-tab-button2 {
+    list-style-image:
+        url("chrome://browser/skin/new-tab.svg") !important;
+}
+
+#appMenu-new-window-button2,
+#appMenuRecentlyClosedWindows {
+    list-style-image:
+        url("chrome://browser/skin/window.svg") !important;
+}
+
+#appMenu-new-private-window-button2 {
+    list-style-image:
+        url("chrome://browser/skin/privateBrowsing.svg") !important;
+}
+
+#appMenu-bookmarks-button,
+#panelMenuBookmarkThisPage {
+    list-style-image:
+        url("chrome://browser/skin/bookmark-hollow.svg") !important;
+}
+
+#appMenu-history-button,
+#appMenuRecentlyClosedTabs {
+    list-style-image:
+        url("chrome://browser/skin/history.svg") !important;
+}
+
+#appMenu-downloads-button {
+    list-style-image:
+        url("chrome://browser/skin/downloads/downloads.svg") !important;
+}
+
+#appMenu-passwords-button {
+    list-style-image:
+        url("chrome://browser/skin/login.svg") !important;
+}
+
+#appMenu-extensions-themes-button {
+    list-style-image:
+        url("chrome://mozapps/skin/extensions/extension.svg") !important;
+}
+
+#appMenu-print-button2 {
+    list-style-image:
+        url("chrome://global/skin/icons/print.svg") !important;
+}
+
+#appMenu-save-file-button2 {
+    list-style-image:
+        url("chrome://browser/skin/downloads/downloads.svg") !important;
+}
+
+#appMenu-find-button2,
+#panelMenu_searchBookmarks,
+#appMenuSearchHistory {
+    list-style-image:
+        url("chrome://global/skin/icons/search-glass.svg") !important;
+}
+
+#appMenu-translate-button {
+    list-style-image:
+        url("chrome://browser/skin/translations.svg") !important;
+}
+
+#appMenu-more-button2 {
+    list-style-image:
+        url("chrome://global/skin/icons/more.svg") !important;
+}
+
+#appMenu-help-button2 {
+    list-style-image:
+        url("chrome://global/skin/icons/help.svg") !important;
+}
+
+#appMenu-settings-button {
+    list-style-image:
+        url("chrome://global/skin/icons/settings.svg") !important;
+}
+
+#appMenu-quit-button2 {
+    list-style-image:
+        url("chrome://browser/skin/sync-off.svg") !important;
+}
+
+
+/* =====================================================================
+   2. CONTEXT MENU — 아이콘용 gutter
+   ---------------------------------------------------------------------
+   liquidmica_for_floorp.css 쪽의
+     padding: 4px 8px !important;
+     background-image: none !important;
+   보다 specificity를 높게 잡습니다.
+   ===================================================================== */
+
+#mainPopupSet
+#contentAreaContextMenu
+> :is(menuitem, menu):not(
+    .menuitem-iconic,
+    .menu-iconic,
+    [type="checkbox"],
+    [type="radio"]
+),
+
+#mainPopupSet
+#contentAreaContextMenu
+menu
+> menupopup
+> :is(menuitem, menu):not(
+    .menuitem-iconic,
+    .menu-iconic,
+    [type="checkbox"],
+    [type="radio"]
+) {
+    padding-inline-start:
+        30px !important;
+
+    padding-inline-end:
+        8px !important;
+
+    background-position:
+        8px center !important;
+
+    background-repeat:
+        no-repeat !important;
+
+    background-size:
+        16px 16px !important;
+
+    -moz-context-properties:
+        fill,
+        fill-opacity !important;
+
+    fill:
+        var(--uc-popup-menu-icon-color) !important;
+
+    fill-opacity:
+        1 !important;
+}
+
+
+/* RTL */
+#mainPopupSet
+#contentAreaContextMenu
+> :is(menuitem, menu):dir(rtl):not(
+    .menuitem-iconic,
+    .menu-iconic,
+    [type="checkbox"],
+    [type="radio"]
+) {
+    background-position:
+        calc(100% - 14px) center !important;
+}
+
+
+/* =====================================================================
+   3. PAGE / GENERAL CONTEXT ITEMS
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu #context-savepage {
+    background-image:
+        url("chrome://browser/skin/downloads/downloads.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-selectall {
+    background-image:
+        url("chrome://global/skin/reader/align-left-20.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-take-screenshot {
+    background-image:
+        url("chrome://browser/skin/screenshot.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-ask-chat,
+#mainPopupSet #contentAreaContextMenu #context_askChat {
+    background-image:
+        url("chrome://global/skin/icons/highlights.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    #context-viewsource,
+    #context-viewframesource,
+    #context-viewpartialsource-selection
+) {
+    background-image:
+        url("chrome://devtools/skin/images/tool-styleeditor.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-inspect-a11y {
+    background-image:
+        url("chrome://devtools/skin/images/tool-accessibility.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-inspect {
+    background-image:
+        url("resource://devtools-shared-images/command-pick.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    #context-searchselect,
+    #context-searchselect-private,
+    #context-visual-search
+) {
+    background-image:
+        url("chrome://global/skin/icons/search-glass.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-translate-selection {
+    background-image:
+        url("chrome://browser/skin/translations.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    #context-sendpagetodevice,
+    #context-sendlinktodevice
+) {
+    background-image:
+        url("chrome://browser/skin/synced-tabs.svg") !important;
+}
+
+
+/* =====================================================================
+   4. LINK CONTEXT ITEMS
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    #context-openlinkintab,
+    #context-openlinkincontainertab
+) {
+    background-image:
+        url("chrome://global/skin/icons/open-in-new.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-openlinkinsplitview {
+    background-image:
+        url("chrome://browser/skin/split-view-left-16.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-openlinkinusercontext-menu {
+    background-image:
+        url("chrome://browser/skin/topsites.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-openlink {
+    background-image:
+        url("chrome://browser/skin/window.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-openlinkprivate {
+    background-image:
+        url("chrome://browser/skin/privateBrowsing.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-previewlink {
+    background-image:
+        url("chrome://global/skin/icons/eye.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-bookmarklink {
+    background-image:
+        url("chrome://browser/skin/bookmark-hollow.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-savelink {
+    background-image:
+        url("chrome://browser/skin/downloads/downloads.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    #context-copylink,
+    #context-stripOnShareLink
+) {
+    background-image:
+        url("chrome://global/skin/icons/link.svg") !important;
+}
+
+
+/* =====================================================================
+   5. IMAGE CONTEXT ITEMS
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu #context-viewimage {
+    background-image:
+        url("chrome://global/skin/icons/open-in-new.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-saveimage {
+    background-image:
+        url("chrome://browser/skin/downloads/downloads.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-copyimage-contents {
+    background-image:
+        url("chrome://global/skin/icons/edit-copy.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-copyimage {
+    background-image:
+        url("chrome://global/skin/icons/link.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-sendimage {
+    background-image:
+        url("chrome://browser/skin/mail.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-viewimageinfo {
+    background-image:
+        url("chrome://global/skin/icons/info.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-setDesktopBackground {
+    background-image:
+        url("chrome://browser/skin/canvas.svg") !important;
+}
+
+
+/* =====================================================================
+   6. EDIT / TEXT CONTEXT ITEMS
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu
+menuitem[data-l10n-id="text-action-undo"] {
+    background-image:
+        url("chrome://global/skin/icons/undo.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem[data-l10n-id="text-action-cut"] {
+    background-image:
+        url("chrome://browser/skin/edit-cut.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem[data-l10n-id="text-action-copy"] {
+    background-image:
+        url("chrome://global/skin/icons/edit-copy.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+:is(
+    menuitem[data-l10n-id="text-action-paste"],
+    menuitem[data-l10n-id="text-action-paste-no-formatting"]
+) {
+    background-image:
+        url("chrome://browser/skin/edit-paste.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem[data-l10n-id="text-action-delete"] {
+    background-image:
+        url("chrome://global/skin/icons/delete.svg") !important;
+}
+
+
+/* =====================================================================
+   7. MEDIA / FRAME
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu #context-media-play {
+    background-image:
+        url("chrome://global/skin/media/play-fill.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-media-pause {
+    background-image:
+        url("chrome://global/skin/media/pause-fill.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-media-mute {
+    background-image:
+        url("chrome://global/skin/media/audio-muted.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-media-unmute {
+    background-image:
+        url("chrome://global/skin/media/audio.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-reloadframe {
+    background-image:
+        url("chrome://global/skin/icons/reload.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-bookmarkframe {
+    background-image:
+        url("chrome://browser/skin/bookmark-hollow.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu #context-openframeintab {
+    background-image:
+        url("chrome://global/skin/icons/open-in-new.svg") !important;
+}
+
+
+/* =====================================================================
+   8. SEND TO DEVICE — DYNAMIC CLIENT ITEMS
+   ===================================================================== */
+
+#mainPopupSet #contentAreaContextMenu
+menuitem.sendtab-target[clientType="desktop"] {
+    background-image:
+        url("chrome://browser/skin/device-desktop.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem.sendtab-target[clientType="phone"] {
+    background-image:
+        url("chrome://browser/skin/device-phone.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem.sendtab-target[clientType="tablet"] {
+    background-image:
+        url("chrome://browser/skin/device-tablet.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem.sendtab-target[clientType="tv"] {
+    background-image:
+        url("chrome://browser/skin/device-tv.svg") !important;
+}
+
+#mainPopupSet #contentAreaContextMenu
+menuitem.sendtab-target[clientType="vr"] {
+    background-image:
+        url("chrome://browser/skin/device-vr.svg") !important;
+}
+
+
+/* =====================================================================
+   9. LIQUID GLASS HOVER COMPAT
+   ---------------------------------------------------------------------
+   liquidmica 쪽 hover가 `background:` shorthand를 사용해도
+   위의 더 높은 specificity background-image가 유지됩니다.
+   여기서는 hover 배경 자체를 건드리지 않습니다.
+   ===================================================================== */

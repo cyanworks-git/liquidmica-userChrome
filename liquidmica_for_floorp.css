@@ -1,0 +1,1783 @@
+/* =====================================================================
+   FLOORP 12 PANEL SIDEBAR — PRESERVE NATIVE MICA + LIQUID GLASS
+   =====================================================================
+
+   FILE OWNERSHIP RULE:
+   All Floorp-only UI elements and chrome://noraneko-* document styles
+   belong in this file. Firefox-shared internal document styles remain
+   in userContents.css.
+
+   userChrome.css:
+     @import url("liquidmica_for_floorp.css");
+
+   IMPORTANT:
+   This version intentionally DOES NOT replace Floorp's
+   --panel-sidebar-background-color.
+
+   Floorp's stock UI already uses that variable for:
+     #panel-sidebar-select-box
+     #panel-sidebar-box
+     #panel-sidebar-header
+
+   We preserve that native surface and darken it with translucent
+   inset overlays instead of painting a new opaque background.
+   ===================================================================== */
+
+:root {
+    /* Dark overlays placed ABOVE Floorp's native Mica surface */
+    --fp-mica-rail-overlay:
+        rgba(0, 0, 0, 0.22);
+
+    --fp-mica-panel-overlay:
+        rgba(0, 0, 0, 0.18);
+
+    --fp-mica-header-overlay:
+        rgba(0, 0, 0, 0.30);
+
+    --fp-glass-hover:
+        rgba(255, 255, 255, 0.095);
+
+    --fp-glass-selected:
+        rgba(255, 255, 255, 0.155);
+
+    --fp-glass-selected-hover:
+        rgba(255, 255, 255, 0.19);
+
+    --fp-glass-active:
+        rgba(255, 255, 255, 0.23);
+
+    --fp-glass-border:
+        rgba(255, 255, 255, 0.12);
+
+    --fp-glass-radius:
+        10px;
+}
+
+
+/* =====================================================================
+   1. PRESERVE FLOORP'S NATIVE SIDEBAR SURFACE
+   ---------------------------------------------------------------------
+   Do NOT redefine --panel-sidebar-background-color.
+   Do NOT set a replacement rgba background here.
+   Floorp stock CSS keeps ownership of the Mica-capable background.
+   ===================================================================== */
+
+
+/* =====================================================================
+   2. LEFT APP RAIL — DARKEN NATIVE MICA WITHOUT REPLACING IT
+   ===================================================================== */
+
+#panel-sidebar-select-box {
+    /*
+     * Keep Floorp's own background exactly as-is.
+     * Only add a translucent dark overlay using inset shadow.
+     */
+    box-shadow:
+        inset 0 0 0 9999px var(--fp-mica-rail-overlay),
+        inset -1px 0 0 rgba(255, 255, 255, 0.055)
+        !important;
+
+    border-inline:
+        0 1px !important;
+
+    border-inline-end-color:
+        rgba(255, 255, 255, 0.08) !important;
+
+    /*
+     * Native Windows Mica is already the backdrop.
+     * Do not add CSS backdrop-filter on top.
+     */
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    --toolbarbutton-hover-background:
+        transparent !important;
+
+    --toolbarbutton-active-background:
+        transparent !important;
+}
+
+
+/* Preserve the stock lwtheme background too; only darken via shadow. */
+#panel-sidebar-select-box:-moz-lwtheme {
+    box-shadow:
+        inset 0 0 0 9999px var(--fp-mica-rail-overlay),
+        inset -1px 0 0 rgba(255, 255, 255, 0.055)
+        !important;
+}
+
+
+/* =====================================================================
+   3. OPEN PANEL FRAME — PRESERVE MICA
+   ===================================================================== */
+
+#panel-sidebar-box {
+    box-shadow:
+        inset 0 0 0 9999px var(--fp-mica-panel-overlay)
+        !important;
+
+    border:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+
+/* Internal chrome wrappers must not paint a second opaque surface. */
+#panel-sidebar-box
+> :is(
+    #panel-sidebar-browser-box-wrapper,
+    #panel-sidebar-browser-box
+) {
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+}
+
+
+/* =====================================================================
+   4. WEB PANEL TOP BAR — PRESERVE STOCK MICA, DARKEN IT
+   ===================================================================== */
+
+#panel-sidebar-header {
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    /*
+     * Keep Floorp's stock background-color.
+     * The darkening layer is an inset shadow, not a replacement fill.
+     */
+    box-shadow:
+        inset 0 0 0 9999px var(--fp-mica-header-overlay),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.065)
+        !important;
+
+    border:
+        none !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.075) !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    --toolbarbutton-hover-background:
+        transparent !important;
+
+    --toolbarbutton-active-background:
+        transparent !important;
+}
+
+
+/* =====================================================================
+   5. ALL LEFT SIDEBAR BUTTONS — LIQUID GLASS BASE
+   ---------------------------------------------------------------------
+   Covers:
+     - web / extension panel buttons
+     - workspace buttons
+     - add button
+     - addons / passwords / settings buttons
+   ===================================================================== */
+
+#panel-sidebar-select-box .panel-sidebar-panel {
+    position:
+        relative !important;
+
+    isolation:
+        isolate !important;
+
+    box-sizing:
+        border-box !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        var(--fp-glass-radius) !important;
+
+    outline:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    overflow:
+        hidden !important;
+
+    transition:
+        background-color 100ms ease,
+        border-color 100ms ease,
+        box-shadow 100ms ease,
+        transform 100ms ease
+        !important;
+}
+
+
+/* =====================================================================
+   6. ALL NON-SELECTED BUTTON HOVER
+   ---------------------------------------------------------------------
+   Important correction:
+   Do NOT require data-checked="false".
+   Floorp bottom buttons and workspace controls may have NO data-checked.
+   ===================================================================== */
+
+#panel-sidebar-select-box
+.panel-sidebar-panel:not([data-checked="true"]):hover,
+
+#panel-sidebar-select-box
+.panel-sidebar-button-wrapper:hover
+> .panel-sidebar-panel:not([data-checked="true"]) {
+    background-color:
+        var(--fp-glass-hover) !important;
+
+    background-image:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(255, 255, 255, 0.012) 48%,
+            rgba(0, 0, 0, 0.018)
+        ) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.085) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.115),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        0 3px 9px rgba(0, 0, 0, 0.20)
+        !important;
+}
+
+
+/* =====================================================================
+   7. SELECTED APP — STRONG LIQUID GLASS
+   Floorp sets data-checked="true" on the selected panel/workspace.
+   ===================================================================== */
+
+#panel-sidebar-select-box
+.panel-sidebar-panel[data-checked="true"] {
+    background-color:
+        var(--fp-glass-selected) !important;
+
+    background-image:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.050) 40%,
+            rgba(255, 255, 255, 0.012) 66%,
+            rgba(0, 0, 0, 0.055) 100%
+        ) !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.17) !important;
+
+    border-radius:
+        var(--fp-glass-radius) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.20),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 3px 10px rgba(0, 0, 0, 0.26)
+        !important;
+}
+
+
+/* Gloss layer */
+#panel-sidebar-select-box
+.panel-sidebar-panel[data-checked="true"]::before {
+    content:
+        "" !important;
+
+    position:
+        absolute !important;
+
+    inset:
+        0 !important;
+
+    z-index:
+        0 !important;
+
+    pointer-events:
+        none !important;
+
+    border-radius:
+        inherit !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.115),
+            rgba(255, 255, 255, 0.020) 46%,
+            transparent 72%
+        ) !important;
+}
+
+
+/* Keep panel favicon above the gloss layer. */
+#panel-sidebar-select-box
+.panel-sidebar-panel
+> :is(
+    img,
+    image,
+    svg,
+    .toolbarbutton-icon,
+    .toolbarbutton-badge-stack
+) {
+    position:
+        relative !important;
+
+    z-index:
+        1 !important;
+
+    background:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+}
+
+
+#panel-sidebar-select-box
+.panel-sidebar-panel[data-checked="true"]:hover {
+    background-color:
+        var(--fp-glass-selected-hover) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.20) !important;
+}
+
+
+/* Click feedback for every panel button. */
+#panel-sidebar-select-box
+.panel-sidebar-panel:active {
+    background-color:
+        var(--fp-glass-active) !important;
+
+    transform:
+        scale(0.95) !important;
+}
+
+
+/* =====================================================================
+   8. PANEL HEADER ACTION BUTTONS — LIQUID GLASS
+   ===================================================================== */
+
+#panel-sidebar-header .panel-sidebar-actions {
+    appearance:
+        none !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+
+    outline:
+        none !important;
+
+    transition:
+        background-color 100ms ease,
+        border-color 100ms ease,
+        box-shadow 100ms ease,
+        transform 100ms ease
+        !important;
+}
+
+
+#panel-sidebar-header .panel-sidebar-actions:hover {
+    background-color:
+        var(--fp-glass-hover) !important;
+
+    background-image:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(255, 255, 255, 0.010)
+        ) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.085) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.115),
+        0 3px 8px rgba(0, 0, 0, 0.18)
+        !important;
+}
+
+
+#panel-sidebar-header .panel-sidebar-actions:active {
+    background-color:
+        var(--fp-glass-active) !important;
+
+    transform:
+        scale(0.95) !important;
+}
+
+
+/* =====================================================================
+   9. RESTORED WINDOW MODE — KEEP THE STOCK SURFACE VISIBLE
+   ---------------------------------------------------------------------
+   Do not substitute our own opaque dark panel.
+   Explicitly reuse Floorp's own sidebar background variable.
+   ===================================================================== */
+
+#main-window[sizemode="normal"]
+#panel-sidebar-select-box,
+
+#main-window[sizemode="normal"]
+#panel-sidebar-box,
+
+#main-window[sizemode="normal"]
+#panel-sidebar-header {
+    background-color:
+        var(--panel-sidebar-background-color) !important;
+}
+
+
+/* Reapply dark tint using shadow, preserving the underlying Mica surface. */
+#main-window[sizemode="normal"]
+#panel-sidebar-select-box {
+    box-shadow:
+        inset 0 0 0 9999px rgba(0, 0, 0, 0.25),
+        inset -1px 0 0 rgba(255, 255, 255, 0.055)
+        !important;
+}
+
+
+#main-window[sizemode="normal"]
+#panel-sidebar-box {
+    box-shadow:
+        inset 0 0 0 9999px rgba(0, 0, 0, 0.20)
+        !important;
+}
+
+
+#main-window[sizemode="normal"]
+#panel-sidebar-header {
+    box-shadow:
+        inset 0 0 0 9999px rgba(0, 0, 0, 0.33),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.065)
+        !important;
+}
+
+
+/* =====================================================================
+   10. FLOATING PANEL
+   Preserve Floorp background, only add frame / tint.
+   ===================================================================== */
+
+#panel-sidebar-box[data-floating="true"] {
+    background-color:
+        var(--panel-sidebar-background-color) !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10) !important;
+
+    border-radius:
+        10px !important;
+
+    box-shadow:
+        inset 0 0 0 9999px rgba(0, 0, 0, 0.20),
+        0 16px 42px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.055)
+        !important;
+
+    overflow:
+        hidden !important;
+}
+
+
+/* =====================================================================
+   11. SPLITTER
+   ===================================================================== */
+
+#panel-sidebar-splitter {
+    background:
+        rgba(255, 255, 255, 0.04) !important;
+
+    border-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+}
+
+/* =========================================================
+   FLOORP WORKSPACE BUTTON — EXACT CENTERING
+   ========================================================= */
+
+#panel-sidebar-select-box
+.workspace-panel-button-wrapper {
+    box-sizing:
+        border-box !important;
+
+    /*
+     * Floorp 부모의 align-items:flex-start를 무시하고
+     * wrapper가 레일 전체 너비를 차지하게 한다.
+     */
+    align-self:
+        stretch !important;
+
+    inline-size:
+        auto !important;
+
+    width:
+        auto !important;
+
+    display:
+        grid !important;
+
+    place-items:
+        center !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+}
+
+#panel-sidebar-select-box
+.workspace-panel-button-wrapper
+> :is(
+    .workspace-panel,
+    .workspace-panel-control
+) {
+    box-sizing:
+        border-box !important;
+
+    inline-size:
+        var(--panel-sidebar-panel-size, 36px) !important;
+
+    block-size:
+        var(--panel-sidebar-panel-size, 36px) !important;
+
+    min-inline-size:
+        var(--panel-sidebar-panel-size, 36px) !important;
+
+    min-block-size:
+        var(--panel-sidebar-panel-size, 36px) !important;
+
+    display:
+        grid !important;
+
+    place-items:
+        center !important;
+
+    margin:
+        5px 0 0 !important;
+
+    padding:
+        0 !important;
+}
+
+#panel-sidebar-select-box
+.workspace-panel-button-wrapper
+> :is(
+    .workspace-panel,
+    .workspace-panel-control
+)
+> img {
+    display:
+        block !important;
+
+    inline-size:
+        16px !important;
+
+    block-size:
+        16px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    /* Floorp 아이콘 이미지 자체의 시각적 중심 보정 */
+    transform:
+        translateX(1px) !important;
+}
+
+/* =========================================================
+   FIREFOX + FLOORP SIDEBARS — PAIRED POSITION
+   ---------------------------------------------------------
+   LEFT:
+   Firefox rail → Firefox panel
+   → Floorp rail → Floorp panel
+   → Web
+
+   RIGHT:
+   Web
+   → Floorp panel → Floorp rail
+   → Firefox panel → Firefox rail
+   ========================================================= */
+
+
+/* =========================================================
+   FIREFOX SIDEBAR — LEFT
+   ========================================================= */
+
+#browser:not(:has(> #sidebar-box[sidebar-positionend]))
+> #sidebar-container {
+    order: -80 !important;
+}
+
+#browser:not(:has(> #sidebar-box[sidebar-positionend]))
+> #sidebar-launcher-splitter {
+    order: -79 !important;
+}
+
+#browser:not(:has(> #sidebar-box[sidebar-positionend]))
+> #sidebar-box {
+    order: -78 !important;
+}
+
+#browser:not(:has(> #sidebar-box[sidebar-positionend]))
+> #sidebar-splitter {
+    order: -77 !important;
+}
+
+
+/* =========================================================
+   FIREFOX SIDEBAR — RIGHT
+   ========================================================= */
+
+#browser:has(> #sidebar-box[sidebar-positionend])
+> #sidebar-splitter {
+    order: 77 !important;
+}
+
+#browser:has(> #sidebar-box[sidebar-positionend])
+> #sidebar-box {
+    order: 78 !important;
+}
+
+#browser:has(> #sidebar-box[sidebar-positionend])
+> #sidebar-launcher-splitter {
+    order: 79 !important;
+}
+
+#browser:has(> #sidebar-box[sidebar-positionend])
+> #sidebar-container {
+    order: 80 !important;
+}
+
+/* =========================================================
+   FIREFOX SPLITTER
+   ========================================================= */
+
+#browser > #sidebar-launcher-splitter {
+    flex: 0 0 4px !important;
+
+    inline-size: 4px !important;
+    min-inline-size: 4px !important;
+    max-inline-size: 4px !important;
+
+    margin-inline: 0 !important;
+
+    pointer-events: auto !important;
+
+    z-index: 50 !important;
+}
+
+#browser > #sidebar-splitter {
+    margin-inline: 0 !important;
+
+    pointer-events: auto !important;
+}
+
+
+/* =========================================================
+   FLOORP SPLITTER
+   ========================================================= */
+
+#browser > #panel-sidebar-splitter {
+    flex: 0 0 4px !important;
+
+    inline-size: 4px !important;
+    min-inline-size: 4px !important;
+    max-inline-size: 4px !important;
+
+    margin-inline: 0 !important;
+
+    cursor: ew-resize !important;
+
+    pointer-events: auto !important;
+
+    z-index: 40 !important;
+}
+
+
+/* =========================================================
+   FLOORP RAIL — SIDE NEUTRAL MICA EDGE
+   ---------------------------------------------------------
+   Floorp 위치 판별에 의존하지 않는 공통 레일 스타일
+   ========================================================= */
+
+#panel-sidebar-select-box,
+#panel-sidebar-select-box:-moz-lwtheme {
+    border-inline:
+        0 !important;
+
+    box-shadow:
+        inset 0 0 0 9999px
+            var(--fp-mica-rail-overlay),
+
+        inset 0 0 0 1px
+            rgba(255, 255, 255, 0.055)
+        !important;
+}
+
+
+/* =========================================================
+   FLOORP HUB — APP MENU LABEL FALLBACK
+   Floorp creates this XUL button dynamically. In some builds the label
+   property does not reach the anonymous .toolbarbutton-text, leaving a
+   fully clickable but blank row. Keep the native command and supply only
+   its visible label from CSS.
+   ========================================================= */
+
+#appMenu-popup #appMenu-floorp-hub-button {
+    color:
+        var(--uc-appmenu-text, rgba(255, 255, 255, 0.96)) !important;
+}
+
+#appMenu-popup
+#appMenu-floorp-hub-button
+> .toolbarbutton-text {
+    display:
+        none !important;
+}
+
+#appMenu-popup #appMenu-floorp-hub-button::after {
+    content:
+        "Floorp Hub" !important;
+
+    display:
+        block !important;
+
+    flex:
+        1 1 auto !important;
+
+    min-width:
+        0 !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    color:
+        inherit !important;
+
+    font:
+        inherit !important;
+
+    text-align:
+        start !important;
+
+    white-space:
+        nowrap !important;
+}
+
+/* =========================================================
+   FLOORP CHROME MODAL - BOOKMARK DIALOG MICA SURFACE
+   Floorp renders the panel editor inside #modal-child-browser.
+   The parent browser must own the blur; an element inside the
+   child document cannot blur content across that browser boundary.
+   ========================================================= */
+
+#modal-parent-container {
+    isolation:
+        isolate !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+/* Paint the glass in the parent chrome document. A remote <browser> cannot
+   blur pixels belonging to the web page behind its process boundary. */
+#modal-parent-container::before {
+    content:
+        "" !important;
+
+    position:
+        fixed !important;
+
+    top:
+        125px !important;
+
+    left:
+        50% !important;
+
+    z-index:
+        0 !important;
+
+    inline-size:
+        min(600px, calc(100vw - 32px)) !important;
+
+    block-size:
+        min(620px, calc(100vh - 141px)) !important;
+
+    translate:
+        -50% 0 !important;
+
+    pointer-events:
+        none !important;
+
+    background:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12) !important;
+
+    border-radius:
+        16px !important;
+
+    box-shadow:
+        0 16px 42px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10)
+        !important;
+
+    backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+
+    -webkit-backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+}
+
+#modal-parent-container
+> #modal-child-browser {
+    appearance:
+        none !important;
+
+    color-scheme:
+        dark !important;
+
+    anchor-name:
+        --floorp-nora-modal !important;
+
+    z-index:
+        1 !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        16px !important;
+
+    outline:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    overflow:
+        clip !important;
+}
+
+/* Use the browser's real inline size/position when CSS Anchor Positioning is
+   available. The fixed 600 x 620 fallback above matches PanelSidebarAddModal. */
+@supports (top: anchor(top)) {
+    #modal-parent-container::before {
+        position-anchor:
+            --floorp-nora-modal !important;
+
+        top:
+            anchor(top) !important;
+
+        left:
+            anchor(left) !important;
+
+        inline-size:
+            anchor-size(width) !important;
+
+        block-size:
+            anchor-size(height) !important;
+
+        translate:
+            none !important;
+    }
+}
+
+/* =========================================================
+   FLOORP PANEL ADD DIALOG - LIQUID MICA
+   The form lives in its own chrome:// document, so it must be
+   styled from userContent.css instead of the browser chrome sheet.
+   ========================================================= */
+
+@-moz-document url-prefix("chrome://noraneko-modal-child/") {
+    :root,
+    html,
+    body,
+    #root {
+        color-scheme:
+            dark !important;
+
+        background:
+            transparent !important;
+
+        background-color:
+            transparent !important;
+    }
+
+    body {
+        margin:
+            0 !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        overflow:
+            hidden !important;
+    }
+
+    #root
+    > div {
+        box-sizing:
+            border-box !important;
+
+        padding:
+            0 !important;
+
+        background:
+            transparent !important;
+    }
+
+    #dynamic-form {
+        box-sizing:
+            border-box !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        background:
+            transparent !important;
+
+        background-color:
+            transparent !important;
+
+        background-image:
+            none !important;
+
+        border:
+            0 !important;
+
+        border-radius:
+            16px !important;
+
+        box-shadow:
+            none !important;
+
+        backdrop-filter:
+            none !important;
+
+        -webkit-backdrop-filter:
+            none !important;
+
+        overflow:
+            hidden !important;
+    }
+
+    #dynamic-form
+    :is(
+        h1,
+        label,
+        span
+    ) {
+        color:
+            inherit !important;
+    }
+
+    #dynamic-form
+    > div:first-child,
+    #dynamic-form
+    > div:last-child {
+        border-color:
+            rgba(255, 255, 255, 0.105) !important;
+    }
+
+    #dynamic-form
+    :is(
+        input:not([type="checkbox"]):not([type="radio"]),
+        select,
+        textarea
+    ) {
+        box-sizing:
+            border-box !important;
+
+        appearance:
+            none !important;
+
+        inline-size:
+            100% !important;
+
+        block-size:
+            42px !important;
+
+        min-block-size:
+            42px !important;
+
+        max-block-size:
+            42px !important;
+
+        margin:
+            0 !important;
+
+        padding:
+            0 16px !important;
+
+        line-height:
+            normal !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        background:
+            rgba(0, 0, 0, 0.30) !important;
+
+        background-image:
+            none !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.11) !important;
+
+        border-radius:
+            11px !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.035)
+            !important;
+
+        outline:
+            none !important;
+
+        transition:
+            border-color 100ms ease,
+            box-shadow 100ms ease,
+            background-color 100ms ease
+            !important;
+    }
+
+    #dynamic-form
+    input[type="number"] {
+        appearance:
+            textfield !important;
+
+        -moz-appearance:
+            textfield !important;
+    }
+
+    #dynamic-form
+    :is(
+        input:not([type="checkbox"]):not([type="radio"]),
+        select,
+        textarea
+    ):focus {
+        border-color:
+            rgba(0, 210, 235, 0.88) !important;
+
+        box-shadow:
+            0 0 0 1px rgba(0, 210, 235, 0.50),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05)
+            !important;
+    }
+
+    #dynamic-form
+    input:is([type="checkbox"], [type="radio"]) {
+        accent-color:
+            rgb(0, 199, 222) !important;
+
+        background-color:
+            rgba(4, 7, 10, 0.48) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.24) !important;
+    }
+
+    #dynamic-form
+    button {
+        appearance:
+            none !important;
+
+        box-sizing:
+            border-box !important;
+
+        min-block-size:
+            34px !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        background:
+            rgba(48, 52, 62, 0.82) !important;
+
+        background-color:
+            rgba(48, 52, 62, 0.82) !important;
+
+        background-image:
+            none !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.30) !important;
+
+        border-radius:
+            10px !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.09)
+            !important;
+
+        filter:
+            none !important;
+
+        text-shadow:
+            none !important;
+
+        outline:
+            none !important;
+
+        transition:
+            background-color 100ms ease,
+            border-color 100ms ease,
+            box-shadow 100ms ease
+            !important;
+    }
+
+    #dynamic-form
+    button[type="submit"] {
+        background:
+            rgba(0, 0, 0, 0.55) !important;
+
+        background-color:
+            rgba(0, 0, 0, 0.55) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.34) !important;
+    }
+
+    #dynamic-form
+    button:hover {
+        background:
+            rgba(70, 75, 87, 0.82) !important;
+
+        background-color:
+            rgba(70, 75, 87, 0.82) !important;
+
+        background-image:
+            none !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.38) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.10),
+            0 2px 6px rgba(0, 0, 0, 0.08)
+            !important;
+
+        transform:
+            none !important;
+    }
+
+    #dynamic-form
+    button[type="submit"]:hover {
+        background:
+            rgba(0, 0, 0, 0.68) !important;
+
+        background-color:
+            rgba(0, 0, 0, 0.68) !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.42) !important;
+    }
+
+    #dynamic-form
+    button:active {
+        background:
+            rgba(78, 83, 96, 0.88) !important;
+
+        background-image:
+            none !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.32) !important;
+
+        box-shadow:
+            inset 0 1px 2px rgba(0, 0, 0, 0.18)
+            !important;
+
+        transform:
+            none !important;
+    }
+
+    #dynamic-form
+    button[type="submit"]:active {
+        background:
+            rgba(0, 0, 0, 0.78) !important;
+    }
+
+    #dynamic-form
+    button::before,
+    #dynamic-form
+    button::after {
+        content:
+            none !important;
+
+        display:
+            none !important;
+    }
+
+    /* Dropdown triggers are fields, not footer/action buttons. This rule is
+       intentionally after the shared button states to prevent double hover. */
+    #dynamic-form
+    [class~="relative"]
+    > button[type="button"] {
+        inline-size:
+            100% !important;
+
+        block-size:
+            42px !important;
+
+        min-block-size:
+            42px !important;
+
+        margin:
+            0 !important;
+
+        padding:
+            0 16px !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        text-align:
+            start !important;
+
+        background:
+            rgba(0, 0, 0, 0.30) !important;
+
+        background-image:
+            none !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.11) !important;
+
+        border-radius:
+            11px !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.035)
+            !important;
+
+        transform:
+            none !important;
+    }
+
+    #dynamic-form
+    [class~="relative"]
+    > button[type="button"]:hover {
+        background:
+            rgba(255, 255, 255, 0.075) !important;
+
+        background-image:
+            none !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.15) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
+            !important;
+    }
+
+    #dynamic-form
+    [class~="relative"]
+    > button[type="button"]:focus-visible {
+        border-color:
+            rgba(0, 210, 235, 0.88) !important;
+
+        box-shadow:
+            0 0 0 1px rgba(0, 210, 235, 0.50),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05)
+            !important;
+    }
+
+    /* The custom dropdown is portaled directly under body. Remove its opaque
+       Tailwind surface and give each option one Liquid Glass hover layer. */
+    body
+    > div.fixed {
+        box-sizing:
+            border-box !important;
+
+        color:
+            rgba(255, 255, 255, 0.96) !important;
+
+        background:
+            rgba(8, 10, 13, 0.72) !important;
+
+        background-image:
+            none !important;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.14) !important;
+
+        border-radius:
+            11px !important;
+
+        box-shadow:
+            0 14px 34px rgba(0, 0, 0, 0.34),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08)
+            !important;
+
+        backdrop-filter:
+            blur(20px)
+            saturate(116%)
+            brightness(84%)
+            !important;
+
+        overflow:
+            hidden auto !important;
+    }
+
+    body
+    > div.fixed
+    li {
+        min-block-size:
+            38px !important;
+
+        margin:
+            2px 4px !important;
+
+        padding:
+            0 12px !important;
+
+        background:
+            transparent !important;
+
+        background-image:
+            none !important;
+
+        border:
+            1px solid transparent !important;
+
+        border-radius:
+            8px !important;
+
+        box-shadow:
+            none !important;
+
+        transition:
+            background-color 90ms ease,
+            border-color 90ms ease,
+            box-shadow 90ms ease
+            !important;
+    }
+
+    body
+    > div.fixed
+    li:hover {
+        background:
+            rgba(255, 255, 255, 0.10) !important;
+
+        background-image:
+            none !important;
+
+        border-color:
+            rgba(255, 255, 255, 0.11) !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.075)
+            !important;
+    }
+
+    /* In the web-panel form the fourth field is the container dropdown. */
+    #dynamic-form
+    > [class~="flex-grow"]
+    > div:nth-child(4)
+    [class~="relative"]
+    > button[type="button"] {
+        anchor-name:
+            --floorp-container-trigger !important;
+    }
+
+    @supports (bottom: anchor(top)) {
+        /* Container lists have at least four entries and no extension icons.
+           Attach their bottom edge directly above the container field. */
+        body
+        > div.fixed:has(li:nth-child(4)):not(:has(li img)) {
+            position-anchor:
+                --floorp-container-trigger !important;
+
+            top:
+                auto !important;
+
+            right:
+                auto !important;
+
+            bottom:
+                anchor(top) !important;
+
+            left:
+                anchor(left) !important;
+
+            inline-size:
+                anchor-size(width) !important;
+
+            margin-block-end:
+                6px !important;
+
+            transform:
+                none !important;
+        }
+    }
+}
+
+/* =========================================================
+   FLOORP TOP WORKSPACE BUTTON — CENTER + FIXED ICON SIZE
+   ========================================================= */
+
+/* 버튼 자체 */
+#TabsToolbar #workspaces-toolbar-button {
+    display:
+        flex !important;
+
+    align-items:
+        center !important;
+
+    justify-content:
+        center !important;
+
+    padding:
+        0 !important;
+
+    overflow:
+        hidden !important;
+}
+
+
+/* Floorp가 남겨둔 Workspace 이름 제거 */
+#TabsToolbar #workspaces-toolbar-button
+:is(
+    .toolbarbutton-text,
+    .toolbarbutton-multiline-text,
+    .toolbarbutton-text-wrapper,
+    label
+) {
+    display:
+        none !important;
+
+    width:
+        0 !important;
+
+    min-width:
+        0 !important;
+
+    max-width:
+        0 !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+}
+
+
+/* 실제 Workspace 아이콘 */
+#TabsToolbar #workspaces-toolbar-button
+> .toolbarbutton-icon {
+    width:
+        18px !important;
+
+    height:
+        18px !important;
+
+    min-width:
+        18px !important;
+
+    min-height:
+        18px !important;
+
+    max-width:
+        18px !important;
+
+    max-height:
+        18px !important;
+
+    flex:
+        0 0 18px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    object-fit:
+        contain !important;
+
+    align-self:
+        center !important;
+
+    transform:
+        none !important;
+
+    translate:
+        none !important;
+}
+
+
+/* badge-stack 구조로 들어오는 Floorp 버전 대응 */
+#TabsToolbar #workspaces-toolbar-button
+> .toolbarbutton-badge-stack {
+    width:
+        18px !important;
+
+    height:
+        18px !important;
+
+    min-width:
+        18px !important;
+
+    min-height:
+        18px !important;
+
+    max-width:
+        18px !important;
+
+    max-height:
+        18px !important;
+
+    flex:
+        0 0 18px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    display:
+        flex !important;
+
+    align-items:
+        center !important;
+
+    justify-content:
+        center !important;
+}
+
+
+/* badge-stack 내부 아이콘까지 크기 제한 */
+#TabsToolbar #workspaces-toolbar-button
+> .toolbarbutton-badge-stack
+> .toolbarbutton-icon {
+    width:
+        18px !important;
+
+    height:
+        18px !important;
+
+    min-width:
+        18px !important;
+
+    min-height:
+        18px !important;
+
+    max-width:
+        18px !important;
+
+    max-height:
+        18px !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+}
+
+/* =========================================================
+   FLOORP XUL MENUS — LIQUID GLASS ROWS
+   ========================================================= */
+
+/* Floorp 기본 hover가 위에 한 번 더 생기는 것 방지 */
+menupopup:not(.in-menulist) {
+    --button-background-color-hover: transparent !important;
+    --button-background-color-active: transparent !important;
+    --button-hover-bgcolor: transparent !important;
+    --button-active-bgcolor: transparent !important;
+
+    --panel-menuitem-border-radius:
+        var(--uc-context-item-radius, 8px) !important;
+}
+
+
+/* 모든 일반 메뉴 행 */
+menupopup:not(.in-menulist)
+> :is(menuitem, menu) {
+    min-height:
+        var(--uc-context-item-min-height, 30px) !important;
+
+    margin:
+        1px 5px !important;
+
+    padding:
+        4px 8px !important;
+
+    box-sizing:
+        border-box !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        var(--uc-context-item-radius, 8px) !important;
+
+    background-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    outline:
+        none !important;
+
+    transition:
+        background-color 90ms ease,
+        border-color 90ms ease,
+        box-shadow 90ms ease
+        !important;
+}
+
+
+/* Liquid Glass hover */
+menupopup:not(.in-menulist)
+> :is(menuitem, menu):not([disabled]):is(
+    :hover,
+    [_moz-menuactive="true"]
+) {
+    background-color:
+        var(--uc-context-hover,
+            rgba(255, 255, 255, 0.095)) !important;
+
+    border-color:
+        var(--uc-context-border,
+            rgba(255, 255, 255, 0.08)) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.11),
+        0 2px 7px rgba(0, 0, 0, 0.08)
+        !important;
+}
+
+
+/* 클릭 */
+menupopup:not(.in-menulist)
+> :is(menuitem, menu):not([disabled]):active {
+    background-color:
+        var(--uc-context-active,
+            rgba(255, 255, 255, 0.155)) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.11) !important;
+
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.16)
+        !important;
+}
+
+
+/* 비활성 항목 */
+menupopup:not(.in-menulist)
+> :is(menuitem, menu)[disabled] {
+    background-color:
+        transparent !important;
+
+    border-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+}
+
+
+/* 구분선 */
+menupopup:not(.in-menulist)
+> menuseparator {
+    margin:
+        4px 0 !important;
+}
