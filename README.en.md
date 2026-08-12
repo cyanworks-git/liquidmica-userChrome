@@ -46,18 +46,17 @@ Menus, message boxes, notification popups, and many other UI elements have been 
 
 ### Installing and Applying the Theme
 
-Download and extract the archive. The required theme files are included inside.
-
-1. Enter `about:profiles` in the Firefox address bar.
-2. Find the profile currently in use and click **Open Folder** next to the **Root Directory**.
-3. Create a folder named `chrome`, then move the downloaded theme files into it.
-4. Either rename `liquidmica.css` to `userChrome.css`, or create a new `userChrome.css` file and add the following line:
+1. At the top of the page, click `Code` → `Download ZIP` to download the repository as a ZIP file.
+2. Enter `about:profiles` in the Firefox address bar.
+3. Find the profile currently in use and click **Open Folder** next to the **Root Directory**.
+4. Create a folder named `chrome`, then move the downloaded theme files into it.
+5. Either rename `liquidmica.css` to `userChrome.css`, or create a new `userChrome.css` file and add the following line:
 
    ```css
    @import url("liquidmica.css");
    ```
 
-5. Restart Firefox.
+6. Restart Firefox.
 
 ## Floorp Support
 
@@ -76,5 +75,6 @@ Floorp-specific menus, windows, and other interface elements have also been rest
 > You can enable it from:
 > **Menu (☰) → Floorp Hub → Tabs & Appearance**.
 
-1. In Floorp, open **Menu (☰)** → **Styles** → **Open Stylesheet Folder**. This will open the `chrome` directory used for custom stylesheets.
-2. Move the downloaded theme files into this folder.
+1. At the top of the page, click `Code` → `Download ZIP` to download the repository as a ZIP file.
+2. In Floorp, open **Menu (☰)** → **Styles** → **Open Stylesheet Folder**. This will open the `chrome` directory used for custom stylesheets.
+3. Move the downloaded theme files into this folder.
