@@ -46,7 +46,7 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 
 ## Floorp 대응
 이 테마는 같은 Gecko(FireFox) 기반인 Floorp 브라우저에도 이용할 수 있도록 대응하였습니다. 이는 `liquidmica_for_floorp.css`가 그 역할을 합니다.
-<br>기존 Floorp와 다르게 전용 사이드바는 왼족으로 고정되며(현재 Floorp Hub로 방향 설정 불가), 세로 탭 혹은 FireFox 사이드바가 왼쪽에 켜져있을 때 Floorp 사이드바는 오른쪽으로 배치되게끔 배치를 바꿨습니다(패널도 바로 옆에 생성됩니다).
+<br>기존 Floorp와 다르게 전용 사이드바는 왼족으로 고정되며(현재 Floorp Hub로 방향 설정 불가), 세로 탭 혹은 FireFox 기본 사이드바가 왼쪽에 켜져있을 때 Floorp 사이드바는 오른쪽으로 배치되게끔 하여 배치 순서를 바꿨습니다. 패널 또한 바로 옆에 올바르게 배치됩니다.
 <br>또한, Floorp 관련 메뉴들과 창 역시 본 테마에 맞게 적용되었습니다.
 ### Floorp에서 테마 저장 방법
 > [!NOTE]
