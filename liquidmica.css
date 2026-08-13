@@ -4,7 +4,7 @@
 
 /* =====================================================================
    FIREFOX / FLOORP LIQUID GLASS
-   CLEAN userChrome.css — v6 menu-only Mica/Acrylic refinement
+   Shared Firefox chrome surfaces and Liquid Mica refinements
    ===================================================================== */
 
 
@@ -84,60 +84,8 @@
 
     /* ---------- URLBAR ---------- */
 
-    --uc-urlbar-bg:
-        rgba(18, 26, 30, 0.34);
-
-    /* 열린 주소창의 Mica tint.
-       알파를 낮춰 backdrop blur가 보이도록 합니다. */
-    /* 일반 웹페이지 위에서 backdrop-filter가 보이지 않는 환경을 위한
-       어두운 fallback. blur가 지원되면 뒤 픽셀이 은은하게 비치고,
-       지원되지 않아도 밝은 페이지가 그대로 비치지 않습니다. */
-    --uc-urlbar-popup-bg:
-        var(--uc-context-native-tint);
-
-    --uc-urlbar-field-bg:
-        rgba(255, 255, 255, 0.075);
-
     --uc-urlbar-blur:
         20px !important;
-
-
-    /* ---------- APP MENU ---------- */
-
-    /*
-     * Windows / Firefox 우클릭 메뉴 색상을 기준으로 합니다.
-     *
-     * 88% -> 오른쪽 클릭 메뉴와 비슷한 어두운 색
-     * 82% -> 조금 더 투명
-     * 94% -> 더 불투명
-     */
-
-    /* 창 상단 Mica와 같은 계열의 어두운 청록 tint.
-       실제 흐림은 Windows popup backdrop + backdrop-filter가 담당하고,
-       이 색은 재질의 색조만 잡습니다. */
-    /* 창 상단의 짙은 Mica 톤에 맞춘 메뉴 색.
-       기존보다 훨씬 어둡게 하되 약간의 투명도는 남깁니다. */
-    /* 햄버거 메뉴 전용: 우클릭 Mica 메뉴처럼 짙고 흐릿하게 */
-    --uc-appmenu-bg:
-        rgba(12, 10, 16, 0.58);
-
-    --uc-appmenu-bg-fallback:
-        rgba(12, 10, 16, 0.84);
-
-    --uc-appmenu-text:
-        rgba(255, 255, 255, 0.96);
-
-    --uc-appmenu-border:
-        rgba(255, 255, 255, 0.12);
-
-    --uc-appmenu-hover:
-        rgba(255, 255, 255, 0.10);
-
-    --uc-appmenu-active:
-        rgba(255, 255, 255, 0.16);
-
-    --uc-appmenu-blur:
-        34px;
 
 
     /* Firefox 기본 toolbar hover는 우리가 직접 처리 */
@@ -766,41 +714,12 @@ tab-split-view-wrapper {
 #TabsToolbar
 .toolbarbutton-1:not(.titlebar-button):not(.tab-close-button) {
 
-    width:
-        var(--uc-button-size) !important;
-
-    height:
-        var(--uc-button-size) !important;
-
-
-    min-width:
-        var(--uc-button-size) !important;
-
-    min-height:
-        var(--uc-button-size) !important;
-
-
-    max-width:
-        var(--uc-button-size) !important;
-
-    max-height:
-        var(--uc-button-size) !important;
-
-
-    flex:
-        0 0 var(--uc-button-size) !important;
-
-
     margin:
         auto 2px !important;
 
 
     padding:
         0 !important;
-
-
-    box-sizing:
-        border-box !important;
 
 
     align-self:
@@ -1013,8 +932,7 @@ tab-split-view-wrapper {
 }
 
 /* =====================================================================
-   BLOCK A - Replace current liquidmica.css lines 959-1196 with this block.
-   Search button + URL bar buttons + flexible search-mode popup.
+   07. URL BAR CONTROLS AND SEARCH-MODE POPUP
    ===================================================================== */
 
 /* Address-bar control colors.  These also catch Firefox controls that are
@@ -1027,12 +945,7 @@ tab-split-view-wrapper {
   --urlbar-box-text-color-hover: rgba(255, 255, 255, 0.98) !important;
 }
 
-/* =====================================================================
-   BLOCK A
-   Replace liquidmica.css from `#urlbar .searchmode-switcher {`
-   through the active-state rule for the other URL-bar controls.
-   Current file: lines 975-1086.
-   ===================================================================== */
+/* Search-mode switcher button */
 
 #urlbar .searchmode-switcher {
   --button-background-color: rgba(255, 255, 255, 0.065) !important;
@@ -1284,9 +1197,7 @@ tab-split-view-wrapper {
 }
 
 /* =====================================================================
-   BLOCK B
-   Replace the entire `.searchmode-switcher-panel-list` section through
-   its final `> hr` rule.  Current file: lines 1150-1217.
+   08. SEARCH-MODE PROVIDER LIST
    ===================================================================== */
 
 .searchmode-switcher-panel-list {
@@ -1295,8 +1206,9 @@ tab-split-view-wrapper {
   --panel-list-border-radius: var(--uc-panel-glass-radius, 12px) !important;
   --panel-list-box-shadow: none !important;
   --button-background-color: transparent !important;
-  --button-background-color-hover: rgba(255, 255, 255, 0.14) !important;
-  --button-background-color-active: rgba(255, 255, 255, 0.20) !important;
+  --button-background-color-hover: transparent !important;
+  --button-background-color-active: transparent !important;
+  --button-background-color-selected: transparent !important;
   inline-size: max-content !important;
   min-inline-size: max-content !important;
   max-inline-size: none !important;
@@ -1315,14 +1227,9 @@ tab-split-view-wrapper {
   margin: 0 !important;
 }
 
-/* ================================================================
-   A. Search-mode popup: paint Liquid Glass on the panel-item host.
-   Replace liquidmica.css lines 1204-1241 with this block.
-   ================================================================ */
+/* Keep the shadow button transparent and paint one surface on its host. */
 
 .searchmode-switcher-panel-list > panel-item {
-  /* The button inside panel-item lives in a shadow root.  Keep that
-     native hover transparent and paint the glass on the host instead. */
   --button-background-color: transparent !important;
   --button-background-color-hover: transparent !important;
   --button-background-color-active: transparent !important;
@@ -1336,50 +1243,47 @@ tab-split-view-wrapper {
   border-radius: 9px !important;
   box-shadow: none !important;
   outline: none !important;
-  transition:
-    background-color 130ms ease,
-    border-color 130ms ease,
-    box-shadow 130ms ease !important;
+  backdrop-filter: none !important;
+  transition: none !important;
 }
 
-.searchmode-switcher-panel-list > panel-item::part(button) {
+.searchmode-switcher-panel-list > panel-item::part(button),
+.searchmode-switcher-panel-list > panel-item::part(button):hover,
+.searchmode-switcher-panel-list > panel-item::part(button):focus-visible,
+.searchmode-switcher-panel-list > panel-item::part(button):active {
   min-height: 34px !important;
   inline-size: 100% !important;
   box-sizing: border-box !important;
   margin: 0 !important;
   background-color: transparent !important;
   background-image: none !important;
-  border: 0 !important;
+  border: 1px solid transparent !important;
   border-radius: inherit !important;
   box-shadow: none !important;
   outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: none !important;
 }
 
 .searchmode-switcher-panel-list
-  > panel-item:not([disabled]):is(:hover, :focus-within) {
+  > panel-item:not([disabled]):hover {
+  background-color: rgba(255, 255, 255, 0.09) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 3px 9px rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: blur(10px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(125%) !important;
+}
+
+.searchmode-switcher-panel-list
+  > panel-item:not([disabled]):active {
   background-color: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.23) !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.20),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.035),
-    0 4px 12px rgba(0, 0, 0, 0.20) !important;
-  backdrop-filter: blur(12px) saturate(145%) !important;
-}
-
-.searchmode-switcher-panel-list
-  > panel-item:not([disabled]):is(:hover, :focus-within)::part(button) {
-  background-color: transparent !important;
-  background-image: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-.searchmode-switcher-panel-list > panel-item:not([disabled]):active {
-  background-color: rgba(255, 255, 255, 0.20) !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
-  box-shadow:
-    inset 0 1px 2px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+    inset 0 1px 2px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
 .searchmode-switcher-panel-list > hr {
@@ -1416,9 +1320,7 @@ tab-split-view-wrapper {
 }
 
 /* =====================================================================
-   BLOCK B - Replace the autocomplete styling from the comment immediately
-   below section 10 through the Selected + Hover rule with this block.
-   In the current file this is lines 1354-1514.
+   09. URL BAR AUTOCOMPLETE RESULTS
    ===================================================================== */
 
 #urlbar {
@@ -1577,7 +1479,7 @@ tab-split-view-wrapper {
 
 
 /* =====================================================================
-   11. APP MENU — DARK MICA / ACCOUNT ALIGNMENT FIX
+   10. APP MENU — DARK MICA / ACCOUNT ALIGNMENT FIX
    주소창 관련 코드는 건드리지 않습니다.
    ===================================================================== */
 
@@ -1614,10 +1516,9 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   12. APP MENU ROOT
+   11. APP MENU ROOT
 
-   native panel 자체는 살리고 배경 변수만 강제로 어둡게 합니다.
-   이전처럼 appearance:none 으로 panel skin 전체를 제거하지 않습니다.
+   native panel skin은 유지하고 배경 변수만 어둡게 조정합니다.
    --------------------------------------------------------------------- */
 
 #appMenu-popup {
@@ -1680,7 +1581,7 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   13. OUTER PANEL SURFACE
+   12. OUTER PANEL SURFACE
 
    panel 변수만으로 안 먹는 Floorp 빌드도 있어서
    anonymous .panel-arrowcontent에도 같은 색을 직접 지정합니다.
@@ -1737,7 +1638,7 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   14. INNER VIEWS
+   13. INNER VIEWS
 
    내부 view에는 별도 반투명 판을 만들지 않습니다.
    바깥 Mica 한 장만 보이게 유지합니다.
@@ -1776,7 +1677,7 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   15. NORMAL MENU ITEMS
+   14. NORMAL MENU ITEMS
    계정 toolbaritem/child는 별도 처리
    --------------------------------------------------------------------- */
 
@@ -1847,7 +1748,7 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   16. ACCOUNT / PROFILE ROW
+   15. ACCOUNT / PROFILE ROW
 
    실제 DOM은:
    toolbaritem#appMenu-fxa-status2.subviewbutton
@@ -2064,7 +1965,7 @@ tab-split-view-wrapper {
 
 
 /* ---------------------------------------------------------------------
-   17. MENU SEPARATORS
+   16. MENU SEPARATORS
    --------------------------------------------------------------------- */
 
 #appMenu-popup toolbarseparator {
@@ -2074,24 +1975,7 @@ tab-split-view-wrapper {
 
 
 /* =====================================================================
-   18. ALT MENUBAR — COMPACT HEIGHT FIX
-   Alt 키로 메뉴바가 나타날 때 과도한 세로 공간이 생기는 현상 수정
-   ===================================================================== */
-
-/*
- * 자동 숨김 상태에서는 레이아웃 공간을 완전히 제거.
- */
-/*
- * Alt로 메뉴바가 표시될 때 높이를 24px로 고정.
- * 기본 Firefox/Floorp의 큰 toolbar 높이를 따라가지 않도록 함.
- */
-/* 메뉴 항목들이 toolbar 상단에 붙지 않고 정확히 가운데 오도록 */
-/* 파일/편집/보기... 항목 자체 높이도 축소 */
-/* Alt 메뉴가 나타났을 때 titlebar에 불필요한 추가 여백 방지 */
-/* 메뉴바가 켜져 있어도 탭바 자체 높이는 기존 46px 그대로 유지 */
-
-/* =====================================================================
-   19. RIGHT-CLICK CONTEXT MENU — LIQUID GLASS BUTTONS
+   17. RIGHT-CLICK CONTEXT MENU — LIQUID GLASS BUTTONS
    배경색은 기존 Mica/컨텍스트 메뉴 스타일을 그대로 유지하고,
    메뉴 항목 hover와 간격만 Liquid Glass 스타일로 변경.
    ===================================================================== */
@@ -2270,35 +2154,14 @@ menu
    --------------------------------------------------------------------- */
 
 #contentAreaContextMenu #context-navigation {
-    margin:
-        3px 5px 4px !important;
-
-    padding:
-        1px !important;
-
     border-radius:
         10px !important;
-
-    background:
-        transparent !important;
 }
 
 
 #contentAreaContextMenu
 #context-navigation
 > menuitem {
-    min-width:
-        36px !important;
-
-    min-height:
-        32px !important;
-
-    margin:
-        0 2px !important;
-
-    padding:
-        5px !important;
-
     border:
         1px solid transparent !important;
 
@@ -2374,7 +2237,7 @@ menu
 
 
 /* =====================================================================
-   20. APP MENU SUBVIEWS / ACCOUNT / LIBRARY — LIQUID GLASS ROWS
+   18. APP MENU SUBVIEWS / ACCOUNT / LIBRARY — LIQUID GLASS ROWS
    메인 햄버거 메뉴는 그대로 두고, 들어간 뒤의 서브 패널만 적용.
    ===================================================================== */
 
@@ -2725,7 +2588,7 @@ toolbarseparator {
 
 
 /* =====================================================================
-   21. DOWNLOADS PANEL — LIQUID GLASS
+   19. DOWNLOADS PANEL — LIQUID GLASS
    다운로드 패널은 App Menu와 별도 panel이므로 따로 처리해야 함.
    ===================================================================== */
 
@@ -2920,7 +2783,7 @@ toolbarseparator {
 }
 
 /* =====================================================================
-   26. TAB HOVER PREVIEW — DARK MICA
+   20. TAB HOVER PREVIEW — DARK MICA
    탭에 마우스를 올렸을 때 나타나는 미리보기 패널
    ===================================================================== */
 
@@ -3134,7 +2997,7 @@ toolbarseparator {
 }
 
 /* =====================================================================
-   31. CONTEXT MENU — NATIVE MICA BLUR + DARK TINT
+   21. CONTEXT MENU — NATIVE MICA BLUR + DARK TINT
    - Windows/Firefox의 원래 popup blur는 살림
    - 그 위에 어두운 tint만 얹음
    - 커스텀 box-shadow/바깥 사각형 제거
@@ -3302,7 +3165,7 @@ toolbarseparator {
 
 
 /* =====================================================================
-   32. CONTEXT NAVIGATION — SPACE-BETWEEN FINAL
+   22. CONTEXT NAVIGATION — SPACE-BETWEEN
    ===================================================================== */
 
 #contentAreaContextMenu #context-navigation {
@@ -3377,7 +3240,7 @@ toolbarseparator {
 
 
 /* =====================================================================
-   33. SINGLE-LAYER TRANSLUCENT PANELS
+   23. SINGLE-LAYER TRANSLUCENT PANELS
    불투명/배경소실 문제를 피하기 위해 "한 레이어만" 반투명 처리합니다.
 
    - 메인 햄버거 메뉴: panelmultiview 한 장
@@ -3580,8 +3443,7 @@ panelmultiview {
 
 
 /* ---------------------------------------------------------------------
-   계정/라이브러리/다운로드 버튼 hover는 기존 Liquid Glass 유지.
-   혹시 Floorp가 별도 기본색을 다시 넣는 경우만 방지.
+   계정/라이브러리/다운로드 버튼의 기본색을 투명하게 유지.
    --------------------------------------------------------------------- */
 
 :is(
@@ -3595,34 +3457,17 @@ panelmultiview {
 
 
 /* =====================================================================
-   34. PANEL SURFACE RECOVERY + LIBRARY HOVER FIX
-   v33 보정:
-   - 메인 햄버거 메뉴 배경이 사라지는 문제 해결
-   - 계정/다운로드 패널은 조금 더 어둡게
-   - 라이브러리 패널 hover를 실제 toolbarbutton까지 넓혀 적용
-   - blur는 계속 시도하지만, 실패해도 반투명 배경은 반드시 남김
+   PANEL SURFACE TOKENS
+   라이브러리와 다운로드 패널의 공통 hover/active 색상
    ===================================================================== */
 
 :root {
-    /* 기존보다 약간 밝고 투명하게 */
-    --uc-mainmenu-glass:
-        rgba(12, 14, 18, 0.66);
-
-    --uc-subpanel-glass:
-        rgba(12, 14, 18, 0.72);
-
-    --uc-panel-glass-border-v34:
-        rgba(255, 255, 255, 0.14);
-
     --uc-panel-glass-hover-v34:
         rgba(255, 255, 255, 0.11);
 
     --uc-panel-glass-active-v34:
         rgba(255, 255, 255, 0.17);
 
-    /* 28px보다 유리 표면처럼 부드럽게 */
-    --uc-panel-glass-blur-v34:
-        24px !important;
 }
 
 
@@ -3802,154 +3647,6 @@ panelmultiview {
 }
 
 
-/* 다운로드 내부는 투명 */
-#downloadsPanel
-:is(
-    #downloadsPanel-mainView,
-    #downloadsPanel-blockedSubview,
-    #downloadsListBox,
-    #downloadsFooter,
-    #downloadsFooterButtons,
-    #emptyDownloads
-) {
-    background:
-        transparent !important;
-
-    background-color:
-        transparent !important;
-
-    background-image:
-        none !important;
-}
-
-
-/* =========================================================
-   CONTAINER INDICATOR — FAVICON TOP-START BADGE
-   가로·세로 탭 모두 favicon 왼쪽 위에 표시
-   ========================================================= */
-
-/*
- * 각 탭 내부에서 favicon을 위치 기준점으로 등록한다.
- * 탭 방향이나 확장 상태가 바뀌어도 같은 위치를 유지한다.
- */
-.tabbrowser-tab[usercontextid] {
-    anchor-scope:
-        --uc-container-favicon !important;
-}
-
-.tabbrowser-tab[usercontextid]
-.tab-icon-stack {
-    anchor-name:
-        --uc-container-favicon !important;
-}
-
-
-/* 기존 탭 배경의 클리핑과 위치 기준 유지 */
-.tabbrowser-tab[usercontextid]
-> .tab-stack
-> .tab-background {
-    position:
-        relative !important;
-
-    overflow:
-        hidden !important;
-}
-
-
-/*
- * 기존 하단 선을 5×5px 원형 배지로 변경하고
- * favicon 왼쪽 위 모서리에 겹친다.
- */
-.tabbrowser-tab[usercontextid]
-> .tab-stack
-> .tab-background
-> .tab-context-line {
-    box-sizing:
-        border-box !important;
-
-    position:
-        absolute !important;
-
-    position-anchor:
-        --uc-container-favicon !important;
-
-    /* 기존 물리 좌표 완전 초기화 */
-    top:
-        auto !important;
-
-    bottom:
-        auto !important;
-
-    left:
-        auto !important;
-
-    right:
-        auto !important;
-
-    /*
-     * favicon 왼쪽 위 모서리에서 3px 바깥쪽으로 이동.
-     * 배지 일부가 favicon 모서리에 겹치는 형태다.
-     */
-    inset-inline-start:
-        calc(anchor(start) - 3px) !important;
-
-    inset-inline-end:
-        auto !important;
-
-    inset-block-start:
-        calc(anchor(top) - 3px) !important;
-
-    inset-block-end:
-        auto !important;
-
-    inline-size:
-        5px !important;
-
-    min-inline-size:
-        5px !important;
-
-    max-inline-size:
-        5px !important;
-
-    block-size:
-        5px !important;
-
-    min-block-size:
-        5px !important;
-
-    max-block-size:
-        5px !important;
-
-    margin:
-        0 !important;
-
-    padding:
-        0 !important;
-
-    border:
-        1px solid rgba(15, 19, 27, 0.92) !important;
-
-    border-radius:
-        50% !important;
-
-    background:
-        var(--identity-icon-color) !important;
-
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.40),
-        0 0 0 1px rgba(255, 255, 255, 0.055)
-        !important;
-
-    transform:
-        none !important;
-
-    z-index:
-        10 !important;
-
-    pointer-events:
-        none !important;
-}
-
 /* =====================================================================
    STATUS PANEL + TOOLTIPS
    ===================================================================== */
@@ -4021,9 +3718,7 @@ panelmultiview {
 /* 브라우저 툴바 및 탭의 XUL 툴팁 */
 
 /* =====================================================================
-   BLOCK C
-   Replace the existing "ALL FIREFOX TOOLTIPS" section through its final
-   `.places-tooltip-uri` rule.  Current file: lines 3827-3994.
+   FIREFOX TOOLTIPS
    ===================================================================== */
 
 :is(
@@ -4393,9 +4088,6 @@ tooltip:-moz-native-anonymous :is(.tooltip-label, label, description),
 #unified-extensions-panel,
 #unified-extensions-view {
     --uei-icon-size:
-        16px !important;
-
-    --uc-extension-icon-size:
         16px !important;
 
     --uc-extension-row-height:
@@ -6172,12 +5864,7 @@ menuseparator {
 
 /* ==================================================
    웹사이트 alert / confirm / prompt
-   Mica Blur + Dark Glass Buttons
-   ================================================== */
-
-/* ==================================================
-   웹사이트 alert / confirm / prompt
-   완벽 보정형 CSS 백드롭 필터 블러 (6217줄 교체용)
+   Mica blur + dark glass buttons
    ================================================== */
 
 /* 다이얼로그 뒤쪽 음영 투명화 */
@@ -7087,10 +6774,8 @@ menuseparator {
 }
 
 /* =====================================================================
-   BLOCK C - Insert after the trust-panel rules and before the
-   "Site permissions panel" comment.  In the current file this is after
-   line 6901.
-   Keep the row transparent and paint only the toggle track and thumb.
+   TRUST PANEL TOGGLE
+   Keep the row transparent and paint only the track and thumb.
    ===================================================================== */
 
 #trustpanel-popup :is(
@@ -7239,15 +6924,13 @@ menuseparator {
 }
 
 /* =====================================================================
-   Liquid Mica — browser infobars + bookmarks toolbar
-
-   Common overlay for Floorp and Firefox.
-   Import this AFTER liquidmica.css.
+   BROWSER INFOBARS + BOOKMARKS TOOLBAR
+   Shared Firefox and Floorp chrome surfaces
    ===================================================================== */
 
 
 /* ---------------------------------------------------------------------
-   1. Browser notification / info bars
+   Browser notification / info bars
 
    Covers popup-blocked bars and other alerts created through Firefox's
    NotificationBox, including slow/unresponsive-page bars when they use
@@ -7311,7 +6994,6 @@ notification-message[message-bar-type="infobar"]:not([style*="margin-top"]) {
    are intentionally left to Firefox's native NotificationBox layout. */
 :root {
   --uc-content-frame-gap: 0px;
-  --uc-content-frame-radius: 10px;
   --uc-content-frame-corners: 10px 10px 0 10px;
   --uc-infobar-surface: rgba(15, 27, 31, 0.20);
 }
@@ -7388,7 +7070,7 @@ notification-message[message-bar-type="infobar"]
 
 
 /* ---------------------------------------------------------------------
-   2. Bookmarks toolbar — Liquid Glass hover/open/active states
+   Bookmarks toolbar — Liquid Glass hover/open/active states
    --------------------------------------------------------------------- */
 
 #PersonalToolbar toolbarbutton.bookmark-item:not(.subviewbutton) {
@@ -7942,7 +7624,7 @@ notification-message[message-bar-type="infobar"]
 
 
 /* ---------------------------------------------------------------------
-   3. Trust panel primary action — stronger separation
+   Trust panel primary action — stronger separation
    --------------------------------------------------------------------- */
 
 #trustpanel-blocker-see-all::part(button) {
@@ -7976,7 +7658,7 @@ notification-message[message-bar-type="infobar"]
 
 
 /* ---------------------------------------------------------------------
-   4. Permission-state Allow / Block button — rounded rectangle, not pill
+   Permission-state Allow / Block button — rounded rectangle, not pill
    --------------------------------------------------------------------- */
 
 #permission-popup .permission-popup-permission-remove-button {
@@ -8751,30 +8433,8 @@ tab-split-view-wrapper:not([hasactivetab])
 
 #tabbrowser-tabs[orient="vertical"][expanded]
 tab-split-view-wrapper {
-    display:
-        grid !important;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr)) !important;
-
     box-sizing:
         border-box !important;
-
-    /*
-     * 일반 탭과 마찬가지로 wrapper는 전체 너비를 사용한다.
-     * 각 내부 tab-background가 좌우 2px 여백을 담당한다.
-     */
-    inline-size:
-        100% !important;
-
-    min-inline-size:
-        0 !important;
-
-    max-inline-size:
-        100% !important;
-
-    margin-inline:
-        0 !important;
 
     padding:
         0 !important;
@@ -8996,15 +8656,6 @@ tab-split-view-wrapper
     box-sizing:
         border-box !important;
 
-    inline-size:
-        calc(100% - 4px) !important;
-
-    min-inline-size:
-        0 !important;
-
-    max-inline-size:
-        calc(100% - 4px) !important;
-
     block-size:
         calc(var(--tab-min-height, 32px) - 2px) !important;
 
@@ -9113,12 +8764,6 @@ tab-split-view-wrapper
 #tabbrowser-tabs[orient="vertical"]:not([expanded])
 .tabbrowser-tab
 .tab-content {
-    box-sizing:
-        border-box !important;
-
-    inline-size:
-        100% !important;
-
     min-inline-size:
         0 !important;
 
@@ -9128,17 +8773,9 @@ tab-split-view-wrapper
     margin-inline:
         0 !important;
 
-    justify-content:
-        center !important;
-
-    align-items:
-        center !important;
 }
 
-/*
- * 기존에는 icon-stack과 icon-image 모두 margin:auto여서
- * 내부 여백이 중복되고 오른쪽으로 밀렸다.
- */
+/* icon-stack에서만 중앙 정렬해 중복 margin을 방지한다. */
 #tabbrowser-tabs[orient="vertical"]:not([expanded])
 .tabbrowser-tab
 .tab-icon-stack {
@@ -9286,7 +8923,7 @@ tab-split-view-wrapper
 }
 
 /* =========================================================
-   HORIZONTAL TAB LIQUID GLASS — FINAL OVERRIDE
+   HORIZONTAL TAB LIQUID GLASS
    ========================================================= */
 
 /* 일반 탭 호버 */
@@ -9395,37 +9032,8 @@ tab-split-view-wrapper
         0 !important;
 }
 
-#pinned-tabs-container[orient="vertical"]::part(items-wrapper) {
-    box-sizing:
-        border-box !important;
-
-    display:
-        grid !important;
-
-    grid-template-columns:
-        minmax(0, 1fr) !important;
-
-    grid-auto-rows:
-        var(--tab-min-height, 32px) !important;
-
-    inline-size:
-        100% !important;
-
-    padding:
-        0 !important;
-
-    align-items:
-        center !important;
-
-    justify-items:
-        stretch !important;
-}
-
 #pinned-tabs-container[orient="vertical"]
 .tabbrowser-tab[pinned] {
-    box-sizing:
-        border-box !important;
-
     inline-size:
         100% !important;
 
@@ -9435,33 +9043,8 @@ tab-split-view-wrapper
     max-inline-size:
         100% !important;
 
-    block-size:
-        var(--tab-min-height, 32px) !important;
-
-    min-block-size:
-        var(--tab-min-height, 32px) !important;
-
-    max-block-size:
-        var(--tab-min-height, 32px) !important;
-
-    margin:
-        0 !important;
-
     padding:
         0 !important;
-}
-
-#pinned-tabs-container[orient="vertical"]
-.tabbrowser-tab[pinned]
-> .tab-stack {
-    box-sizing:
-        border-box !important;
-
-    inline-size:
-        100% !important;
-
-    block-size:
-        100% !important;
 }
 
 #pinned-tabs-container[orient="vertical"]
@@ -9505,18 +9088,6 @@ tab-split-view-wrapper
 #tabbrowser-tabs[orient="vertical"]:not([expanded])
 > #pinned-tabs-container[orient="vertical"]
 .tabbrowser-tab[pinned] {
-    inline-size:
-        var(--tab-min-height, 32px) !important;
-
-    min-inline-size:
-        var(--tab-min-height, 32px) !important;
-
-    max-inline-size:
-        var(--tab-min-height, 32px) !important;
-
-    justify-self:
-        center !important;
-
     margin-inline:
         auto !important;
 }
@@ -9533,40 +9104,6 @@ tab-split-view-wrapper
         calc(var(--tab-min-height, 32px) - 2px) !important;
 
     max-inline-size:
-        calc(var(--tab-min-height, 32px) - 2px) !important;
-
-    margin-inline:
-        auto !important;
-}
-
-
-/* 고정 탭과 일반 탭 사이 구분선 */
-#vertical-pinned-tabs-splitter {
-    box-sizing:
-        border-box !important;
-
-    inline-size:
-        calc(100% - 4px) !important;
-
-    min-block-size:
-        1px !important;
-
-    block-size:
-        1px !important;
-
-    margin:
-        2px 2px !important;
-
-    border:
-        0 !important;
-
-    background:
-        rgba(255, 255, 255, 0.16) !important;
-}
-
-#tabbrowser-tabs[orient="vertical"]:not([expanded])
-> #vertical-pinned-tabs-splitter {
-    inline-size:
         calc(var(--tab-min-height, 32px) - 2px) !important;
 
     margin-inline:
@@ -9626,7 +9163,7 @@ tab-split-view-wrapper
 }
 
 /* =========================================================
-   VERTICAL TABS — FINAL MICA SURFACE
+   VERTICAL TABS — MICA SURFACE
    ========================================================= */
 
 /* Native vertical tabs share the window Mica instead of painting a panel. */
@@ -9897,45 +9434,6 @@ tab-split-view-wrapper
         none !important;
 }
 
-/* 고정 탭과 일반 탭 사이 구분선 */
-#vertical-pinned-tabs-splitter {
-    display:
-        block !important;
-
-    box-sizing:
-        border-box !important;
-
-    inline-size:
-        var(--icon-size, 16px) !important;
-
-    min-inline-size:
-        var(--icon-size, 16px) !important;
-
-    max-inline-size:
-        var(--icon-size, 16px) !important;
-
-    block-size:
-        1px !important;
-
-    min-block-size:
-        1px !important;
-
-    margin:
-        3px auto !important;
-
-    border:
-        0 !important;
-
-    background:
-        rgba(255, 255, 255, 0.20) !important;
-
-    opacity:
-        0.72 !important;
-
-    box-shadow:
-        none !important;
-}
-
 /* Firefox가 탭 목록 아래 생성하는 추가 선 제거 */
 #tabbrowser-tabs[orient="vertical"]::after {
     content:
@@ -9952,7 +9450,7 @@ tab-split-view-wrapper
 }
 
 /* =========================================================
-   VERTICAL TABS — FINAL COLLAPSED / PINNED ALIGNMENT
+   VERTICAL TABS — COLLAPSED / PINNED ALIGNMENT
    ========================================================= */
 
 /*
@@ -10490,9 +9988,6 @@ tab-split-view-wrapper
 #tabbrowser-tabs[orient="horizontal"]
 .tabbrowser-tab[pinned]
 .tab-icon-stack {
-    position:
-        static !important;
-
     display:
         grid !important;
 
@@ -11136,7 +10631,7 @@ tab-split-view-wrapper
         center !important;
 }
 
-/* Reapplied: match the whole split group to an ordinary tab's 6px outer inset. */
+/* Match the whole split group to an ordinary tab's 6px outer inset. */
 #tabbrowser-tabs[orient="vertical"][expanded]
 tab-split-view-wrapper {
     display:
@@ -11743,12 +11238,68 @@ panel[id^="_testpilot-containers"][id$="-panel"]
         ) !important;
 }
 
+/* Expanded vertical tabs already sit on the window-level Mica surface.
+   Keep every outer tab layer clear and paint the selected state only once on
+   .tab-background; a second backdrop-filter pass looked like an opaque card. */
+#tabbrowser-tabs[orient="vertical"]
+.tabbrowser-tab:not([pinned]) {
+    background:
+        transparent !important;
 
-/* Never show the vertical pinned-tabs splitter in the horizontal strip. */
-#tabbrowser-tabs[orient="horizontal"]
-#vertical-pinned-tabs-splitter {
-    display:
+    background-image:
         none !important;
+}
+
+#tabbrowser-tabs[orient="vertical"]
+.tabbrowser-tab:not([pinned])
+> .tab-stack,
+#tabbrowser-tabs[orient="vertical"]
+.tabbrowser-tab:not([pinned])
+.tab-content {
+    background:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+}
+
+#tabbrowser-tabs[orient="vertical"]
+.tabbrowser-tab:not([pinned]):is([selected], [visuallyselected])
+> .tab-stack
+> .tab-background {
+    background:
+        rgba(255, 255, 255, 0.105) !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.20) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 3px 9px rgba(0, 0, 0, 0.14)
+        !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+#tabbrowser-tabs[orient="vertical"]
+.tabbrowser-tab:not([pinned]):is([selected], [visuallyselected]):hover
+> .tab-stack
+> .tab-background {
+    background:
+        rgba(255, 255, 255, 0.13) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.24) !important;
 }
 
 
