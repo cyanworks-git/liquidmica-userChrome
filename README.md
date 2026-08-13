@@ -5,8 +5,8 @@
       <summary>
         <h1>Liquid Mica</h1>
       </summary>
-      <img src="https://img.shields.io/badge/FireFox-153.0.3-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
-      <img src="https://img.shields.io/badge/FireFox Developer Edition-154.0b10-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox-153.0.3-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox Developer Edition-154.0b10-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
       <img src="https://img.shields.io/badge/Floorp-12.16.4@153.0-5309E8?style=flat&logo=floorp&logoColor=white"/>
     </ul>
     
@@ -27,7 +27,7 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 > [!WARNING]
 > * 본 테마는 Windows 11 다크 모드에서 테스트되었습니다. 라이트 모드에서는 지원되지 않습니다.
 > * Windows의 Mica 디자인 시스템이 적용되기 때문에 다른 운영체제에서는 호환되지 않습니다.
-> * 본 테마는 <b>FireFox 153.0.3</b>, <b>FireFox Developer Edition 154.0b10</b>  및 <b>Floorp 12.16.4@153.0</b>에서 테스트되었습니다. 이전 버전에서 사용시 테마 스타일이 깨질 수 있습니다.
+> * 본 테마는 <b>Firefox 153.0.3</b>, <b>Firefox Developer Edition 154.0b10</b>  및 <b>Floorp 12.16.4@153.0</b>에서 테스트되었습니다. 이전 버전에서 사용시 테마 스타일이 깨질 수 있습니다.
 ### 설치 전 조치사항
 1. FireFox 주소에 `about:config`를 입력합니다. 경고 화면이 뜰 경우 `위험을 감수하고 계속`을 누릅니다.
 2. `toolkit.legacyUserProfileCustomizations.stylesheets`를 찾아 더블 클릭으로 `true`로 만듭니다.
