@@ -7,6 +7,7 @@
         <h1>Liquid Mica</h1>
       </summary>
       <img src="https://img.shields.io/badge/Firefox-153.0.3-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox Developer Edition-154.0b10-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
       <img src="https://img.shields.io/badge/Floorp-12.16.4@153.0-5309E8?style=flat&logo=floorp&logoColor=white"/>
     </ul>
   </div>
@@ -34,7 +35,7 @@ Menus, message boxes, notification popups, and many other UI elements have been 
 > [!WARNING]
 > * This theme has been tested on **Windows 11 in Dark Mode**. Light Mode is currently not supported.
 > * Since this theme relies on the **Windows Mica design system**, it is not compatible with other operating systems.
-> * This theme has been tested on **Firefox 153.0.3** and **Floorp 12.16.4@153.0**. Using older versions may cause parts of the interface or theme styling to break.
+> * This theme has been tested on **Firefox 153.0.3**, **Firefox Developer Edition 154.0b10** and **Floorp 12.16.4@153.0**. Using older versions may cause parts of the interface or theme styling to break.
 
 ### Before Installation
 
