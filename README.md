@@ -23,6 +23,16 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 
 메뉴창, 메시지 상자, 알림 팝업 등 최대한 스타일에 맞게 수정되었으며, 밋밋한 메뉴창에 일부 아이콘을 추가하고 세로 탭에서도 테마가 유연하게 적용되도록 만들었습니다.
 
+## 미리보기
+<details>
+  <summary>펼쳐서 미리보기</summary>
+  <img width="1431" height="932" alt="1" src="https://github.com/user-attachments/assets/a843df25-fc12-4164-ac81-bec0c87c7804" />
+  <img width="1431" height="932" alt="2" src="https://github.com/user-attachments/assets/b6ad72f8-6cba-4034-9259-98e6a09e0b6b" />
+  <img width="1431" height="932" alt="3" src="https://github.com/user-attachments/assets/00dc6a1d-3c03-4638-9b88-5654fc79b7fb" />
+  <img width="1431" height="932" alt="4" src="https://github.com/user-attachments/assets/66f22a22-51f2-4c77-94c9-0d8c69b4ac18" />
+  <img width="1431" height="932" alt="5" src="https://github.com/user-attachments/assets/464ee584-a0f5-405f-a4fa-a3fd2d9cbe2d" />
+</details>
+
 ## 설치 방법
 > [!WARNING]
 > * 본 테마는 Windows 11 다크 모드에서 테스트되었습니다. 라이트 모드에서는 지원되지 않습니다.
@@ -45,6 +55,11 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
    @import url("liquidmica.css");
    ```
 6. FireFox를 재시작 합니다.
+<br>
+<br>
+
+
+<img width="100%" alt="6" src="https://github.com/user-attachments/assets/ed065261-dd11-450f-94e1-e5cc1d128cb6" />
 
 ## Floorp 대응
 이 테마는 같은 Gecko(FireFox) 기반인 Floorp 브라우저에도 이용할 수 있도록 대응하였습니다. 이는 `liquidmica_for_floorp.css`가 그 역할을 합니다.
