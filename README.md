@@ -26,11 +26,11 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 ## 미리보기
 <details>
   <summary>펼쳐서 미리보기</summary>
-  <img width="1431" height="932" alt="1" src="https://github.com/user-attachments/assets/a843df25-fc12-4164-ac81-bec0c87c7804" />
-  <img width="1431" height="932" alt="2" src="https://github.com/user-attachments/assets/b6ad72f8-6cba-4034-9259-98e6a09e0b6b" />
-  <img width="1431" height="932" alt="3" src="https://github.com/user-attachments/assets/00dc6a1d-3c03-4638-9b88-5654fc79b7fb" />
-  <img width="1431" height="932" alt="4" src="https://github.com/user-attachments/assets/66f22a22-51f2-4c77-94c9-0d8c69b4ac18" />
-  <img width="1431" height="932" alt="5" src="https://github.com/user-attachments/assets/464ee584-a0f5-405f-a4fa-a3fd2d9cbe2d" />
+  <img width="100%" alt="1" src="https://github.com/user-attachments/assets/a843df25-fc12-4164-ac81-bec0c87c7804" />
+  <img width="100%" alt="2" src="https://github.com/user-attachments/assets/b6ad72f8-6cba-4034-9259-98e6a09e0b6b" />
+  <img width="100%" alt="3" src="https://github.com/user-attachments/assets/00dc6a1d-3c03-4638-9b88-5654fc79b7fb" />
+  <img width="100%" alt="4" src="https://github.com/user-attachments/assets/66f22a22-51f2-4c77-94c9-0d8c69b4ac18" />
+  <img width="100%" alt="5" src="https://github.com/user-attachments/assets/464ee584-a0f5-405f-a4fa-a3fd2d9cbe2d" />
 </details>
 
 ## 설치 방법
