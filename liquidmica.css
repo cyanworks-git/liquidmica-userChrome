@@ -517,27 +517,6 @@ tab-split-view-wrapper {
 
 
 
-/* 일반 탭 hover */
-
-.tabbrowser-tab:not([selected="true"]):hover
-> .tab-stack
-> .tab-background {
-
-    background:
-        rgba(255, 255, 255, 0.085) !important;
-
-
-    border-color:
-        rgba(255, 255, 255, 0.07) !important;
-
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.10) !important;
-}
-
-
-
 /* 선택된 탭 */
 
 .tabbrowser-tab[selected="true"]
@@ -7782,6 +7761,12 @@ notification-message[message-bar-type="infobar"]
  */
 #tabbrowser-tabs[orient="horizontal"]
 tab-split-view-wrapper {
+    position:
+        relative !important;
+
+    isolation:
+        isolate !important;
+
     box-sizing:
         border-box !important;
 
@@ -7822,7 +7807,7 @@ tab-split-view-wrapper {
         none !important;
 
     border:
-        1px solid transparent !important;
+        0 !important;
 
     border-radius:
         var(--uc-tab-radius) !important;
@@ -7853,35 +7838,63 @@ tab-split-view-wrapper {
  */
 #tabbrowser-tabs[orient="horizontal"]
 tab-split-view-wrapper[hasactivetab] {
-    background-color:
-        color-mix(
-            in srgb,
-            var(--toolbar-background-color, transparent) 42%,
-            rgba(5, 10, 14, 0.25)
-        ) !important;
-
-    background-image:
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.055),
-            rgba(255, 255, 255, 0.012) 58%,
-            transparent
-        ) !important;
+    background:
+        transparent !important;
 
     border-color:
-        rgba(255, 255, 255, 0.10) !important;
+        transparent !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-        0 3px 10px rgba(0, 0, 0, 0.16)
-        !important;
+        none !important;
 
     backdrop-filter:
-        blur(16px) saturate(130%) brightness(84%) !important;
+        none !important;
 
     -webkit-backdrop-filter:
-        blur(16px) saturate(130%) brightness(84%) !important;
+        none !important;
+}
+
+/* Keep both tab slots unchanged and draw only the shared card 5px inward. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]::before {
+    content:
+        "" !important;
+
+    box-sizing:
+        border-box !important;
+
+    position:
+        absolute !important;
+
+    inset-block:
+        0 !important;
+
+    inset-inline:
+        5px !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15) !important;
+
+    border-radius:
+        var(--uc-tab-radius) !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    pointer-events:
+        none !important;
 }
 
 
@@ -7980,31 +7993,6 @@ tab-split-view-wrapper
 }
 
 /* 래퍼 전체가 아니라 호버한 개별 탭만 Glass 표시 */
-#tabbrowser-tabs[orient="horizontal"]
-tab-split-view-wrapper
-> .tabbrowser-tab:not(
-    [selected="true"],
-    [visuallyselected="true"]
-):hover
-> .tab-stack
-> .tab-background {
-    background-color:
-        rgba(255, 255, 255, 0.085) !important;
-
-    background-image:
-        none !important;
-
-    border-color:
-        rgba(255, 255, 255, 0.10) !important;
-
-    border-radius:
-        var(--uc-tab-radius) !important;
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.11) !important;
-}
-
 /* Floorp의 전체 높이 구분선 제거 */
 #tabbrowser-tabs[orient="horizontal"]
 tab-split-view-wrapper
@@ -8935,32 +8923,27 @@ tab-split-view-wrapper
 > .tab-stack
 > .tab-background {
     background-color:
-        var(--uc-glass-hover) !important;
+        rgba(255, 255, 255, 0.075) !important;
 
     background-image:
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.07),
-            rgba(255, 255, 255, 0.015) 58%,
-            transparent
-        ) !important;
+        none !important;
 
     border:
-        1px solid var(--uc-glass-border) !important;
+        1px solid rgba(255, 255, 255, 0.12) !important;
 
     border-radius:
         var(--uc-tab-radius) !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.13),
-        0 3px 9px rgba(0, 0, 0, 0.14)
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        0 2px 7px rgba(0, 0, 0, 0.10)
         !important;
 
     backdrop-filter:
-        blur(12px) saturate(130%) !important;
+        none !important;
 
     -webkit-backdrop-filter:
-        blur(12px) saturate(130%) !important;
+        none !important;
 }
 
 /* 선택된 가로 탭 */
@@ -11092,13 +11075,20 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 
 /* Give ordinary expanded vertical rows the same comfortable inset. */
 #tabbrowser-tabs[orient="vertical"][expanded]
+.tabbrowser-tab:not([pinned]) .tab-content {
+    padding-inline:
+        10px !important;
+}
+
+/* Ordinary tabs start at 6px + 10px. The new-tab card starts at 8px, so an
+   8px content inset puts its icon and label on the same 16px alignment line. */
+#tabbrowser-tabs[orient="vertical"][expanded]
 :is(
-    .tabbrowser-tab:not([pinned]) .tab-content,
     #vertical-tabs-newtab-button,
     #tabs-newtab-button
 ) {
     padding-inline:
-        10px !important;
+        8px !important;
 }
 
 :is(
@@ -11120,8 +11110,23 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 }
 
 
-/* Container identity: replace the strong bottom line with a faint full-tab
-   tint. This single rule is shared by horizontal and vertical tabs. */
+/* Container identity is clipped by the actual tab card.  Without a positioned
+   parent Firefox can resolve the absolute context line against the tab strip,
+   stretching it across the sidebar height or window width. */
+.tabbrowser-tab[usercontextid]
+> .tab-stack
+> .tab-background {
+    position:
+        relative !important;
+
+    overflow:
+        clip !important;
+
+    isolation:
+        isolate !important;
+}
+
+/* Replace the strong bottom line with a faint full-card tint. */
 .tabbrowser-tab[usercontextid]
 > .tab-stack
 > .tab-background
@@ -11134,9 +11139,6 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 
     position:
         absolute !important;
-
-    position-anchor:
-        auto !important;
 
     top:
         0 !important;
@@ -11163,22 +11165,22 @@ panel[id^="_testpilot-containers"][id$="-panel"]
         0 !important;
 
     inline-size:
-        auto !important;
+        100% !important;
 
     min-inline-size:
         0 !important;
 
     max-inline-size:
-        none !important;
+        100% !important;
 
     block-size:
-        auto !important;
+        100% !important;
 
     min-block-size:
         0 !important;
 
     max-block-size:
-        none !important;
+        100% !important;
 
     margin:
         0 !important;
@@ -11300,6 +11302,36 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 
     border-color:
         rgba(255, 255, 255, 0.24) !important;
+}
+
+/* A selected split tab already sits inside the shared split outline. Keep its
+   selected surface unchanged on hover instead of applying a second intensity
+   boost intended for ordinary standalone tabs. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]
+> .tabbrowser-tab:is([selected], [visuallyselected]):hover
+> .tab-stack
+> .tab-background {
+    background-color:
+        var(--uc-glass-selected) !important;
+
+    border-color:
+        var(--uc-glass-border-strong) !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]:hover {
+    background:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
 }
 
 
@@ -11556,4 +11588,55 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 
     box-sizing:
         border-box !important;
+}
+
+
+/* Icon-only toolbar controls use one square hover surface. Content-sized
+   controls such as Mozilla VPN / IP Protection intentionally stay fluid. */
+:is(#nav-bar, #TabsToolbar)
+:is(
+    toolbarbutton[data-extensionid],
+    #back-button,
+    #forward-button,
+    #reload-button,
+    #stop-button,
+    #home-button,
+    #downloads-button,
+    #unified-extensions-button,
+    #nav-bar-overflow-button,
+    #PanelUI-menu-button,
+    #library-button,
+    #sidebar-button,
+    #firefox-view-button,
+    #translations-button,
+    #new-tab-button,
+    #tabs-newtab-button,
+    #alltabs-button
+):not([overflowedItem="true"]):not([cui-areatype="panel"]) {
+    inline-size:
+        var(--uc-button-size) !important;
+
+    min-inline-size:
+        var(--uc-button-size) !important;
+
+    max-inline-size:
+        var(--uc-button-size) !important;
+
+    width:
+        var(--uc-button-size) !important;
+
+    min-width:
+        var(--uc-button-size) !important;
+
+    max-width:
+        var(--uc-button-size) !important;
+
+    padding-inline:
+        0 !important;
+
+    flex:
+        0 0 var(--uc-button-size) !important;
+
+    justify-content:
+        center !important;
 }
