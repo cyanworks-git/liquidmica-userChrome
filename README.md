@@ -38,12 +38,14 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 > * 본 테마는 Windows 11 다크 모드에서 테스트되었습니다. 라이트 모드에서는 지원되지 않습니다.
 > * Windows의 Mica 디자인 시스템이 적용되기 때문에 다른 운영체제에서는 호환되지 않습니다.
 > * 본 테마는 <b>Firefox 153.0.3</b>, <b>Firefox Developer Edition 154.0b10</b>  및 <b>Floorp 12.16.4@153.0</b>에서 테스트되었습니다. 이전 버전에서 사용시 테마 스타일이 깨질 수 있습니다.
+> * **본 테마는 Nova 디자인을 지원하지 않습니다**. 만약 적용되어 있는 경우 아래 조치사항을 읽어보세요.
 ### 설치 전 조치사항
 1. FireFox 주소에 `about:config`를 입력합니다. 경고 화면이 뜰 경우 `위험을 감수하고 계속`을 누릅니다.
 2. `toolkit.legacyUserProfileCustomizations.stylesheets`를 찾아 더블 클릭으로 `true`로 만듭니다.
 3. `widget.windows.mica`를 찾아 더블 클릭으로 `true`로 만듭니다.
 4. `widget.windows.mica.popups`를 찾아 `1` 혹은 `2`로 기본 설정되어 있는지 확인합니다. `0`으로 되어있을 경우 더블 클릭으로 불린 값을 해당 값으로 조정합니다.
 5. `widget.windows.mica.toplevel-backdrop`을 찾아 더블 클릭으로 불린 값을 `2`로 조정합니다.
+6. 본 테마는 nova 디자인을 지원하지 않습니다. `browser.nova.enabled`가 `false`로 설정되어 있는지 확인하세요.
 ### 설치 및 적용방법 
 1. 페이지 상단에 `Code` → `Download ZIP`을 눌러 압축파일로 저장합니다.
 2. FireFox 주소에 `about:profiles`를 입력합니다.
