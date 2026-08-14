@@ -47,6 +47,7 @@ Menus, message boxes, notification popups, and many other UI elements have been 
 > * This theme has been tested on **Windows 11 in Dark Mode**. Light Mode is currently not supported.
 > * Since this theme relies on the **Windows Mica design system**, it is not compatible with other operating systems.
 > * This theme has been tested on **Firefox 153.0.3**, **Firefox Developer Edition 154.0b10** and **Floorp 12.16.4@153.0**. Using older versions may cause parts of the interface or theme styling to break.
+> * **This theme does not support the Nova design**. If it is currently enabled, please refer to the instructions below.
 
 ### Before Installation
 
@@ -55,6 +56,7 @@ Menus, message boxes, notification popups, and many other UI elements have been 
 3. Search for `widget.windows.mica` and set it to `true`.
 4. Search for `widget.windows.mica.popups` and make sure its value is set to `1` or `2`. If it is set to `0`, change it to either `1` or `2`.
 5. Search for `widget.windows.mica.toplevel-backdrop` and set its value to `2`.
+6. This theme does not support the Nova design. Make sure `browser.nova.enabled` is set to `false`.
 
 ### Installing and Applying the Theme
 
