@@ -1062,23 +1062,29 @@ tab-split-view-wrapper {
 #urlbar #notification-popup-box:not([hidden]) {
   appearance: none !important;
   box-sizing: border-box !important;
-  width: 28px !important;
+  display: flex !important;
+  width: auto !important;
   min-width: 28px !important;
-  max-width: 28px !important;
+  max-width: none !important;
   height: 28px !important;
   min-height: 28px !important;
   max-height: 28px !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  column-gap: 2px !important;
+  overflow: visible !important;
   margin-inline: 3px !important;
   padding: 3px 5px !important;
   align-self: center !important;
-  background-color: rgba(255, 255, 255, 0.065) !important;
+  background-color: transparent !important;
   background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.11) !important;
+  border: 1px solid transparent !important;
   border-radius: var(--uc-button-radius, 10px) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+  box-shadow: none !important;
   outline: none !important;
-  backdrop-filter: blur(12px) saturate(125%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transition:
     background-color 110ms ease,
     border-color 110ms ease,
@@ -1091,12 +1097,16 @@ tab-split-view-wrapper {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.20),
     0 4px 12px rgba(0, 0, 0, 0.20) !important;
+  backdrop-filter: blur(12px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
 }
 
 #urlbar #notification-popup-box:not([hidden]):active {
   background-color: rgba(255, 255, 255, 0.20) !important;
   border-color: rgba(255, 255, 255, 0.30) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+  backdrop-filter: blur(12px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(125%) !important;
 }
 
 #urlbar #notification-popup-box > .notification-anchor-icon {
@@ -6269,6 +6279,8 @@ menuseparator {
   #ssb-panel,
   #trustpanel-popup,
   #permission-popup,
+  #selection-shortcut-action-panel,
+  #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
@@ -6331,6 +6343,8 @@ menuseparator {
   #ssb-panel,
   #trustpanel-popup,
   #permission-popup,
+  #selection-shortcut-action-panel,
+  #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
@@ -6355,6 +6369,8 @@ menuseparator {
   #ssb-panel,
   #trustpanel-popup,
   #permission-popup,
+  #selection-shortcut-action-panel,
+  #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
@@ -6380,7 +6396,9 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #selection-shortcut-action-panel,
+  #chat-shortcuts-options-panel
 ) :is(panelmultiview, panelview, .PanelUI-subView, .panel-subview-body, .panel-footer) {
   color: var(--uc-aux-panel-text) !important;
   background: transparent !important;
@@ -6392,7 +6410,9 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #selection-shortcut-action-panel,
+  #chat-shortcuts-options-panel
 ) :is(label, description, .panel-header, .panel-header h1, .panel-header span) {
   color: inherit !important;
 }
@@ -6403,7 +6423,8 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #chat-shortcuts-options-panel
 ) toolbarseparator {
   border-color: var(--uc-aux-separator) !important;
   opacity: 1 !important;
@@ -6417,7 +6438,8 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #chat-shortcuts-options-panel
 ) toolbarbutton:is(.subviewbutton, .panel-info-button):not([disabled]) {
   background-color: transparent !important;
   background-image: none !important;
@@ -6436,7 +6458,8 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #chat-shortcuts-options-panel
 ) toolbarbutton:is(.subviewbutton, .panel-info-button):not([disabled]):hover {
   background-color: var(--uc-aux-button-hover) !important;
   background-image: none !important;
@@ -6533,12 +6556,82 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel,
   #trustpanel-popup,
-  #permission-popup
+  #permission-popup,
+  #chat-shortcuts-options-panel
 ) toolbarbutton:is(.subviewbutton, .panel-info-button):not([disabled]):hover:active {
   background-color: rgba(255, 255, 255, 0.10) !important;
   background-image: none !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ---------------------------------------------------------------------
+   Firefox AI selection shortcut and prompt menu
+   --------------------------------------------------------------------- */
+
+#selection-shortcut-action-panel {
+  --button-background-color: transparent !important;
+  --button-background-color-hover: var(--uc-aux-button-hover) !important;
+  --button-background-color-active: var(--uc-aux-button-active) !important;
+  --button-border: 1px solid transparent !important;
+  --button-border-radius: var(--uc-aux-button-radius) !important;
+}
+
+#selection-shortcut-action-panel #ai-action-button {
+  margin: 2px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#chat-shortcuts-options-panel #ask-chat-shortcuts {
+  box-sizing: border-box !important;
+  padding: 6px !important;
+  color: var(--uc-aux-panel-text) !important;
+  background: transparent !important;
+}
+
+#chat-shortcuts-options-panel .subviewbutton {
+  appearance: none !important;
+  box-sizing: border-box !important;
+  min-height: 30px !important;
+  margin: 2px 0 !important;
+  padding-inline: 9px !important;
+  color: var(--uc-aux-panel-text) !important;
+}
+
+#chat-shortcuts-options-panel .subviewbutton
+> :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#chat-shortcuts-options-panel .ask-chat-shortcuts-custom-prompt {
+  appearance: none !important;
+  box-sizing: border-box !important;
+  min-height: 48px !important;
+  margin: 6px 0 4px !important;
+  padding: 8px !important;
+  resize: vertical !important;
+  color: var(--uc-aux-panel-text) !important;
+  background: var(--uc-aux-field-bg) !important;
+  border: 1px solid var(--uc-aux-panel-border) !important;
+  border-radius: var(--uc-aux-field-radius) !important;
+  outline: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+}
+
+#chat-shortcuts-options-panel .ask-chat-shortcuts-custom-prompt:focus {
+  border-color: var(--focus-outline-color, #00cad7) !important;
+  box-shadow:
+    0 0 0 1px var(--focus-outline-color, #00cad7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+#chat-shortcuts-options-panel toolbarseparator {
+  margin: 6px 0 !important;
+  border-top: 1px solid var(--uc-aux-separator) !important;
+  border-bottom: 0 !important;
 }
 
 /* Shared footer / action buttons. */
