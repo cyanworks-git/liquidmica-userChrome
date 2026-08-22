@@ -765,10 +765,10 @@ tab-split-view-wrapper {
 /* hover */
 
 #nav-bar
-.toolbarbutton-1:not(.titlebar-button):hover,
+.toolbarbutton-1:not(.titlebar-button):not([disabled]):not([aria-disabled="true"]):hover,
 
 #TabsToolbar
-.toolbarbutton-1:not(.titlebar-button):not(.tab-close-button):hover {
+.toolbarbutton-1:not(.titlebar-button):not(.tab-close-button):not([disabled]):not([aria-disabled="true"]):hover {
 
     background:
         var(--uc-glass-hover) !important;
@@ -788,10 +788,10 @@ tab-split-view-wrapper {
 /* active */
 
 #nav-bar
-.toolbarbutton-1:not(.titlebar-button):active,
+.toolbarbutton-1:not(.titlebar-button):not([disabled]):not([aria-disabled="true"]):active,
 
 #TabsToolbar
-.toolbarbutton-1:not(.titlebar-button):not(.tab-close-button):active {
+.toolbarbutton-1:not(.titlebar-button):not(.tab-close-button):not([disabled]):not([aria-disabled="true"]):active {
 
     background:
         var(--uc-glass-active) !important;
@@ -11731,4 +11731,58 @@ tab-split-view-wrapper[hasactivetab]:hover {
 
     justify-content:
         center !important;
+}
+
+
+/* =========================================================
+   DISABLED CONTROLS — NO HOVER / ACTIVE FEEDBACK
+   ---------------------------------------------------------
+   비활성 항목의 흐린 아이콘/문자 표시는 유지하되, 클릭 가능한 항목처럼
+   Glass 배경이나 테두리 및 눌림 변형이 나타나지 않게 한다.
+   ========================================================= */
+
+:is(#nav-bar, #TabsToolbar)
+.toolbarbutton-1:is([disabled], [aria-disabled="true"]):is(:hover, :active),
+
+:is(panel, menupopup, panelview, .PanelUI-subView, .panel-subview-body)
+:is(toolbarbutton, .subviewbutton, menu, menuitem)
+:is([disabled], [aria-disabled="true"])
+:is(:hover, :active, [_moz-menuactive="true"]) {
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    transform:
+        none !important;
+}
+
+/* HTML/XUL 일반 버튼은 기존 disabled 면을 유지하고 hover 때 색만 바뀌지
+   않게 한다. 저장 버튼처럼 비활성 배경 자체가 상태 표시인 경우를 보존한다. */
+:is(panel, panelview, .PanelUI-subView, .panel-subview-body)
+button:is([disabled], [aria-disabled="true"]):is(:hover, :active) {
+    background-color:
+        var(--button-background-color-disabled, rgba(70, 75, 87, 0.70)) !important;
+
+    border-color:
+        var(--button-border-color-disabled, rgba(255, 255, 255, 0.22)) !important;
+
+    color:
+        var(--button-text-color-disabled, rgba(255, 255, 255, 0.62)) !important;
+
+    box-shadow:
+        none !important;
+
+    transform:
+        none !important;
 }
