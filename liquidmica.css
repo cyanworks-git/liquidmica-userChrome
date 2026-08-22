@@ -6284,6 +6284,8 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #loopback-network-notification:not([hidden])),
+  #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
 ) {
   appearance: auto !important;
@@ -6348,6 +6350,8 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #loopback-network-notification:not([hidden])),
+  #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
 )::part(content) {
   background: transparent !important;
@@ -6374,6 +6378,8 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #loopback-network-notification:not([hidden])),
+  #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
 ) .panel-arrowcontent {
   background: var(--uc-panel-glass, rgba(8, 10, 13, 0.58)) !important;
@@ -11684,27 +11690,20 @@ tab-split-view-wrapper[hasactivetab]:hover {
 }
 
 
-/* Icon-only toolbar controls use one square hover surface. Content-sized
-   controls such as Mozilla VPN / IP Protection intentionally stay fluid. */
+/* Firefox의 일반 아이콘 버튼은 모두 하나의 정사각형 hover 면을 사용한다.
+   확장 버튼은 기존 정사각형 규칙을 그대로 유지하고, Mozilla VPN / IP
+   Protection 및 Smart Window처럼 실제 내용 너비가 필요한 버튼만 제외한다. */
 :is(#nav-bar, #TabsToolbar)
 :is(
     toolbarbutton[data-extensionid],
-    #back-button,
-    #forward-button,
-    #reload-button,
-    #stop-button,
-    #home-button,
-    #downloads-button,
-    #unified-extensions-button,
-    #nav-bar-overflow-button,
-    #PanelUI-menu-button,
-    #library-button,
-    #sidebar-button,
-    #firefox-view-button,
-    #translations-button,
-    #new-tab-button,
-    #tabs-newtab-button,
-    #alltabs-button
+    toolbarbutton.toolbarbutton-1:not(
+        .titlebar-button,
+        .tab-close-button,
+        [data-extensionid],
+        #ipprotection-button,
+        #smartwindow-ask-button-inner,
+        [id*="vpn" i]
+    )
 ):not([overflowedItem="true"]):not([cui-areatype="panel"]) {
     inline-size:
         var(--uc-button-size) !important;
