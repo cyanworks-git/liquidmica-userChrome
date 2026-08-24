@@ -11433,6 +11433,155 @@ tab-split-view-wrapper[hasactivetab]:hover {
         none !important;
 }
 
+/* Keep the remaining ancestors clear as well.  .tab-content may carry the
+   attention-dot image, so only its surface properties are reset. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper
+> .tabbrowser-tab
+> .tab-stack
+> .tab-content {
+    background-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    filter:
+        none !important;
+
+    mix-blend-mode:
+        normal !important;
+}
+
+/* Firefox can mark the inner .tab-background as multiselected in a split
+   view even when its owning tab is not the active tab.  Clear that native
+   selected surface explicitly; otherwise it remains under our child hover. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper
+> .tabbrowser-tab:not(
+    [selected],
+    [visuallyselected],
+    [visually-selected]
+)
+> .tab-stack
+> .tab-background {
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border-color:
+        transparent !important;
+
+    outline-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+/* Reapply exactly one Liquid Glass hover surface to the hovered half. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper
+> .tabbrowser-tab:not(
+    [selected],
+    [visuallyselected],
+    [visually-selected]
+):hover
+> .tab-stack
+> .tab-background {
+    background:
+        rgba(255, 255, 255, 0.075) !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        0 2px 7px rgba(0, 0, 0, 0.10)
+        !important;
+}
+
+/* The wrapper is already neutralized above.  From this level down, use the
+   exact same selected surface as an ordinary horizontal tab. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]
+> .tabbrowser-tab:is(
+    [selected],
+    [visuallyselected],
+    [visually-selected]
+)
+> .tab-stack
+> .tab-background {
+    background-color:
+        var(--uc-glass-selected) !important;
+
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.035) 52%,
+            transparent
+        ) !important;
+
+    border:
+        1px solid var(--uc-glass-border-strong) !important;
+
+    border-radius:
+        var(--uc-tab-radius) !important;
+
+    outline-color:
+        transparent !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.045),
+        0 4px 12px rgba(0, 0, 0, 0.20)
+        !important;
+
+    backdrop-filter:
+        blur(14px) saturate(135%) !important;
+
+    -webkit-backdrop-filter:
+        blur(14px) saturate(135%) !important;
+}
+
+/* Match the ordinary selected-tab hover state too. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]
+> .tabbrowser-tab:is(
+    [selected],
+    [visuallyselected],
+    [visually-selected]
+):hover
+> .tab-stack
+> .tab-background {
+    background-color:
+        rgba(255, 255, 255, 0.20) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.34) !important;
+}
+
 
 /* Force the horizontal pinned favicon group to the exact tab center. */
 #tabbrowser-tabs[orient="horizontal"]
@@ -11784,5 +11933,800 @@ button:is([disabled], [aria-disabled="true"]):is(:hover, :active) {
         none !important;
 
     transform:
+        none !important;
+}
+
+
+/* =====================================================================
+   TAB GROUPS — LIQUID MICA PANELS / CONSISTENT GROUP MARKERS
+   ===================================================================== */
+
+/* 탭 그룹 만들기/관리 패널과 접힌 그룹 미리보기는 다른 보조 패널과
+   동일한 단일 Mica 면을 사용한다. */
+:is(.tab-group-editor-panel, #tabgroup-preview-panel) {
+    appearance:
+        auto !important;
+
+    -moz-default-appearance:
+        menupopup !important;
+
+    color-scheme:
+        dark !important;
+
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    --panel-background:
+        transparent !important;
+
+    --panel-background-color:
+        transparent !important;
+
+    --arrowpanel-background:
+        transparent !important;
+
+    --panel-border-color:
+        transparent !important;
+
+    --arrowpanel-border-color:
+        transparent !important;
+
+    --panel-border-radius:
+        0 !important;
+
+    --panel-shadow:
+        none !important;
+
+    --panel-box-shadow:
+        none !important;
+
+    --panel-box-shadow-margin:
+        0px !important;
+
+    background:
+        var(--uc-aux-panel-bg, rgba(8, 10, 13, 0.46)) !important;
+
+    background-color:
+        var(--uc-aux-panel-bg, rgba(8, 10, 13, 0.46)) !important;
+
+    background-image:
+        none !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+    overflow:
+        visible !important;
+
+    clip-path:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+:is(.tab-group-editor-panel, #tabgroup-preview-panel)::part(content) {
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+/* 구형/Floorp anonymous 구조에서는 .panel-arrowcontent가 실제 한 장의
+   내부 표면이므로 이 경우에만 여기에서 Mica 유리를 그린다. */
+:is(.tab-group-editor-panel, #tabgroup-preview-panel) .panel-arrowcontent {
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    background:
+        var(--uc-panel-glass, rgba(8, 10, 13, 0.58)) !important;
+
+    background-color:
+        var(--uc-panel-glass, rgba(8, 10, 13, 0.58)) !important;
+
+    background-image:
+        none !important;
+
+    border-color:
+        var(--uc-aux-panel-border, rgba(255, 255, 255, 0.11)) !important;
+
+    border-radius:
+        var(--uc-panel-glass-radius, 12px) !important;
+
+    backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+
+    -webkit-backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+
+    overflow:
+        clip !important;
+}
+
+.tab-group-editor-panel
+:is(
+    #tab-group-main,
+    #tab-group-properties-and-actions,
+    .panel-subview-body,
+    .panel-header,
+    .panel-footer,
+    .tab-group-create-actions,
+    .tab-group-edit-actions
+) {
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+}
+
+.tab-group-editor-panel #tab-group-name {
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    background:
+        rgba(8, 10, 13, 0.44) !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.18) !important;
+
+    border-radius:
+        var(--uc-field-radius, 11px) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.tab-group-editor-panel #tab-group-name:focus {
+    border-color:
+        rgb(0, 221, 255) !important;
+
+    outline:
+        1px solid rgb(0, 221, 255) !important;
+
+    outline-offset:
+        -1px !important;
+}
+
+/* 관리창의 작업 목록은 평상시 투명하고, 실제로 사용할 수 있는 항목에만
+   한 겹의 Liquid Glass hover/active 면을 표시한다. */
+.tab-group-editor-panel
+.tab-group-edit-actions
+> toolbarbutton.subviewbutton {
+    min-height:
+        34px !important;
+
+    margin:
+        2px 6px !important;
+
+    padding:
+        7px 10px !important;
+
+    color:
+        rgba(255, 255, 255, 0.94) !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+
+    transition:
+        background-color 100ms ease,
+        border-color 100ms ease,
+        box-shadow 100ms ease
+        !important;
+}
+
+.tab-group-editor-panel
+.tab-group-edit-actions
+> toolbarbutton.subviewbutton
+> :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+}
+
+.tab-group-editor-panel
+.tab-group-edit-actions
+> toolbarbutton.subviewbutton:not([disabled]):not([aria-disabled="true"]):hover {
+    background:
+        var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11)) !important;
+
+    background-color:
+        var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11)) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.14) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        0 2px 7px rgba(0, 0, 0, 0.10)
+        !important;
+}
+
+.tab-group-editor-panel
+.tab-group-edit-actions
+> toolbarbutton.subviewbutton:not([disabled]):not([aria-disabled="true"]):active {
+    background:
+        var(--uc-panel-glass-active-v34, rgba(255, 255, 255, 0.17)) !important;
+
+    background-color:
+        var(--uc-panel-glass-active-v34, rgba(255, 255, 255, 0.17)) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.18) !important;
+
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.14) !important;
+}
+
+.tab-group-editor-panel moz-button::part(button) {
+    min-height:
+        34px !important;
+
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    background:
+        rgba(255, 255, 255, 0.075) !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.16) !important;
+
+    border-radius:
+        10px !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+.tab-group-editor-panel moz-button:not([disabled]):hover::part(button) {
+    background:
+        var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11)) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.24) !important;
+}
+
+.tab-group-editor-panel moz-button:not([disabled]):active::part(button) {
+    background:
+        var(--uc-panel-glass-active-v34, rgba(255, 255, 255, 0.17)) !important;
+}
+
+.tab-group-editor-panel moz-button[type="primary"]::part(button) {
+    color:
+        rgb(8, 28, 33) !important;
+
+    background:
+        rgb(0, 205, 226) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.28) !important;
+}
+
+/* 접힌 탭 그룹에 마우스를 올렸을 때 나타나는 탭 목록. */
+#tabgroup-panel-content {
+    padding:
+        6px !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+}
+
+#tabgroup-panel-content > toolbarbutton {
+    min-height:
+        34px !important;
+
+    margin:
+        2px 0 !important;
+
+    padding-inline:
+        10px !important;
+
+    color:
+        rgba(255, 255, 255, 0.94) !important;
+
+    background:
+        transparent !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+}
+
+#tabgroup-panel-content > toolbarbutton:not([disabled]):hover {
+    background:
+        var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11)) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.12) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+#tabgroup-panel-content > toolbarbutton.active-tab {
+    background:
+        rgba(255, 255, 255, 0.085) !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 탭 그룹 안내 Feature Callout도 같은 유리 표면과 버튼 계열을 사용한다. */
+#feature-callout {
+    color-scheme:
+        dark !important;
+
+    --fc-background:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    --fc-color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    --fc-border:
+        var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11)) !important;
+
+    --fc-button-background:
+        rgba(255, 255, 255, 0.075) !important;
+
+    --fc-button-background-hover:
+        var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11)) !important;
+
+    --fc-button-background-active:
+        var(--uc-panel-glass-active-v34, rgba(255, 255, 255, 0.17)) !important;
+
+    --fc-button-color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    --fc-button-border:
+        rgba(255, 255, 255, 0.16) !important;
+
+    --fc-primary-button-background:
+        rgb(0, 205, 226) !important;
+
+    --fc-primary-button-background-hover:
+        rgb(39, 221, 239) !important;
+
+    --fc-primary-button-background-active:
+        rgb(0, 183, 204) !important;
+
+    --fc-primary-button-color:
+        rgb(8, 28, 33) !important;
+
+    --fc-primary-button-border:
+        rgba(255, 255, 255, 0.28) !important;
+}
+
+#feature-callout::part(content) {
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+}
+
+#feature-callout
+.screen[pos="callout"]
+.section-main
+.main-content {
+    background:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    background-color:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    border:
+        1px solid var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11)) !important;
+
+    border-radius:
+        var(--uc-panel-glass-radius, 12px) !important;
+
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08)
+        !important;
+
+    backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+
+    -webkit-backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(116%)
+        brightness(82%)
+        !important;
+}
+
+#feature-callout :is(.background-arrow, .shadow-arrow) {
+    background:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    border-color:
+        var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11)) !important;
+}
+
+/* 선택된 그룹 탭의 선도 선택되지 않은 그룹 탭처럼 툴바 아래쪽에 둔다.
+   선택 탭 배경의 block margin과 실제 측정 오차 1px만큼 내려 맞춘다. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-group
+.tabbrowser-tab:is([selected], [visuallyselected], [visually-selected])
+> .tab-stack
+> .tab-background
+> .tab-group-line {
+    inset-block-start:
+        auto !important;
+
+    inset-block-end:
+        calc(var(--tab-group-line-toolbar-border-distance, 1px) - var(--uc-tab-gap, 5px) - 1px) !important;
+}
+
+/* Firefox는 이름 없는 그룹의 label에 U+200B(폭 없는 공백)를 넣는다.
+   그 상태만 골라 큰 정사각형 대신 5px짜리 얇은 색상 마커로 표시한다. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[label="\200B"]
+> .tab-group-label-container {
+    inline-size:
+        5px !important;
+
+    min-inline-size:
+        5px !important;
+
+    max-inline-size:
+        5px !important;
+
+    margin-inline-start:
+        3px !important;
+
+    padding-inline-end:
+        3px !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[label="\200B"]
+> .tab-group-label-container
+> .tab-group-label-hover-highlight,
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[label="\200B"]
+> .tab-group-label-container
+.tab-group-label {
+    inline-size:
+        5px !important;
+
+    min-inline-size:
+        5px !important;
+
+    max-inline-size:
+        5px !important;
+
+    padding-inline:
+        0 !important;
+
+    border-radius:
+        3px !important;
+
+    overflow:
+        hidden !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[label="\200B"]
+.tab-group-label-hover-highlight:hover {
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.08) !important;
+}
+
+
+/* ---------------------------------------------------------------------
+   COLLAPSED TAB GROUPS
+   ---------------------------------------------------------------------
+   후반부의 탭/분할 래퍼 크기 규칙이 Firefox 기본 접힘 규칙을 덮지 않게
+   한다. 현재 탭이 없는 접힌 그룹은 전부 숨기고, 현재 탭 또는 현재
+   split wrapper만 남긴다. 펼치면 이 규칙이 해제되어 원래 배치로 복귀한다. */
+
+#tabbrowser-tabs
+tab-group[collapsed]
+> .tabbrowser-tab:not(
+    [selected],
+    [visuallyselected],
+    [visually-selected],
+    [multiselected]
+) {
+    display:
+        none !important;
+}
+
+#tabbrowser-tabs
+tab-group[collapsed]
+> tab-split-view-wrapper:not([hasactivetab]) {
+    display:
+        none !important;
+}
+
+/* 세로 확장 탭의 펼친 그룹 hover 면은 일반 탭의 오른쪽 inset과 같은
+   크기가 되도록 Firefox 기본 폭에서 넘치는 2px을 줄인다. */
+#tabbrowser-tabs[orient="vertical"][expanded]
+tab-group:not([collapsed])
+> .tab-group-label-container
+> .tab-group-label-hover-highlight {
+    box-sizing:
+        border-box !important;
+
+    max-inline-size:
+        calc(100% - 2px) !important;
+
+    margin-inline-end:
+        2px !important;
+}
+
+/* 가로 split group 안에서 선택되지 않은 개별 탭의 선을 1px 높인다.
+   활성 split wrapper 안의 비선택 탭도 포함하되 선택 탭 선은 유지한다. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-group
+> tab-split-view-wrapper
+> .tabbrowser-tab:not(
+    [selected],
+    [visuallyselected],
+    [visually-selected]
+)
+.tab-group-line {
+    transform:
+        translateY(-1px) !important;
+}
+
+/* 세로 분할 탭의 카드 내부 .tab-group-line은 여러 clip/stacking 층에
+   가려지므로 그룹 split wrapper 자체에 하나의 연속선을 그린다. */
+#tabbrowser-tabs[orient="vertical"]
+tab-group
+> tab-split-view-wrapper {
+    position:
+        relative !important;
+
+    overflow:
+        visible !important;
+}
+
+#tabbrowser-tabs[orient="vertical"]
+tab-group
+> tab-split-view-wrapper
+.tab-group-line {
+    display:
+        none !important;
+}
+
+#tabbrowser-tabs[orient="vertical"]
+tab-group
+> tab-split-view-wrapper::after {
+    content:
+        "" !important;
+
+    display:
+        block !important;
+
+    position:
+        absolute !important;
+
+    z-index:
+        4 !important;
+
+    inset-inline-start:
+        0 !important;
+
+    inset-block-start:
+        calc(var(--space-xsmall, 4px) * -2) !important;
+
+    inset-block-end:
+        calc(var(--space-xsmall, 4px) * -1) !important;
+
+    inline-size:
+        var(--tab-group-line-thickness, 2px) !important;
+
+    min-inline-size:
+        var(--tab-group-line-thickness, 2px) !important;
+
+    max-inline-size:
+        var(--tab-group-line-thickness, 2px) !important;
+
+    background-color:
+        var(--tab-group-line-color) !important;
+
+    border-radius:
+        2px !important;
+
+    pointer-events:
+        none !important;
+}
+
+/* 접힌 가로 그룹에서 숨겨진 탭 수(+n)가 좁은 flex 영역 때문에 여러
+   줄로 꺾이지 않도록 내용 길이만큼 폭을 확보한다. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[collapsed]
+> .tab-group-overflow-count-container {
+    box-sizing:
+        border-box !important;
+
+    inline-size:
+        max-content !important;
+
+    min-inline-size:
+        max-content !important;
+
+    max-inline-size:
+        none !important;
+
+    flex:
+        0 0 auto !important;
+
+    overflow:
+        visible !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-group[collapsed]
+> .tab-group-overflow-count-container
+> .tab-group-overflow-count {
+    box-sizing:
+        border-box !important;
+
+    inline-size:
+        max-content !important;
+
+    min-inline-size:
+        max-content !important;
+
+    max-inline-size:
+        none !important;
+
+    flex:
+        0 0 auto !important;
+
+    white-space:
+        nowrap !important;
+
+    overflow:
+        visible !important;
+
+    text-overflow:
+        clip !important;
+}
+
+
+/* ---------------------------------------------------------------------
+   HORIZONTAL SPLIT TAB — SINGLE BACKGROUND SURFACE
+   ---------------------------------------------------------------------
+   Floorp uses --tab-background-color-hover on the active wrapper while the
+   hovered child tab paints its own Liquid Glass surface.  Neutralize the
+   wrapper variable as well as its actual background so only the child card
+   is painted. */
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper,
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper
+> .tabbrowser-tab,
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper
+> .tabbrowser-tab
+> .tab-stack {
+    --tab-background-color-hover:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab],
+
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[hasactivetab]:hover {
+    --tab-background-color-hover:
+        transparent !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    outline-color:
+        transparent !important;
+
+    box-shadow:
+        none !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
         none !important;
 }
