@@ -5,7 +5,7 @@
       <summary>
         <h1>Liquid Mica</h1>
       </summary>
-      <img src="https://img.shields.io/badge/Firefox-153.0.3-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox-154.0-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
       <img src="https://img.shields.io/badge/Firefox Developer Edition-155.0b4-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
       <img src="https://img.shields.io/badge/Floorp-12.17.0@154.0-5309E8?style=flat&logo=floorp&logoColor=white"/>
     </ul>
