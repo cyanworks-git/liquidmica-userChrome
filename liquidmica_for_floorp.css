@@ -1781,3 +1781,70 @@ menupopup:not(.in-menulist)
     margin:
         4px 0 !important;
 }
+
+
+/* =========================================================
+   FLOORP ZEN MODE — TOP TOOLBOX MICA BACKDROP
+   ---------------------------------------------------------
+   Floorp takes #navigator-toolbox out of normal layout and places it over
+   web content while Zen mode is active.  It can no longer inherit the real
+   window Mica seen by the normal title/tab/navigation bars, so the overlay
+   must sample and blur its own backdrop.
+   ========================================================= */
+
+:root[zenmode] #navigator-toolbox {
+    background:
+        rgba(8, 10, 13, 0.43) !important;
+
+    background-color:
+        rgba(8, 10, 13, 0.43) !important;
+
+    background-image:
+        none !important;
+
+    border-block-end:
+        1px solid rgba(255, 255, 255, 0.10) !important;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.24),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18)
+        !important;
+
+    backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(122%)
+        brightness(80%)
+        !important;
+
+    -webkit-backdrop-filter:
+        blur(var(--uc-panel-glass-blur, 28px))
+        saturate(122%)
+        brightness(80%)
+        !important;
+}
+
+/* The individual bars provide only their subtle tonal separation.  They must
+   not start another backdrop pass on top of the toolbox glass. */
+:root[zenmode]
+#navigator-toolbox
+:is(#titlebar, #TabsToolbar, #nav-bar, #PersonalToolbar) {
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+/* During reveal the URL bar is promoted to Firefox's top layer.  Keep its
+   surrounding surfaces translucent so the toolbox backdrop remains visible. */
+:root[zenmode][zenmode-reveal-top]
+#urlbar-container,
+
+:root[zenmode][zenmode-reveal-top]
+#urlbar-input-container {
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+}

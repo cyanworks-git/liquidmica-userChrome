@@ -1198,6 +1198,9 @@ tab-split-view-wrapper {
   --button-background-color-hover: transparent !important;
   --button-background-color-active: transparent !important;
   --button-background-color-selected: transparent !important;
+  --button-background-color-menu-hover: transparent !important;
+  --button-background-color-menu-active: transparent !important;
+  --button-background-color-menu-disabled: transparent !important;
   inline-size: max-content !important;
   min-inline-size: max-content !important;
   max-inline-size: none !important;
@@ -1208,6 +1211,10 @@ tab-split-view-wrapper {
   border: 0 !important;
   border-radius: var(--uc-panel-glass-radius, 12px) !important;
   box-shadow: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  scrollbar-color: transparent transparent !important;
 }
 
 .searchmode-switcher-panel-description {
@@ -1222,6 +1229,9 @@ tab-split-view-wrapper {
   --button-background-color: transparent !important;
   --button-background-color-hover: transparent !important;
   --button-background-color-active: transparent !important;
+  --button-background-color-menu-hover: transparent !important;
+  --button-background-color-menu-active: transparent !important;
+  --button-background-color-menu-disabled: transparent !important;
 
   inline-size: 100% !important;
   box-sizing: border-box !important;
@@ -6284,6 +6294,7 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
   #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
@@ -6350,6 +6361,7 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
   #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
@@ -6378,6 +6390,7 @@ menuseparator {
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
+  #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
   #notification-popup:has(> #local-network-notification:not([hidden])),
   #notification-popup:has(> #drmContentPlaying-notification:not([hidden]))
@@ -10842,16 +10855,26 @@ tab-split-view-wrapper
         center !important;
 }
 
-/* Web-notification and DRM prompts share the same native Mica outer surface;
+/* Web-notification, geolocation and DRM prompts share the same native Mica outer surface;
    clear their opaque inner layers so that surface remains visible. */
 #notification-popup:has(> :is(
         #web-notifications-notification,
+        #geolocation-notification,
         #drmContentPlaying-notification
       ):not([hidden]))::part(content),
-:is(#web-notifications-notification, #drmContentPlaying-notification),
-:is(#web-notifications-notification, #drmContentPlaying-notification) :is(
+:is(
+  #web-notifications-notification,
+  #geolocation-notification,
+  #drmContentPlaying-notification
+),
+:is(
+  #web-notifications-notification,
+  #geolocation-notification,
+  #drmContentPlaying-notification
+) :is(
   .popup-notification-body-container,
   .popup-notification-content,
+  .popup-notification-checkbox-container,
   .popup-notification-footer-container,
   .panel-footer
 ) {
@@ -10864,7 +10887,11 @@ tab-split-view-wrapper
 }
 
 #notification-popup
-  :is(#web-notifications-notification, #drmContentPlaying-notification)
+  :is(
+    #web-notifications-notification,
+    #geolocation-notification,
+    #drmContentPlaying-notification
+  )
   :is(.popup-notification-primary-button, .popup-notification-secondary-button)::part(button) {
   appearance: none !important;
   min-height: 34px !important;
@@ -10886,7 +10913,11 @@ tab-split-view-wrapper
 }
 
 #notification-popup
-  :is(#web-notifications-notification, #drmContentPlaying-notification)
+  :is(
+    #web-notifications-notification,
+    #geolocation-notification,
+    #drmContentPlaying-notification
+  )
   :is(.popup-notification-primary-button, .popup-notification-secondary-button):hover::part(button) {
   background-color: rgb(0 0 0 / 68%) !important;
   border-color: rgb(255 255 255 / 45%) !important;
@@ -10896,7 +10927,11 @@ tab-split-view-wrapper
 }
 
 #notification-popup
-  :is(#web-notifications-notification, #drmContentPlaying-notification)
+  :is(
+    #web-notifications-notification,
+    #geolocation-notification,
+    #drmContentPlaying-notification
+  )
   :is(.popup-notification-primary-button, .popup-notification-secondary-button):active::part(button) {
   background-color: rgb(0 0 0 / 78%) !important;
   border-color: rgb(255 255 255 / 26%) !important;
@@ -11430,6 +11465,328 @@ tab-split-view-wrapper[hasactivetab]:hover {
         none !important;
 
     -webkit-backdrop-filter:
+        none !important;
+}
+
+
+/* =====================================================================
+   PASSWORD / FORM AUTOCOMPLETE — LIQUID MICA
+   =====================================================================
+   Password logins, generated passwords and ordinary form-history/autofill
+   results all use #PopupAutoComplete.  Keep the native popup as the only
+   outer Mica surface; the richlist and its rows stay transparent until a
+   row is hovered or selected. */
+
+#PopupAutoComplete {
+    appearance:
+        auto !important;
+
+    -moz-default-appearance:
+        menupopup !important;
+
+    color-scheme:
+        dark !important;
+
+    color:
+        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+
+    --panel-background:
+        transparent !important;
+
+    --panel-background-color:
+        transparent !important;
+
+    --panel-border-color:
+        transparent !important;
+
+    --panel-text-color:
+        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+
+    --panel-separator-color:
+        var(--uc-aux-separator, rgba(255, 255, 255, 0.13)) !important;
+
+    --text-color:
+        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+
+    --text-color-deemphasized:
+        rgba(255, 255, 255, 0.70) !important;
+
+    /* The row component inherits this into its shadow tree. */
+    --border-radius-large:
+        8px !important;
+
+    --button-background-color-hover:
+        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+
+    --button-background-color-active:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    --button-background-color-ghost-hover:
+        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+
+    --button-background-color-ghost-active:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    --button-text-color-hover:
+        #fff !important;
+
+    --button-text-color-active:
+        #fff !important;
+
+    background:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    background-color:
+        var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid
+        var(--uc-context-native-border, rgba(255, 255, 255, 0.11)) !important;
+
+    border-radius:
+        var(--uc-context-native-radius, 10px) !important;
+
+    box-shadow:
+        none !important;
+
+    overflow:
+        clip !important;
+
+    clip-path:
+        inset(0 round var(--uc-context-native-radius, 10px)) !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+}
+
+#PopupAutoComplete::part(content) {
+    color:
+        inherit !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        inherit !important;
+
+    box-shadow:
+        none !important;
+}
+
+#PopupAutoComplete > .autocomplete-richlistbox {
+    appearance:
+        none !important;
+
+    color:
+        inherit !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+}
+
+/* The modern item paints its hover inside a shadow tree.  A selected row is
+   painted on the host instead, so its inherited inner hover is neutralized
+   and cannot create the familiar dark, doubled layer. */
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem.autocomplete-row-item {
+    color:
+        inherit !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem.autocomplete-row-item
+> autocomplete-row-item {
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem.autocomplete-row-item[selected]
+> autocomplete-row-item,
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem.autocomplete-row-item
+> autocomplete-row-item[selected] {
+    --button-background-color-hover:
+        transparent !important;
+
+    --button-background-color-active:
+        transparent !important;
+
+    color:
+        #fff !important;
+
+    background:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    background-color:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    border-color:
+        var(--uc-glass-border-strong, rgba(255, 255, 255, 0.30)) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 3px 9px rgba(0, 0, 0, 0.14) !important;
+}
+
+/* Legacy form-history rows do not use autocomplete-row-item, so give the
+   richlist item itself the same single-surface interaction treatment. */
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem:not(.autocomplete-row-item) {
+    color:
+        inherit !important;
+
+    background:
+        transparent !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        none !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem:not(.autocomplete-row-item):not([disabled]):hover {
+    color:
+        #fff !important;
+
+    background:
+        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+
+    background-color:
+        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+
+    border-color:
+        var(--uc-aux-hover-border, rgba(255, 255, 255, 0.075)) !important;
+
+    box-shadow:
+        var(--uc-aux-hover-shadow) !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem:not(.autocomplete-row-item)[selected] {
+    color:
+        #fff !important;
+
+    background:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    background-color:
+        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+
+    border-color:
+        var(--uc-glass-border-strong, rgba(255, 255, 255, 0.30)) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 3px 9px rgba(0, 0, 0, 0.14) !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem[footer]:not(:first-child) {
+    border-block-start-color:
+        var(--uc-aux-separator, rgba(255, 255, 255, 0.13)) !important;
+
+    border-start-start-radius:
+        0 !important;
+
+    border-start-end-radius:
+        0 !important;
+}
+
+#PopupAutoComplete :is(.ac-title, .ac-title-text) {
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+}
+
+#PopupAutoComplete :is(.ac-url, .ac-url-text, .ac-action) {
+    color:
+        rgba(255, 255, 255, 0.70) !important;
+}
+
+#PopupAutoComplete richlistitem[disabled] {
+    color:
+        rgba(255, 255, 255, 0.42) !important;
+
+    background:
+        transparent !important;
+
+    box-shadow:
         none !important;
 }
 
@@ -12409,12 +12766,82 @@ button:is([disabled], [aria-disabled="true"]):is(:hover, :active) {
         !important;
 }
 
-#feature-callout :is(.background-arrow, .shadow-arrow) {
+#feature-callout .background-arrow {
     background:
         var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
 
     border-color:
         var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11)) !important;
+}
+
+/* .shadow-arrow is only the outline/shadow carrier.  Giving it the same
+   translucent fill as .background-arrow stacks two tinted polygons and makes
+   compact callout arrows look smeared. */
+#feature-callout .shadow-arrow {
+    background:
+        transparent !important;
+
+    border-color:
+        transparent !important;
+
+    outline-color:
+        var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11)) !important;
+}
+
+/* Sync's LOGIN_STATUS_ADVISORY is intentionally much smaller than ordinary
+   feature callouts.  Give the Korean copy enough room and a readable line box
+   without changing the larger tab-group/tutorial callouts. */
+#feature-callout:has([data-l10n-id="login-status-advisory-title"])
+.screen[pos="callout"]
+.section-main
+.main-content {
+    inline-size:
+        max-content !important;
+
+    min-inline-size:
+        0 !important;
+
+    max-inline-size:
+        min(360px, calc(100vw - 32px)) !important;
+
+    padding:
+        0 !important;
+
+    gap:
+        0 !important;
+}
+
+#feature-callout
+[data-l10n-id="login-status-advisory-title"] {
+    max-inline-size:
+        328px !important;
+
+    margin:
+        10px 16px !important;
+
+    color:
+        rgba(255, 255, 255, 0.96) !important;
+
+    font-size:
+        12px !important;
+
+    font-weight:
+        500 !important;
+
+    line-height:
+        1.4 !important;
+
+    letter-spacing:
+        0 !important;
+
+    white-space:
+        normal !important;
+
+    overflow-wrap:
+        anywhere !important;
+
+    text-wrap:
+        balance !important;
 }
 
 /* 선택된 그룹 탭의 선도 선택되지 않은 그룹 탭처럼 툴바 아래쪽에 둔다.
