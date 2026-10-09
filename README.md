@@ -50,13 +50,16 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 1. 페이지 상단에 `Code` → `Download ZIP`을 눌러 압축파일로 저장합니다.
 2. FireFox 주소에 `about:profiles`를 입력합니다.
 3. 사용 중인 프로필의 루트 디렉터리의 `폴더 열기`를 누릅니다.
-4. `Chrome` 폴더를 생성하여 그 폴더에서 내려받은 파일들을 이동합니다.
-5. `liquidmica.css`를 `userChrome.css`로 이름을 변경하거나 해당 이름으로 css 파일 생성 후 다음과 같이 수정하여 저장합니다:
-   <br><br>
-   ```css
-   @import url("liquidmica.css");
-   ```
-6. FireFox를 재시작 합니다.
+4. 압축파일의 `Chrome` 폴더를 그대로 루트 디렉터리로 이동합니다.
+5. FireFox를 재시작 합니다.
+### 다른 테마랑 같이 쓰는 경우
+만약 다른 테마랑 혼용해서 쓰려면 `Chrome` 폴더 안에 압축파일의 `Chrome` 폴더를 그대로 옮긴 후 폴더 이름을 `LiquidMica`로 변경합니다.
+
+그런 다음 해당 테마로 적용하고자 할 경우 `userChrome.css`를 열어 다음과 같이 수정합니다:
+<br>
+```css
+@import url("LiquidMica/userChrome.css");
+```
 <br>
 <br>
 
@@ -79,4 +82,4 @@ MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox user
 4. Floorp를 재시작하여 적용되어 있는지 확인합니다.
 > [!TIP]
 > * `메뉴(☰)` → `스타일`에서 css 파일 4개가 정상적으로 보여야 합니다.
-> * `✓ liquidmica.css`만 되어 있어도 모든 스타일이 정상적으로 적용됩니다.
+> * `✓ userChrome.css`만 되어 있어도 모든 스타일이 정상적으로 적용됩니다.
