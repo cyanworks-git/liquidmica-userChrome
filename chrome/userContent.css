@@ -1188,3 +1188,286 @@
             8px !important;
     }
 }
+
+/* Light-mode counterparts for browser-owned internal sidebar documents and
+   the Multi-Account Containers popup. Keep page content outside these URLs
+   untouched. */
+@layer liquidmica-light {
+@media (prefers-color-scheme: light) {
+    @-moz-document regexp(
+        "^moz-extension://[^/]+/pageActionPopup\\.html(?:[?#].*)?$"
+    ) {
+        :root, html, body {
+            color-scheme: light !important;
+            color: rgba(28, 34, 44, 0.96) !important;
+        }
+
+        :is(.panel-section-header, header, [class*="header"], h1, h2) {
+            color: rgba(28, 34, 44, 0.96) !important;
+            border-color: rgba(35, 48, 64, 0.16) !important;
+        }
+
+        :is(.panel-list-item, .menu-item, .container-item, button, [role="button"]) {
+            color: rgba(28, 34, 44, 0.94) !important;
+        }
+
+        :is(.panel-list-item, .menu-item, .container-item, button, [role="button"]):hover {
+            background: rgba(35, 52, 72, 0.10) !important;
+            border-color: rgba(35, 48, 64, 0.18) !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.80), 0 2px 7px rgba(26, 39, 54, 0.08) !important;
+        }
+    }
+
+    @-moz-document url("chrome://browser/content/places/historySidebar.xhtml"),
+                   url("chrome://browser/content/places/bookmarksSidebar.xhtml") {
+        :root, .sidebar-panel, #history-panel, #bookmarks-panel {
+            color-scheme: light !important;
+            color: rgba(28, 34, 44, 0.96) !important;
+            --uc-sidebar-panel-surface: rgba(246, 249, 253, 0.74) !important;
+            background-color: var(--uc-sidebar-panel-surface) !important;
+        }
+
+        #sidebar-panel-close,
+        #search-box,
+        #viewButton {
+            color: rgba(28, 34, 44, 0.96) !important;
+            background: rgba(255, 255, 255, 0.54) !important;
+            border-color: rgba(35, 48, 64, 0.18) !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+        }
+
+        #sidebar-panel-close:hover,
+        #viewButton:hover,
+        .sidebar-placesTreechildren::-moz-tree-row(hover) {
+            background: rgba(35, 52, 72, 0.10) !important;
+            border-color: rgba(35, 48, 64, 0.18) !important;
+        }
+
+        .sidebar-placesTreechildren::-moz-tree-row(selected) {
+            background: rgba(35, 83, 130, 0.16) !important;
+            border-color: rgba(35, 83, 130, 0.28) !important;
+        }
+
+        .sidebar-placesTreechildren::-moz-tree-cell-text,
+        .sidebar-placesTreechildren::-moz-tree-image,
+        .sidebar-placesTreechildren::-moz-tree-twisty {
+            color: rgba(28, 34, 44, 0.94) !important;
+        }
+    }
+
+    @-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html"),
+                   url("chrome://browser/content/sidebar/sidebar-bookmarks.html"),
+                   url("chrome://browser/content/sidebar/sidebar-history.html"),
+                   url("chrome://browser/content/sidebar/sidebar-syncedtabs.html"),
+                   url("chrome://browser/content/syncedtabs/sidebar.xhtml"),
+                   url("chrome://browser/content/genai/chat.html") {
+        :root {
+            color-scheme: light !important;
+            --uc-sidebar-panel-surface: rgba(246, 249, 253, 0.72) !important;
+            --uc-sidebar-panel-field: rgba(255, 255, 255, 0.72) !important;
+            --uc-sidebar-panel-button: rgba(255, 255, 255, 0.54) !important;
+            --uc-sidebar-panel-hover: rgba(35, 52, 72, 0.10) !important;
+            --uc-sidebar-panel-active: rgba(35, 83, 130, 0.16) !important;
+            --uc-sidebar-panel-border: rgba(35, 48, 64, 0.19) !important;
+            --uc-sidebar-panel-text: rgba(28, 34, 44, 0.96) !important;
+            --sidebar-box-background: rgba(255, 255, 255, 0.44) !important;
+            --border-color-deemphasized: rgba(35, 48, 64, 0.15) !important;
+            --panel-separator-color: rgba(35, 48, 64, 0.16) !important;
+            --button-border-color-hover: rgba(35, 48, 64, 0.24) !important;
+            --button-border-color-active: rgba(35, 83, 130, 0.30) !important;
+            --button-border-color-disabled: rgba(35, 48, 64, 0.10) !important;
+            --button-background-color-primary: rgba(35, 83, 130, 0.16) !important;
+            --button-background-color-primary-hover: rgba(35, 83, 130, 0.22) !important;
+            --button-background-color-primary-active: rgba(35, 83, 130, 0.28) !important;
+            --button-text-color-ghost-hover: rgba(20, 29, 40, 0.98) !important;
+            --button-text-color-ghost-active: rgba(20, 29, 40, 0.98) !important;
+            --button-text-color-primary: rgba(20, 29, 40, 0.98) !important;
+            --text-color-deemphasized: rgba(48, 58, 72, 0.72) !important;
+            --link-color-hover: rgb(0, 112, 133) !important;
+            --link-color-visited: rgba(28, 34, 44, 0.96) !important;
+            color: var(--uc-sidebar-panel-text) !important;
+            background-color: var(--uc-sidebar-panel-surface) !important;
+        }
+
+        :is(html, body, .content-container, .content-header, .content-scrollable,
+            #template-container, #browser-container) {
+            color: var(--uc-sidebar-panel-text) !important;
+        }
+
+        #multi-stage-message-root :is(.screen, .optin-wrapper) {
+            color: var(--uc-sidebar-panel-text) !important;
+            background: rgba(255, 255, 255, 0.48) !important;
+            border-color: var(--uc-sidebar-panel-border) !important;
+            box-shadow: 0 10px 28px rgba(26, 39, 54, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+        }
+    }
+}
+
+}
+
+/* Internal chrome documents do not inherit browser-window CSS variables.
+   Give dialogs, download views and sidebar controls their own light palette. */
+@layer liquidmica-light {
+  @media (prefers-color-scheme: light) {
+    @-moz-document url("chrome://global/content/commonDialog.xhtml"),
+                   url("chrome://mozapps/content/handling/permissionDialog.xhtml"),
+                   url("chrome://browser/content/places/bookmarkProperties.xhtml"),
+                   url("chrome://browser/content/browser/places/bookmarkProperties.xhtml") {
+      :root {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        background: transparent !important;
+        --background-color-canvas: transparent !important;
+        --in-content-page-background: transparent !important;
+        --in-content-box-background: rgba(255, 255, 255, 0.58) !important;
+        --text-color: rgb(32, 42, 55) !important;
+        --text-color-deemphasized: rgb(82, 94, 110) !important;
+        --button-background-color: rgba(255, 255, 255, 0.58) !important;
+        --button-background-color-hover: rgba(42, 68, 99, 0.10) !important;
+        --button-background-color-active: rgba(38, 96, 164, 0.20) !important;
+        --button-background-color-primary: rgb(38, 88, 146) !important;
+        --button-background-color-primary-hover: rgb(30, 72, 123) !important;
+        --button-background-color-primary-active: rgb(24, 59, 103) !important;
+        --button-text-color: rgb(32, 42, 55) !important;
+        --button-text-color-hover: rgb(32, 42, 55) !important;
+        --button-text-color-active: rgb(32, 42, 55) !important;
+        --button-text-color-primary: white !important;
+        --button-text-color-primary-hover: white !important;
+        --button-text-color-primary-active: white !important;
+        --button-border: 1px solid rgba(39, 57, 79, 0.22) !important;
+        --input-text-background-color: rgba(255, 255, 255, 0.72) !important;
+        --input-text-color: rgb(32, 42, 55) !important;
+        --input-text-border-color: rgba(39, 57, 79, 0.22) !important;
+      }
+      :is(#commonDialogWindow, #commonDialog, #bookmarkpropertiesdialog, #infoTitle,
+        #infoBody, #checkboxContainer, #checkboxContainer label, label, description) {
+        color: rgb(32, 42, 55) !important;
+      }
+      :is(#commonDialogWindow, #commonDialog, #bookmarkpropertiesdialog, #dialogGrid) {
+        background: transparent !important;
+      }
+      :is(#commonDialog, dialog)::part(dialog-button),
+      moz-button::part(button) {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.58) !important;
+        border-color: rgba(39, 57, 79, 0.22) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 2px 8px rgba(26, 42, 64, 0.10) !important;
+      }
+      :is(#commonDialog, dialog)::part(dialog-button):hover,
+      moz-button:not([disabled]):hover::part(button) {
+        background: rgba(42, 68, 99, 0.10) !important;
+      }
+    }
+
+    @-moz-document url("chrome://browser/content/downloads/contentAreaDownloadsView.xhtml") {
+      :root, #contentAreaDownloadsView {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        background: rgba(246, 249, 253, 0.58) !important;
+        backdrop-filter: blur(22px) saturate(118%) brightness(104%) !important;
+      }
+      #downloadsListBox { scrollbar-color: rgba(39, 57, 79, 0.32) transparent !important; }
+      #downloadsListBox > richlistitem:hover,
+      .downloadButton:hover > .button-box {
+        background: rgba(42, 68, 99, 0.10) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+      }
+      :is(.downloadTarget, .downloadDetails, .downloadButton, label, description) {
+        color: rgb(32, 42, 55) !important;
+      }
+    }
+
+    @-moz-document url("chrome://browser/content/places/historySidebar.xhtml"),
+                   url("chrome://browser/content/places/bookmarksSidebar.xhtml") {
+      :root { --uc-sidebar-panel-surface: rgba(246, 248, 252, 0.28) !important; }
+      :is(.sidebar-panel, #history-panel, #bookmarks-panel) { background: transparent !important; }
+      .sidebar-placesTreechildren { scrollbar-color: rgba(39, 57, 79, 0.32) transparent !important; }
+      .sidebar-placesTreechildren::-moz-tree-cell-text(selected),
+      .sidebar-placesTreechildren::-moz-tree-image(selected),
+      .sidebar-placesTreechildren::-moz-tree-twisty(selected) { color: rgb(32, 42, 55) !important; }
+      #sidebar-panel-header { border-block-end-color: rgba(39, 57, 79, 0.18) !important; }
+      #viewButton > menupopup { background: rgba(246, 249, 253, 0.72) !important; color: rgb(32, 42, 55) !important; }
+      #viewButton > menupopup > menuitem:hover {
+        background: rgba(42, 68, 99, 0.10) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+      }
+    }
+
+    @-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html"),
+                   url("chrome://browser/content/sidebar/sidebar-bookmarks.html"),
+                   url("chrome://browser/content/sidebar/sidebar-history.html"),
+                   url("chrome://browser/content/sidebar/sidebar-syncedtabs.html"),
+                   url("chrome://browser/content/syncedtabs/sidebar.xhtml"),
+                   url("chrome://browser/content/genai/chat.html") {
+      :root {
+        --uc-sidebar-panel-surface: rgba(246, 248, 252, 0.28) !important;
+        --card-background-color: rgba(255, 255, 255, 0.44) !important;
+        --button-border-color-ghost-hover: rgba(39, 57, 79, 0.24) !important;
+        --button-border-color-ghost-active: rgba(31, 83, 144, 0.40) !important;
+        --button-border-color-ghost-selected: rgba(31, 83, 144, 0.40) !important;
+        --button-border-color-primary-hover: rgba(39, 57, 79, 0.24) !important;
+        --button-border-color-primary-active: rgba(31, 83, 144, 0.40) !important;
+      }
+      :is(button, .button):not(#main-button, #chevron-button):not([disabled]):hover,
+      #multi-stage-message-root label:hover {
+        border-color: rgba(39, 57, 79, 0.24) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 2px 8px rgba(26, 42, 64, 0.10) !important;
+      }
+    }
+
+    @-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html"),
+                   url("chrome://browser/content/genai/chat.html") {
+      :root {
+        --link-color: rgb(0, 103, 135) !important;
+        --link-color-hover: rgb(0, 82, 110) !important;
+        --link-color-visited: rgb(0, 103, 135) !important;
+      }
+    }
+  }
+}
+
+/* The PiP toggle over videos (including videos inside iframes) uses Firefox's
+   video-controls shadow UI, not the separate PiP player window. */
+#pictureInPictureToggle.pip-wrapper:is([has-used], [small-video]) {
+  --pip-border-radius-toggle: 10px !important;
+  --pip-highlight-style: solid rgba(255, 255, 255, 0.48) !important;
+  --pip-highlight-width: 1px !important;
+}
+
+#pictureInPictureToggle.pip-wrapper:is([has-used], [small-video]) > .pip-small {
+  background-color: rgba(42, 44, 48, 0.60) !important;
+  border: 1px solid rgba(255, 255, 255, 0.32) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 3px 10px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(12px) saturate(115%) !important;
+  transition:
+    background-color 140ms ease,
+    border-radius 140ms ease,
+    box-shadow 140ms ease !important;
+}
+
+#pictureInPictureToggle.pip-wrapper:is([has-used], [small-video]):is(:hover, .hovering, :focus-visible) > .pip-small {
+  background-color: rgba(82, 84, 88, 0.58) !important;
+  border-color: rgba(255, 255, 255, 0.52) !important;
+  border-radius: 11px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 4px 12px rgba(0, 0, 0, 0.28) !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+}
+
+#pictureInPictureToggle.pip-wrapper:is([has-used], [small-video]):active > .pip-small {
+  background-color: rgba(32, 34, 38, 0.68) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 2px 5px rgba(0, 0, 0, 0.24) !important;
+}
+
+#pictureInPictureToggle.pip-wrapper:is([has-used], [small-video]):focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.84) !important;
+  outline-offset: 1px !important;
+}

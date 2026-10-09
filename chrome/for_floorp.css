@@ -11,8 +11,9 @@
      @import url("liquidmica_for_floorp.css");
 
    IMPORTANT:
-   This version intentionally DOES NOT replace Floorp's
-   --panel-sidebar-background-color.
+   The dark palette preserves Floorp's native
+   --panel-sidebar-background-color. The light palette below adds a
+   pale translucent surface so the rail stays bright with a light theme.
 
    Floorp's stock UI already uses that variable for:
      #panel-sidebar-select-box
@@ -57,8 +58,8 @@
 /* =====================================================================
    1. PRESERVE FLOORP'S NATIVE SIDEBAR SURFACE
    ---------------------------------------------------------------------
-   Do NOT redefine --panel-sidebar-background-color.
-   Do NOT set a replacement rgba background here.
+   Do NOT redefine --panel-sidebar-background-color for the dark palette.
+   The light-only surface override lives in liquidmica-light below.
    Floorp stock CSS keeps ownership of the Mica-capable background.
    ===================================================================== */
 
@@ -474,7 +475,7 @@
 #main-window[sizemode="normal"]
 #panel-sidebar-select-box {
     box-shadow:
-        inset 0 0 0 9999px rgba(0, 0, 0, 0.25),
+        inset 0 0 0 9999px var(--fp-mica-rail-overlay),
         inset -1px 0 0 rgba(255, 255, 255, 0.055)
         !important;
 }
@@ -483,7 +484,7 @@
 #main-window[sizemode="normal"]
 #panel-sidebar-box {
     box-shadow:
-        inset 0 0 0 9999px rgba(0, 0, 0, 0.20)
+        inset 0 0 0 9999px var(--fp-mica-panel-overlay)
         !important;
 }
 
@@ -491,7 +492,7 @@
 #main-window[sizemode="normal"]
 #panel-sidebar-header {
     box-shadow:
-        inset 0 0 0 9999px rgba(0, 0, 0, 0.33),
+        inset 0 0 0 9999px var(--fp-mica-header-overlay),
         inset 0 -1px 0 rgba(255, 255, 255, 0.065)
         !important;
 }
@@ -513,7 +514,7 @@
         10px !important;
 
     box-shadow:
-        inset 0 0 0 9999px rgba(0, 0, 0, 0.20),
+        inset 0 0 0 9999px var(--fp-mica-panel-overlay),
         0 16px 42px rgba(0, 0, 0, 0.38),
         inset 0 1px 0 rgba(255, 255, 255, 0.055)
         !important;
@@ -1148,11 +1149,14 @@
         textarea
     ):focus {
         border-color:
-            rgba(0, 210, 235, 0.88) !important;
+            rgba(116, 177, 239, 0.60) !important;
+
+        background-image:
+            linear-gradient(135deg, rgba(72, 145, 220, 0.12), rgba(180, 215, 255, 0.025) 72%) !important;
 
         box-shadow:
-            0 0 0 1px rgba(0, 210, 235, 0.50),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05)
+            0 0 0 2px rgba(92, 157, 224, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
             !important;
     }
 
@@ -1367,11 +1371,14 @@
     [class~="relative"]
     > button[type="button"]:focus-visible {
         border-color:
-            rgba(0, 210, 235, 0.88) !important;
+            rgba(116, 177, 239, 0.60) !important;
+
+        background-image:
+            linear-gradient(135deg, rgba(72, 145, 220, 0.12), rgba(180, 215, 255, 0.025) 72%) !important;
 
         box-shadow:
-            0 0 0 1px rgba(0, 210, 235, 0.50),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05)
+            0 0 0 2px rgba(92, 157, 224, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07)
             !important;
     }
 
@@ -1847,4 +1854,216 @@ menupopup:not(.in-menulist)
 
     background-image:
         none !important;
+}
+
+/* Floorp-specific light surfaces: the layer overrides the shared dark
+   defaults without depending on obsolete browser theme attributes. */
+@layer liquidmica-light {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @-moz-document url("chrome://browser/content/browser.xhtml") {
+      :root {
+        --fp-light-sidebar-surface: rgba(248, 250, 253, 0.76) !important;
+        --fp-mica-rail-overlay: rgba(255, 255, 255, 0.24) !important;
+        --fp-mica-panel-overlay: rgba(255, 255, 255, 0.14) !important;
+        --fp-mica-header-overlay: rgba(255, 255, 255, 0.18) !important;
+        --fp-glass-hover: rgba(42, 68, 99, 0.10) !important;
+        --fp-glass-selected: rgba(38, 96, 164, 0.17) !important;
+        --fp-glass-selected-hover: rgba(38, 96, 164, 0.22) !important;
+        --fp-glass-active: rgba(38, 96, 164, 0.24) !important;
+        --fp-glass-border: rgba(39, 57, 79, 0.20) !important;
+      }
+      :is(#panel-sidebar-select-box, #panel-sidebar-box, #panel-sidebar-header) {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        background-color: var(--fp-light-sidebar-surface) !important;
+      }
+      #panel-sidebar-select-box {
+        box-shadow: inset 0 0 0 9999px var(--fp-mica-rail-overlay),
+          inset -1px 0 0 rgba(39, 57, 79, 0.12) !important;
+      }
+      #panel-sidebar-box {
+        box-shadow: inset 0 0 0 9999px var(--fp-mica-panel-overlay) !important;
+      }
+      #panel-sidebar-header {
+        box-shadow: inset 0 0 0 9999px var(--fp-mica-header-overlay),
+          inset 0 -1px 0 rgba(39, 57, 79, 0.12) !important;
+      }
+      #panel-sidebar-box[data-floating="true"] {
+        border-color: var(--fp-glass-border) !important;
+        box-shadow: inset 0 0 0 9999px var(--fp-mica-panel-overlay),
+          0 14px 34px rgba(26, 42, 64, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+      }
+      #panel-sidebar-select-box .panel-sidebar-panel:not([disabled]):hover,
+      #panel-sidebar-select-box .panel-sidebar-button-wrapper:hover > .panel-sidebar-panel:not([disabled]),
+      #panel-sidebar-header .panel-sidebar-actions:not([disabled]):hover {
+        background-color: var(--fp-glass-hover) !important;
+        border-color: var(--fp-glass-border) !important;
+        box-shadow: inset 0 0 0 1px var(--fp-glass-border),
+          inset 0 1px 0 rgba(255, 255, 255, 0.86),
+          0 2px 8px rgba(26, 42, 64, 0.10) !important;
+      }
+      #panel-sidebar-select-box .panel-sidebar-panel[data-checked="true"] {
+        background-color: var(--fp-glass-selected) !important;
+        border-color: rgba(31, 83, 144, 0.40) !important;
+      }
+      #panel-sidebar-select-box .panel-sidebar-panel[data-checked="true"]:hover {
+        background-color: var(--fp-glass-selected-hover) !important;
+      }
+      #panel-sidebar-select-box .panel-sidebar-panel:not([disabled]):active,
+      #panel-sidebar-header .panel-sidebar-actions:not([disabled]):active {
+        background-color: var(--fp-glass-active) !important;
+      }
+      #panel-sidebar-select-box .panel-sidebar-panel[disabled]:hover {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      /* The modal frame supplies one glass surface to its transparent child
+         chrome document, including the web-panel/container chooser. */
+      #modal-parent-container::before {
+        background: rgba(246, 249, 253, 0.76) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+        backdrop-filter: blur(28px) saturate(116%) brightness(104%) !important;
+      }
+      #modal-parent-container > #modal-child-browser { color-scheme: light !important; }
+
+      :root[zenmode] #navigator-toolbox {
+        background: rgba(246, 249, 253, 0.66) !important;
+        border-block-end-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: 0 8px 24px rgba(26, 42, 64, 0.14),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.80) !important;
+        backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(120%) brightness(104%) !important;
+      }
+      :root[zenmode] #navigator-toolbox :is(#titlebar, #TabsToolbar, #nav-bar, #PersonalToolbar) {
+        background: transparent !important;
+        backdrop-filter: none !important;
+      }
+    }
+
+    @-moz-document url-prefix("chrome://noraneko-modal-child/") {
+      :root, html, body, #root, #dynamic-form {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+      }
+      #dynamic-form :is(h1, label, span) { color: inherit !important; }
+      #dynamic-form > :is(div:first-child, div:last-child) {
+        border-color: rgba(39, 57, 79, 0.18) !important;
+      }
+      #dynamic-form :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea),
+      #dynamic-form [class~="relative"] > button[type="button"] {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.68) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+      }
+      #dynamic-form button {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.54) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+      }
+      #dynamic-form button:not([disabled]):hover,
+      #dynamic-form [class~="relative"] > button[type="button"]:hover {
+        background: rgba(42, 68, 99, 0.10) !important;
+        border-color: rgba(39, 57, 79, 0.28) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86),
+          0 2px 8px rgba(26, 42, 64, 0.10) !important;
+      }
+      #dynamic-form button[type="submit"] {
+        color: white !important;
+        background: rgb(38, 88, 146) !important;
+      }
+      #dynamic-form button[type="submit"]:not([disabled]):hover { background: rgb(30, 72, 123) !important; }
+      #dynamic-form button:not([disabled]):active { background: rgba(38, 96, 164, 0.20) !important; }
+      #dynamic-form input:is([type="checkbox"], [type="radio"]) {
+        background-color: rgba(255, 255, 255, 0.70) !important;
+        border-color: rgba(39, 57, 79, 0.26) !important;
+      }
+      body > div.fixed {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(246, 249, 253, 0.84) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+        backdrop-filter: blur(20px) saturate(116%) brightness(104%) !important;
+      }
+      body > div.fixed li:hover {
+        background: rgba(42, 68, 99, 0.10) !important;
+        border-color: rgba(39, 57, 79, 0.20) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+      }
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FLOORP HORIZONTAL TABS — FIT THE NATIVE 37px STRIP
+   Floorp's current #TabsToolbar measures 37px. Match the Liquid Mica card
+   and its equal top/bottom inset to that available row instead of expanding
+   the toolbar or changing its overflow behavior.
+   --------------------------------------------------------------------- */
+:root:has(#workspaces-toolbar-button, #panel-sidebar-box)
+:not(:has(#vertical-tabs[visible])) {
+    --uc-tab-height: 33px !important;
+    --uc-tab-gap: 2px !important;
+    --uc-tabbar-height: 37px !important;
+    --uc-tab-radius: 9px !important;
+    --tab-min-height: 33px !important;
+    --tab-block-margin: 0px !important;
+    --tabstrip-min-height: 37px !important;
+}
+
+/* Light-palette counterpart for the Floorp modal's focused fields. */
+@-moz-document url-prefix("chrome://noraneko-modal-child/") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    #dynamic-form :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea):focus,
+    #dynamic-form [class~="relative"] > button[type="button"]:focus-visible {
+      color: rgb(32, 42, 55) !important;
+      border-color: rgba(63, 128, 197, 0.50) !important;
+      background-image: linear-gradient(135deg, rgba(104, 174, 239, 0.16), rgba(255, 255, 255, 0.20) 72%) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+    }
+  }
+}
+
+/* Floorp's rail is #panel-sidebar-select-box. In the default light theme its
+   native variable can still resolve to a dark Mica tint, and the common
+   restored-window rules used to add another dark inset fill on top. Give the
+   three sidebar surfaces one explicit pale tint only when the browser chrome
+   is not using a dark lightweight/default theme. */
+@layer liquidmica-light {
+  @-moz-document url("chrome://browser/content/browser.xhtml") {
+    #main-window:not([lwtheme-brighttext]):not([lwt-default-theme-in-dark-mode="true"])
+    :is(#panel-sidebar-select-box, #panel-sidebar-box, #panel-sidebar-header) {
+      color-scheme: light !important;
+      color: rgb(35, 42, 51) !important;
+      background: rgba(248, 250, 253, 0.86) !important;
+    }
+
+    #main-window:not([lwtheme-brighttext]):not([lwt-default-theme-in-dark-mode="true"])
+    #panel-sidebar-select-box {
+      box-shadow:
+        inset -1px 0 0 rgba(55, 63, 73, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.64) !important;
+    }
+
+    #main-window:not([lwtheme-brighttext]):not([lwt-default-theme-in-dark-mode="true"])
+    #panel-sidebar-box {
+      box-shadow: inset 1px 0 0 rgba(55, 63, 73, 0.08) !important;
+    }
+
+    #main-window:not([lwtheme-brighttext]):not([lwt-default-theme-in-dark-mode="true"])
+    #panel-sidebar-header {
+      box-shadow: inset 0 -1px 0 rgba(55, 63, 73, 0.12) !important;
+    }
+
+    #main-window:not([lwtheme-brighttext]):not([lwt-default-theme-in-dark-mode="true"])
+    #panel-sidebar-box[data-floating="true"] {
+      box-shadow:
+        0 14px 34px rgba(26, 42, 64, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+    }
+  }
 }

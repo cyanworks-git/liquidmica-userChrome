@@ -1,6 +1,1364 @@
-@import url("liquidmica_for_floorp.css");
-@import url("userContents.css");
+@import url("for_floorp.css");
+@import url("userContent.css");
 @import url("menu_icons.css");
+
+/* Inlined light-theme rules (formerly CSS/liquidmica_light.css). */
+/* Liquid Mica light palette for browser chrome.
+ * The browser can expose theme colors independently for toolbar fields,
+ * popups and sidebars. The preference-color-scheme rules provide broad
+ * coverage; explicit lwt selectors below cover Firefox's chrome theme state.
+ * !important in this named layer outranks the unlayered dark defaults even
+ * when a split-tab, panel ID or component state has a stronger selector.
+ * Every future surface/state change needs both a dark and a light counterpart.
+ */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  /* Firefox's built-in Light theme is represented by this preference, not
+     necessarily by lwt-* attributes or the operating-system color scheme. */
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)) {
+    @layer liquidmica-light {
+      :root {
+        color-scheme: light !important;
+        --uc-light-text: rgb(32, 42, 55) !important;
+        --uc-light-border: rgba(39, 57, 79, 0.24) !important;
+      }
+      #window-modal-dialog > .dialogOverlay > .dialogBox {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        background: rgba(248, 251, 255, 0.84) !important;
+        background-color: rgba(248, 251, 255, 0.84) !important;
+        background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.08) 58%, rgba(75, 103, 137, 0.025)) !important;
+        border-color: rgba(39, 57, 79, 0.24) !important;
+        box-shadow: 0 16px 42px rgba(26, 42, 64, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+      }
+      #window-modal-dialog > .dialogOverlay > .dialogBox > .dialogFrame {
+        color-scheme: light !important;
+      }
+    }
+  }
+
+  /* Firefox's Light browser theme can be active while Windows stays dark. */
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root {
+        color-scheme: light !important;
+        --uc-light-text: rgb(32, 42, 55) !important;
+        --uc-light-muted: rgb(82, 94, 110) !important;
+        --uc-light-chrome: rgba(246, 248, 252, 0.28) !important;
+        /* Pale tint with enough transparency for the Mica blur to show. */
+        --uc-light-field: rgba(252, 253, 255, 0.42) !important;
+        --uc-light-field-focus: rgba(252, 253, 255, 0.76) !important;
+        --uc-light-hover: rgba(42, 68, 99, 0.10) !important;
+        --uc-light-active: rgba(38, 96, 164, 0.20) !important;
+        --uc-light-border: rgba(39, 57, 79, 0.20) !important;
+        --uc-light-strong-border: rgba(31, 83, 144, 0.48) !important;
+        --uc-light-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86), 0 2px 8px rgba(26, 42, 64, 0.10) !important;
+
+        --uc-tabbar-bg: var(--uc-light-chrome) !important;
+        --uc-navbar-bg: var(--uc-light-chrome) !important;
+        --uc-bookmark-bg: var(--uc-light-chrome) !important;
+        --uc-glass-hover: var(--uc-light-hover) !important;
+        --uc-glass-active: var(--uc-light-active) !important;
+        /* Selection uses the outline; only containers supply a color tint. */
+        --uc-glass-selected: transparent !important;
+        --uc-glass-border: var(--uc-light-border) !important;
+        --uc-glass-border-strong: var(--uc-light-strong-border) !important;
+        --uc-appmenu-surface: rgba(252, 253, 255, 0.82) !important;
+        --uc-appmenu-text: var(--uc-light-text) !important;
+        --uc-appmenu-border: var(--uc-light-border) !important;
+        --uc-appmenu-hover: transparent !important;
+        --uc-appmenu-active: transparent !important;
+        --uc-panel-glass: var(--uc-appmenu-surface) !important;
+        --uc-panel-glass-border: var(--uc-light-border) !important;
+        --uc-panel-glass-hover-v34: var(--uc-light-hover) !important;
+        --uc-panel-glass-active-v34: var(--uc-light-active) !important;
+        --uc-context-native-tint: rgba(252, 253, 255, 0.74) !important;
+        --uc-context-native-border: var(--uc-light-border) !important;
+        /* Disable the dark base context-menu overlay; the light glass hover
+           is painted directly by the light-only row rules below. */
+        --uc-context-hover: transparent !important;
+        --uc-context-active: transparent !important;
+        --uc-context-border: transparent !important;
+        --uc-aux-panel-bg: var(--uc-context-native-tint) !important;
+        --uc-aux-panel-text: var(--uc-light-text) !important;
+        --uc-aux-panel-muted-text: var(--uc-light-muted) !important;
+        --uc-aux-panel-border: var(--uc-light-border) !important;
+        --uc-aux-separator: rgba(39, 57, 79, 0.18) !important;
+        --uc-aux-field-bg: var(--uc-light-field) !important;
+        --uc-aux-button-bg: rgba(255, 255, 255, 0.54) !important;
+        --uc-aux-button-hover: var(--uc-light-hover) !important;
+        --uc-aux-button-active: var(--uc-light-active) !important;
+        --uc-aux-primary-bg: rgb(38, 88, 146) !important;
+        --uc-aux-primary-hover: rgb(30, 72, 123) !important;
+        --uc-aux-primary-active: rgb(24, 59, 103) !important;
+        --uc-aux-hover-border: var(--uc-light-border) !important;
+        --uc-aux-hover-shadow: var(--uc-light-shadow) !important;
+        --uc-subview-row-hover: transparent !important;
+        --uc-subview-row-active: transparent !important;
+        --uc-subview-row-border: transparent !important;
+        --uc-tabpreview-surface: var(--uc-panel-glass) !important;
+        --uc-tabpreview-border: var(--uc-light-border) !important;
+        --uc-tabpreview-text: var(--uc-light-text) !important;
+        --uc-tabpreview-subtext: var(--uc-light-muted) !important;
+        --uc-overlay-tint: var(--uc-context-native-tint) !important;
+        --uc-infobar-surface: rgba(239, 245, 252, 0.84) !important;
+      }
+
+      /* One window tint: nested toolbox/titlebar containers stay clear. */
+      #navigator-toolbox,
+      #titlebar,
+      .browser-toolbox-background {
+        background: transparent !important;
+      }
+      #TabsToolbar,
+      #nav-bar,
+      #PersonalToolbar,
+      #sidebar-container,
+      #sidebar-box {
+        background: var(--uc-light-chrome) !important;
+        color: var(--uc-light-text) !important;
+        --sidebar-text-color: var(--uc-light-text) !important;
+        --sidebar-background-color: var(--uc-light-chrome) !important;
+      }
+      #TabsToolbar {
+        border-bottom-color: rgba(39, 57, 79, 0.16) !important;
+        box-shadow: none !important;
+      }
+      #nav-bar { box-shadow: none !important; }
+
+      /* Ordinary, pinned and split tabs share the same single card surface. */
+      .tabbrowser-tab,
+      .tabbrowser-tab :is(.tab-label, .tab-secondary-label, .tab-close-button),
+      .tab-group-overflow-count,
+      #vertical-tabs-newtab-button {
+        color: var(--uc-light-text) !important;
+        text-shadow: none !important;
+      }
+      .tabbrowser-tab > .tab-stack > .tab-background {
+        background: transparent !important;
+      }
+      .tabbrowser-tab:not([selected], [visuallyselected], [visually-selected]):hover > .tab-stack > .tab-background {
+        background: var(--uc-light-hover) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack > .tab-background {
+        background: var(--uc-glass-selected) !important;
+        border: 1px solid var(--uc-light-strong-border) !important;
+        outline: none !important;
+        box-shadow: 0 1px 2px rgba(40, 46, 54, 0.12) !important;
+      }
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]):hover > .tab-stack > .tab-background {
+        background: var(--uc-glass-selected) !important;
+        border-color: rgba(105, 112, 121, 0.28) !important;
+      }
+      /* Leave .tab-context-line intact: container identity is a separate tint
+         required on both ordinary and split tabs. */
+      tab-split-view-wrapper::before {
+        border-color: rgba(39, 57, 79, 0.32) !important;
+      }
+      #tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper:not([hasactivetab]) > .tabbrowser-tab:last-child::before,
+      #tabbrowser-tabs[orient="vertical"][expanded] tab-split-view-wrapper > .tabbrowser-tab:last-child::before,
+      #tabbrowser-tabs[orient="vertical"]:not([expanded]) tab-split-view-wrapper:not([hasactivetab]) > .tabbrowser-tab:first-child::after,
+      #vertical-tabs[visible]::after {
+        background: rgba(39, 57, 79, 0.42) !important;
+        opacity: 1 !important;
+      }
+      #tabbrowser-tabpanels[splitview] > .split-view-splitter:hover {
+        background-color: var(--uc-light-hover) !important;
+        box-shadow: inset 0 0 0 1px var(--uc-light-border) !important;
+      }
+      .tab-group-label-hover-highlight:hover {
+        box-shadow: 0 0 0 3px var(--uc-light-hover) !important;
+      }
+
+      /* Firefox sidebar-main is a shadow host, not #sidebar-main or a child
+         of #sidebar-box. Its own button tokens must be overridden here. */
+      *|sidebar-main {
+        color: var(--uc-light-text) !important;
+        --button-background-color: transparent !important;
+        --button-background-color-hover: var(--uc-light-hover) !important;
+        --button-background-color-active: var(--uc-light-active) !important;
+        --button-background-color-selected: var(--uc-light-active) !important;
+        --button-background-color-ghost: transparent !important;
+        --button-background-color-ghost-hover: var(--uc-light-hover) !important;
+        --button-background-color-ghost-active: var(--uc-light-active) !important;
+        --button-background-color-ghost-selected: var(--uc-light-active) !important;
+        --button-border-color-hover: var(--uc-light-border) !important;
+        --button-border-color-active: var(--uc-light-strong-border) !important;
+        --button-border-color-selected: var(--uc-light-strong-border) !important;
+        --button-border-color-ghost-hover: var(--uc-light-border) !important;
+        --button-border-color-ghost-active: var(--uc-light-strong-border) !important;
+        --button-border-color-ghost-selected: var(--uc-light-strong-border) !important;
+        --button-text-color: var(--uc-light-text) !important;
+        --button-text-color-hover: var(--uc-light-text) !important;
+        --button-text-color-active: var(--uc-light-text) !important;
+        --button-text-color-ghost: var(--uc-light-text) !important;
+        --button-text-color-ghost-hover: var(--uc-light-text) !important;
+        --button-text-color-ghost-active: var(--uc-light-text) !important;
+        --toolbarbutton-background-color-active: var(--uc-light-active) !important;
+      }
+
+      /* Field and expanded results, including the promoted vertical-tab URL
+         bar, share a bright glass surface. */
+      #urlbar,
+      #searchbar {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        --toolbar-field-background-color: var(--uc-light-field) !important;
+        --toolbar-field-focus-background-color: var(--uc-light-field-focus) !important;
+        --toolbar-field-color: var(--uc-light-text) !important;
+        --toolbar-field-focus-color: var(--uc-light-text) !important;
+        --urlbar-box-background-color: transparent !important;
+        --urlbar-box-background-color-focus: transparent !important;
+        --urlbar-box-background-color-hover: var(--uc-light-hover) !important;
+        --urlbar-box-background-color-active: var(--uc-light-active) !important;
+        --urlbar-box-text-color-hover: var(--uc-light-text) !important;
+      }
+      #urlbar > :is(.urlbar-background, #urlbar-background),
+      #searchbar,
+      #searchbar .searchbar-textbox {
+        background: var(--uc-light-field) !important;
+        color: var(--uc-light-text) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88), 0 4px 12px rgba(26, 42, 64, 0.08) !important;
+        backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+      }
+      #searchbar .searchbar-textbox {
+        background: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+      }
+      #urlbar:is([focused], [open], [breakout][breakout-extend]) > :is(.urlbar-background, #urlbar-background) {
+        background: var(--uc-light-field-focus) !important;
+        border-color: var(--uc-light-strong-border) !important;
+      }
+      :root:has(#vertical-tabs[visible]) #urlbar[open][breakout][breakout-extend] {
+        backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+      }
+      :root:has(#vertical-tabs[visible]) #urlbar[open][breakout][breakout-extend] > .urlbar-background {
+        backdrop-filter: none !important;
+      }
+      #urlbar :is(#urlbar-input, .urlbar-input, .urlbarView, .urlbarView-row, .urlbarView-title, .urlbarView-no-wrap) {
+        color: var(--uc-light-text) !important;
+      }
+      #urlbar :is(.urlbarView-action, .urlbarView-title-separator, .urlbarView-row-inner) { color: var(--uc-light-text) !important; }
+      #urlbar .urlbarView-url { color: rgb(0, 103, 135) !important; }
+      .urlbarView-userContext {
+        color: var(--uc-light-text) !important;
+        background: color-mix(in srgb, var(--identity-tab-color) 20%, rgba(252, 253, 255, 0.72)) !important;
+        border-color: color-mix(in srgb, var(--identity-tab-color) 56%, var(--uc-light-border)) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      .urlbarView-userContext:hover {
+        background: color-mix(in srgb, var(--identity-tab-color) 28%, rgba(252, 253, 255, 0.82)) !important;
+      }
+      #urlbar .urlbarView-row-inner:is(:hover, [selected]) {
+        color: var(--uc-light-text) !important;
+        background-color: rgba(255, 255, 255, 0.22) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05)) !important;
+        border-color: rgba(255, 255, 255, 0.48) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+        backdrop-filter: blur(8px) saturate(125%) !important;
+        -webkit-backdrop-filter: blur(8px) saturate(125%) !important;
+      }
+      #urlbar .searchmode-switcher {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        background: transparent !important;
+        --button-background-color: transparent !important;
+        --button-background-color-hover: var(--uc-light-hover) !important;
+        --button-background-color-active: var(--uc-light-active) !important;
+        --button-text-color: var(--uc-light-text) !important;
+        --button-text-color-hover: var(--uc-light-text) !important;
+      }
+      #urlbar .searchmode-switcher:is(:hover, :focus-visible),
+      #urlbar :is(.identity-box-button, #trust-icon-container, #tracking-protection-icon-container,
+        .urlbar-icon-wrapper, .urlbar-page-action, .urlbar-go-button, .search-go-button,
+        #urlbar-revert-button-container, #notification-popup-box):not([disabled]):hover {
+        color: var(--uc-light-text) !important;
+        background-color: var(--uc-light-hover) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+
+      /* Native popups keep DWM Mica and paint exactly one surface. This covers
+         library/profile/extension menus as well as IDs in newer builds. */
+      panel,
+      menupopup,
+      tooltip {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        --panel-text-color: var(--uc-light-text) !important;
+        --panel-color: var(--uc-light-text) !important;
+        --arrowpanel-color: var(--uc-light-text) !important;
+        --text-color: var(--uc-light-text) !important;
+        --text-color-deemphasized: var(--uc-light-muted) !important;
+        --panel-separator-color: var(--uc-aux-separator) !important;
+        --panel-description-color: var(--uc-light-muted) !important;
+        --panel-disabled-color: rgba(32, 42, 55, 0.46) !important;
+        --menuitem-text-color: var(--uc-light-text) !important;
+        --menuitem-hover-text-color: var(--uc-light-text) !important;
+        --menuitem-hover-background-color: transparent !important;
+        --menuitem-active-background-color: transparent !important;
+        --panel-menuitem-hover-bgcolor: transparent !important;
+        --panel-menuitem-active-bgcolor: transparent !important;
+        --button-text-color: var(--uc-light-text) !important;
+        --button-text-color-hover: var(--uc-light-text) !important;
+        --button-text-color-active: var(--uc-light-text) !important;
+        --button-text-color-ghost: var(--uc-light-text) !important;
+        --button-text-color-ghost-hover: var(--uc-light-text) !important;
+        --button-text-color-ghost-active: var(--uc-light-text) !important;
+        --button-text-color-disabled: rgba(32, 42, 55, 0.46) !important;
+        --button-background-color-disabled: rgba(39, 57, 79, 0.05) !important;
+        --button-border-color-disabled: rgba(39, 57, 79, 0.12) !important;
+        --button-background-color-primary: var(--uc-aux-primary-bg) !important;
+        --button-background-color-primary-hover: var(--uc-aux-primary-hover) !important;
+        --button-background-color-primary-active: var(--uc-aux-primary-active) !important;
+        --button-text-color-primary: white !important;
+        --button-text-color-primary-hover: white !important;
+        --button-text-color-primary-active: white !important;
+        --uc-context-hover: transparent !important;
+        --uc-context-active: transparent !important;
+        --uc-context-border: transparent !important;
+      }
+      panel,
+      menupopup {
+        --panel-background: transparent !important;
+        --panel-background-color: transparent !important;
+        --arrowpanel-background: transparent !important;
+        background: var(--uc-context-native-tint) !important;
+      }
+      panel:has(.panel-arrowcontent) { background: transparent !important; }
+      panel .panel-arrowcontent {
+        color: var(--uc-light-text) !important;
+        background: var(--uc-panel-glass) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+        backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(104%) !important;
+      }
+      #tab-preview-panel {
+        color-scheme: light !important;
+        color: var(--uc-tabpreview-text) !important;
+        background: var(--uc-tabpreview-surface) !important;
+        background-color: var(--uc-tabpreview-surface) !important;
+        background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 55%, rgba(0, 0, 0, 0.035)) !important;
+        border: 1px solid var(--uc-tabpreview-border) !important;
+        border-radius: var(--uc-tabpreview-radius) !important;
+        box-shadow: 0 14px 36px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+        filter: drop-shadow(0 10px 20px rgba(26, 42, 64, 0.14)) !important;
+        backdrop-filter: blur(var(--uc-tabpreview-blur, 24px)) saturate(118%) brightness(104%) !important;
+        -webkit-backdrop-filter: blur(var(--uc-tabpreview-blur, 24px)) saturate(118%) brightness(104%) !important;
+      }
+      #tab-preview-panel::part(content),
+      #tab-preview-panel .panel-arrowcontent,
+      #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container,
+        .tab-preview-title, .tab-preview-uri, .tab-preview-pid, .tab-preview-activeness, .tab-preview-pid-activeness),
+      #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container)::before,
+      #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container)::after {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+      }
+      panel :is(panelview, .PanelUI-subView, .panel-subview-body, .panel-footer,
+        .popup-notification-content, .popup-notification-body-container, .popup-notification-checkbox-container,
+        .addon-webext-perm-notification-content, .tab-group-create-actions, .tab-group-edit-actions) {
+        color: var(--uc-light-text) !important;
+        background: transparent !important;
+      }
+      panel :is(.subviewbutton, .toolbarbutton-text, .popup-notification-description, .popup-notification-origin,
+        .unified-extensions-item-name, .unified-extensions-item-message, .downloadDisplayName, .downloadDetails),
+      menupopup :is(menu, menuitem),
+      tooltip :is(label, description, .tooltip-label),
+      #appMenu-popup :is(#appMenu-fxa-status2, #appMenu-fxa-label2) {
+        color: var(--uc-light-text) !important;
+      }
+      #appMenu-popup #appMenu-fxa-sign-in-promo {
+        background: rgba(52, 111, 180, 0.10) !important;
+        color: var(--uc-light-text) !important;
+      }
+      #appMenu-popup .fxa-menu-sign-in-promo-heading { color: var(--uc-light-text) !important; }
+      #appMenu-popup .fxa-menu-sign-in-promo-message { color: var(--uc-light-muted) !important; }
+      menupopup :is(menu, menuitem),
+      panel :is(.subviewbutton, .addon-banner-item, menuitem) {
+        --menuitem-hover-background-color: transparent !important;
+        --menuitem-active-background-color: transparent !important;
+        --panel-menuitem-hover-bgcolor: transparent !important;
+        --panel-menuitem-active-bgcolor: transparent !important;
+        transition: none !important;
+      }
+      panel:not(#appMenu-popup) :is(.subviewbutton, .addon-banner-item, menuitem):not([disabled], [aria-disabled="true"]):hover,
+      menupopup :is(menu, menuitem):not([disabled], [aria-disabled="true"]):hover,
+      #downloadsListBox > richlistitem:not([disabled]):hover {
+        color: var(--uc-light-text) !important;
+        background-color: rgba(255, 255, 255, 0.56) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30)) !important;
+        border-color: rgba(255, 255, 255, 0.72) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 4px 14px rgba(26, 42, 64, 0.13) !important;
+        backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+        transition: none !important;
+      }
+      menupopup :is(menu, menuitem)[_moz-menuactive="true"]:not(:hover) {
+        color: var(--uc-light-text) !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        transition: none !important;
+      }
+      panel:not(#appMenu-popup) :is(.subviewbutton, .addon-banner-item):not([disabled], [aria-disabled="true"]):active,
+      menupopup :is(menu, menuitem):not([disabled], [aria-disabled="true"]):active {
+        background: var(--uc-light-active) !important;
+      }
+      panel :is(input[type="text"], input[type="search"], textarea, select, #tab-group-name) {
+        color: var(--uc-light-text) !important;
+        background: var(--uc-light-field) !important;
+        border-color: var(--uc-light-border) !important;
+      }
+      panel :is(menuseparator, toolbarseparator, .panel-subview-separator, hr),
+      menupopup menuseparator {
+        border-color: var(--uc-aux-separator) !important;
+      }
+      panel moz-button::part(button) {
+        color: var(--uc-light-text) !important;
+        background: var(--uc-aux-button-bg) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      panel moz-button:not([disabled]):hover::part(button) { background: var(--uc-light-hover) !important; }
+      panel moz-button:not([disabled]):active::part(button) { background: var(--uc-light-active) !important; }
+      panel moz-button[type="primary"]::part(button) {
+        color: white !important;
+        background: var(--uc-aux-primary-bg) !important;
+      }
+      panel moz-button[type="primary"]:not([disabled]):hover::part(button) { background: var(--uc-aux-primary-hover) !important; }
+
+      #notification-popup popupnotification :is(label, description),
+      #notification-popup :is(.popup-notification-description, .popup-notification-origin) {
+        color: var(--uc-light-text) !important;
+      }
+      #notification-popup :is(.popup-notification-primary-button, .popup-notification-secondary-button)::part(button) {
+        color: var(--uc-light-text) !important;
+        background: var(--uc-aux-button-bg) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      #notification-popup :is(.popup-notification-primary-button, .popup-notification-secondary-button):not([disabled]):hover::part(button) {
+        background: var(--uc-light-hover) !important;
+      }
+      tooltip {
+        background: rgba(246, 249, 253, 0.84) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+        backdrop-filter: blur(18px) saturate(120%) brightness(104%) !important;
+      }
+      tooltip .places-tooltip-uri { color: var(--uc-light-muted) !important; }
+      #trustpanel-popup :is(#trustpanel-blocker-section, .trustpanel-graphic-inner) {
+        background: rgba(39, 57, 79, 0.06) !important;
+      }
+      #trustpanel-popup #trustpanel-insecure-section {
+        background: rgba(184, 44, 50, 0.12) !important;
+        border-color: rgba(160, 35, 40, 0.28) !important;
+      }
+      #trustpanel-popup #trustpanel-toggle {
+        --toggle-background-color: rgba(39, 57, 79, 0.18) !important;
+        --toggle-background-color-hover: rgba(39, 57, 79, 0.26) !important;
+        --toggle-background-color-active: rgba(39, 57, 79, 0.32) !important;
+        --toggle-border-color: var(--uc-light-border) !important;
+      }
+
+      /* Provider menu: custom host owns the hover; inner shadow button does
+         not paint an additional highlight. */
+      .searchmode-switcher-panel,
+      .searchmode-switcher-panel-list {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        --panel-text-color: var(--uc-light-text) !important;
+        --button-text-color-menu-hover: var(--uc-light-text) !important;
+        --button-text-color-menu-active: var(--uc-light-text) !important;
+        --button-text-color-menu-disabled: var(--uc-light-muted) !important;
+      }
+      .searchmode-switcher-panel-list > panel-item {
+        color: var(--uc-light-text) !important;
+        --button-text-color-menu-hover: var(--uc-light-text) !important;
+        --button-text-color-menu-active: var(--uc-light-text) !important;
+        --button-background-color: transparent !important;
+        --button-background-color-hover: transparent !important;
+        --button-background-color-active: transparent !important;
+        --button-background-color-ghost-hover: transparent !important;
+      }
+      .searchmode-switcher-panel-list > panel-item:not([disabled]):hover {
+        background: var(--uc-light-hover) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      .searchmode-switcher-panel-list > panel-item::part(button) { background: transparent !important; }
+      .searchmode-switcher-panel-list { color: var(--uc-light-text) !important; }
+      .searchmode-switcher-panel-description {
+        color: var(--uc-light-muted) !important;
+        text-shadow: none !important;
+      }
+      .searchmode-switcher-panel-list > hr { background-color: var(--uc-aux-separator) !important; }
+
+      /* Close-multiple-tabs dialogs, website prompts and browser infobars. */
+      .dialogBox {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        background: rgba(248, 251, 255, 0.84) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+        backdrop-filter: blur(var(--uc-urlbar-blur, 20px)) saturate(120%) brightness(104%) !important;
+      }
+      /* The common-dialog surface has a later, ID-specific dark rule in the
+         shared sheet. Raise specificity here so the light surface wins for
+         close-tab prompts and other window-level alerts. */
+      :root :is(.content-prompt-dialog, .dialogStack, #window-modal-dialog)
+      > .dialogOverlay > .dialogBox {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        background: rgba(248, 251, 255, 0.84) !important;
+        background-color: rgba(248, 251, 255, 0.84) !important;
+        background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.08) 58%, rgba(75, 103, 137, 0.025)) !important;
+        border: 1px solid var(--uc-light-border) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 16px 42px rgba(26, 42, 64, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+      }
+      :root :is(.content-prompt-dialog, .dialogStack, #window-modal-dialog)
+      > .dialogOverlay > .dialogBox > .dialogFrame {
+        color-scheme: light !important;
+      }
+      notification-message {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        --message-bar-background-color: var(--uc-infobar-surface) !important;
+        --message-bar-text-color: var(--uc-light-text) !important;
+        --button-background-color-ghost-hover: var(--uc-light-hover) !important;
+        --button-background-color-ghost-active: var(--uc-light-active) !important;
+        --button-border-color-ghost-hover: var(--uc-light-border) !important;
+        --button-border-color-ghost-active: var(--uc-light-strong-border) !important;
+        background-color: var(--uc-infobar-surface) !important;
+        border-color: var(--uc-light-border) !important;
+      }
+      /* Tab-group tips and Sync's login advisory are feature-callout HTML,
+         not an arrow panel, and have their own color/button tokens. */
+      #feature-callout {
+        color-scheme: light !important;
+        color: var(--uc-light-text) !important;
+        --fc-background: var(--uc-context-native-tint) !important;
+        --fc-color: var(--uc-light-text) !important;
+        --fc-border: var(--uc-light-border) !important;
+        --fc-button-background: var(--uc-aux-button-bg) !important;
+        --fc-button-background-hover: var(--uc-light-hover) !important;
+        --fc-button-background-active: var(--uc-light-active) !important;
+        --fc-button-color: var(--uc-light-text) !important;
+        --fc-button-border: var(--uc-light-border) !important;
+        --fc-primary-button-background: var(--uc-aux-primary-bg) !important;
+        --fc-primary-button-background-hover: var(--uc-aux-primary-hover) !important;
+        --fc-primary-button-background-active: var(--uc-aux-primary-active) !important;
+        --fc-primary-button-color: white !important;
+      }
+      #feature-callout .main-content {
+        background: var(--uc-panel-glass) !important;
+        color: var(--uc-light-text) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+        backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(104%) !important;
+      }
+      #feature-callout :is(h1, h2, p, [data-l10n-id="login-status-advisory-title"]) {
+        color: var(--uc-light-text) !important;
+      }
+      .tab-icon-overlay {
+        color: var(--uc-light-text) !important;
+        background-color: rgba(246, 249, 253, 0.90) !important;
+        border-color: var(--uc-light-border) !important;
+        box-shadow: var(--uc-light-shadow) !important;
+      }
+      /* Disabled controls never acquire a clickable glass hover. */
+      :is(panel, menupopup) :is(menu, menuitem, toolbarbutton, .subviewbutton, panel-item):is([disabled], [aria-disabled="true"]):is(:hover, :active, [_moz-menuactive="true"]) {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+      }
+      panel moz-button[disabled]::part(button) {
+        background: rgba(39, 57, 79, 0.05) !important;
+        color: rgba(32, 42, 55, 0.46) !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+}
+
+/* Focus treatment for browser-owned prompt inputs and other themed fields:
+   keep a visible keyboard cue, but replace the default hard cyan ring with
+   one restrained blue glass gradient. */
+@-moz-document url("chrome://global/content/commonDialog.xhtml"),
+               url("chrome://mozapps/content/handling/permissionDialog.xhtml") {
+  #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):focus {
+    outline: none !important;
+    border-color: rgba(112, 178, 245, 0.60) !important;
+    background-image: linear-gradient(135deg, rgba(90, 160, 235, 0.13), rgba(190, 220, 255, 0.025) 72%) !important;
+    box-shadow: 0 0 0 2px rgba(95, 160, 230, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  }
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):focus {
+      border-color: rgba(63, 128, 197, 0.50) !important;
+      background-image: linear-gradient(135deg, rgba(104, 174, 239, 0.16), rgba(255, 255, 255, 0.20) 72%) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+    }
+  }
+}
+
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    .tab-group-editor-panel #tab-group-name:focus,
+    #chat-shortcuts-options-panel .ask-chat-shortcuts-custom-prompt:focus {
+      border-color: rgba(63, 128, 197, 0.50) !important;
+      background-image: linear-gradient(135deg, rgba(104, 174, 239, 0.16), rgba(255, 255, 255, 0.20) 72%) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+    }
+    .tab-group-editor-panel #tab-group-name:focus {
+      outline-color: rgba(63, 128, 197, 0.20) !important;
+    }
+  }
+}
+
+/* Firefox exposes address-bar and popup theme colors as root attributes.
+   Use those directly as well as prefers-color-scheme: the browser chrome
+   theme can be light even when the OS color-scheme media query is dark. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @layer liquidmica-light {
+    :root[lwt-toolbar="light"] {
+      --uc-aux-panel-text: rgb(32, 42, 55) !important;
+      --uc-aux-panel-muted-text: rgb(82, 94, 110) !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) {
+      color-scheme: light !important;
+      --uc-light-text: rgb(32, 42, 55) !important;
+      --uc-light-muted: rgb(82, 94, 110) !important;
+      --uc-aux-panel-text: rgb(32, 42, 55) !important;
+      --uc-aux-panel-muted-text: rgb(82, 94, 110) !important;
+      --uc-light-field: rgba(252, 253, 255, 0.42) !important;
+      --uc-light-field-focus: rgba(252, 253, 255, 0.76) !important;
+      --uc-light-hover: rgba(42, 68, 99, 0.10) !important;
+      --uc-light-active: rgba(38, 96, 164, 0.16) !important;
+      --uc-light-border: rgba(39, 57, 79, 0.24) !important;
+      --uc-light-strong-border: rgba(31, 83, 144, 0.48) !important;
+      --uc-tabpreview-surface: rgba(252, 253, 255, 0.78) !important;
+      --uc-tabpreview-border: rgba(39, 57, 79, 0.22) !important;
+      --uc-tabpreview-text: var(--uc-light-text) !important;
+      --uc-tabpreview-subtext: var(--uc-light-muted) !important;
+      --uc-tabpreview-blur: 24px !important;
+      --uc-glass-hover: var(--uc-light-hover) !important;
+      --uc-glass-active: var(--uc-light-active) !important;
+      --uc-glass-border: var(--uc-light-border) !important;
+      --uc-glass-border-strong: var(--uc-light-strong-border) !important;
+      --uc-context-hover: transparent !important;
+      --uc-context-active: transparent !important;
+      --uc-context-border: transparent !important;
+      --uc-appmenu-hover: transparent !important;
+      --uc-appmenu-active: transparent !important;
+      --uc-subview-row-hover: transparent !important;
+      --uc-subview-row-active: transparent !important;
+      --uc-subview-row-border: transparent !important;
+    }
+
+    :root[lwt-popup="light"] {
+      --uc-appmenu-surface: rgba(252, 253, 255, 0.84) !important;
+      --uc-appmenu-hover: transparent !important;
+      --uc-appmenu-active: transparent !important;
+      --uc-panel-glass: rgba(252, 253, 255, 0.84) !important;
+      --uc-subview-row-hover: transparent !important;
+      --uc-subview-row-active: transparent !important;
+      --uc-subview-row-border: transparent !important;
+      --uc-context-native-tint: rgba(252, 253, 255, 0.78) !important;
+      --uc-appmenu-text: var(--uc-light-text) !important;
+      --uc-panel-text: var(--uc-light-text) !important;
+      --panel-background: transparent !important;
+      --panel-background-color: transparent !important;
+      --arrowpanel-background: transparent !important;
+      --panel-text-color: var(--uc-light-text) !important;
+      --arrowpanel-color: var(--uc-light-text) !important;
+      --panel-border-color: var(--uc-light-border) !important;
+      --arrowpanel-border-color: var(--uc-light-border) !important;
+      --menuitem-hover-background-color: transparent !important;
+      --menuitem-active-background-color: transparent !important;
+      --panel-menuitem-hover-bgcolor: transparent !important;
+      --panel-menuitem-active-bgcolor: transparent !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(menupopup, panel) {
+      --uc-context-hover: transparent !important;
+      --uc-context-active: transparent !important;
+      --uc-context-border: transparent !important;
+      --menuitem-hover-background-color: transparent !important;
+      --menuitem-active-background-color: transparent !important;
+      --panel-menuitem-hover-bgcolor: transparent !important;
+      --panel-menuitem-active-bgcolor: transparent !important;
+      --button-background-color-hover: transparent !important;
+      --button-background-color-active: transparent !important;
+      --button-background-color-ghost-hover: transparent !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    menupopup :is(menu, menuitem),
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    panel :is(.subviewbutton, .addon-banner-item, menuitem) {
+      --menuitem-hover-background-color: transparent !important;
+      --menuitem-active-background-color: transparent !important;
+      --panel-menuitem-hover-bgcolor: transparent !important;
+      --panel-menuitem-active-bgcolor: transparent !important;
+      transition: none !important;
+    }
+
+    :root[lwt-popup="light"] :is(panel, menupopup, tooltip) {
+      color-scheme: light !important;
+      color: var(--uc-light-text) !important;
+      background-color: var(--uc-context-native-tint, rgba(252, 253, 255, 0.78)) !important;
+    }
+
+    :root[lwt-popup="light"] panel:has(.panel-arrowcontent) {
+      background: transparent !important;
+    }
+
+    :root[lwt-popup="light"] panel .panel-arrowcontent {
+      color: var(--uc-light-text) !important;
+      background: var(--uc-panel-glass, rgba(252, 253, 255, 0.84)) !important;
+      border-color: var(--uc-light-border) !important;
+      box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(108%) !important;
+    }
+
+    :root[lwt-popup="light"] menupopup :is(menu, menuitem),
+    :root[lwt-popup="light"] panel :is(.subviewbutton, .toolbarbutton-text, .popup-notification-description, .popup-notification-origin) {
+      color: var(--uc-light-text) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    menupopup :is(menu, menuitem):not([disabled], [aria-disabled="true"]):hover,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    panel:not(#appMenu-popup) :is(.subviewbutton, .addon-banner-item, menuitem):not([disabled], [aria-disabled="true"]):hover {
+      color: var(--uc-light-text) !important;
+      background-color: rgba(255, 255, 255, 0.56) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30)) !important;
+      border-color: rgba(255, 255, 255, 0.72) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 4px 14px rgba(26, 42, 64, 0.13) !important;
+      backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+      transition: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    menupopup :is(menu, menuitem)[_moz-menuactive="true"]:not(:hover) {
+      color: var(--uc-light-text) !important;
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      transition: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"]) #searchbar {
+      color-scheme: light !important;
+      color: var(--uc-light-text) !important;
+      --toolbar-field-background-color: var(--uc-light-field) !important;
+      --toolbar-field-focus-background-color: var(--uc-light-field-focus) !important;
+      --toolbar-field-color: var(--uc-light-text) !important;
+      --toolbar-field-focus-color: var(--uc-light-text) !important;
+      --urlbar-box-background-color: transparent !important;
+      --urlbar-box-background-color-focus: transparent !important;
+      --urlbar-box-background-color-hover: var(--uc-light-hover) !important;
+      --urlbar-box-background-color-active: var(--uc-light-active) !important;
+      --urlbar-box-text-color-hover: var(--uc-light-text) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar > .urlbar-background {
+      background-color: var(--uc-light-field) !important;
+      background-image: none !important;
+      color: var(--uc-light-text) !important;
+      border-color: var(--uc-light-border) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 4px 12px rgba(26, 42, 64, 0.08) !important;
+      backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+      -webkit-backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar:is([focused], [open], [breakout][breakout-extend]) > .urlbar-background {
+      background-color: var(--uc-light-field-focus) !important;
+      border-color: var(--uc-light-strong-border) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar[open] .urlbarView,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar[breakout][breakout-extend] .urlbarView,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar :is(.urlbarView-body-outer, .urlbarView-body-inner, .urlbarView-results) {
+      color: var(--uc-light-text) !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar :is(#urlbar-input, .urlbar-input, .urlbarView-title, .urlbarView-no-wrap) {
+      color: var(--uc-light-text) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar :is(.urlbarView-action, .urlbarView-title-separator) {
+      color: var(--uc-light-text) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar .urlbarView-row-inner {
+      color: var(--uc-light-text) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar .urlbarView-url {
+      color: rgb(0, 103, 135) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #urlbar .urlbarView-row-inner:is(:hover, [selected]) {
+      color: var(--uc-light-text) !important;
+      background-color: rgba(255, 255, 255, 0.22) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05)) !important;
+      border-color: rgba(255, 255, 255, 0.48) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+      backdrop-filter: blur(8px) saturate(125%) !important;
+      -webkit-backdrop-filter: blur(8px) saturate(125%) !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #tab-preview-panel {
+      color-scheme: light !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #tab-preview-panel::part(content) {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #tab-preview-panel .panel-arrowcontent {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container,
+      .tab-preview-title, .tab-preview-uri, .tab-preview-pid, .tab-preview-activeness, .tab-preview-pid-activeness),
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container)::before,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #tab-preview-panel :is(.tab-preview-content-interactive, .tab-preview-content-main, .tab-preview-text-container)::after {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) #tab-preview-panel {
+      color-scheme: light !important;
+      color: var(--uc-tabpreview-text) !important;
+      background: var(--uc-tabpreview-surface) !important;
+      background-color: var(--uc-tabpreview-surface) !important;
+      background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 55%, rgba(0, 0, 0, 0.035)) !important;
+      border: 1px solid var(--uc-tabpreview-border) !important;
+      border-radius: var(--uc-tabpreview-radius) !important;
+      box-shadow: 0 14px 36px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+      filter: drop-shadow(0 10px 20px rgba(26, 42, 64, 0.14)) !important;
+      backdrop-filter: blur(var(--uc-tabpreview-blur, 24px)) saturate(118%) brightness(104%) !important;
+      -webkit-backdrop-filter: blur(var(--uc-tabpreview-blur, 24px)) saturate(118%) brightness(104%) !important;
+    }
+
+    /* Window-level close-tab / website prompt dialogs also need to follow the
+       browser theme, even when the OS itself is using dark appearance. */
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(.content-prompt-dialog, .dialogStack, #window-modal-dialog)
+    > .dialogOverlay > .dialogBox {
+      color-scheme: light !important;
+      color: var(--uc-light-text) !important;
+      background: rgba(248, 251, 255, 0.84) !important;
+      background-color: rgba(248, 251, 255, 0.84) !important;
+      background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.08) 58%, rgba(75, 103, 137, 0.025)) !important;
+      border: 1px solid var(--uc-light-border) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 16px 42px rgba(26, 42, 64, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(.content-prompt-dialog, .dialogStack, #window-modal-dialog)
+    > .dialogOverlay > .dialogBox > .dialogFrame {
+      color-scheme: light !important;
+    }
+
+    /* Some themes expose lwt-toolbar="light" without the popup/field flags.
+       Accept any explicit light-theme marker for modal and notification UI. */
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #window-modal-dialog
+    > .dialogOverlay > .dialogBox {
+      color-scheme: light !important;
+      color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+      background: rgba(248, 251, 255, 0.84) !important;
+      background-color: rgba(248, 251, 255, 0.84) !important;
+      background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.08) 58%, rgba(75, 103, 137, 0.025)) !important;
+      border-color: var(--uc-light-border, rgba(39, 57, 79, 0.24)) !important;
+      box-shadow: 0 16px 42px rgba(26, 42, 64, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #window-modal-dialog
+    > .dialogOverlay > .dialogBox > .dialogFrame {
+      color-scheme: light !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    panel:has(.panel-arrowcontent)
+    > .panel-arrowcontainer > .panel-arrowcontent,
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    panel .panel-arrowcontent {
+      color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+      background: var(--uc-panel-glass, rgba(252, 253, 255, 0.84)) !important;
+      border-color: var(--uc-light-border, rgba(39, 57, 79, 0.24)) !important;
+      box-shadow: 0 14px 34px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
+      backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(var(--uc-panel-glass-blur, 28px)) saturate(116%) brightness(108%) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #notification-popup {
+      color-scheme: light !important;
+      color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+      background-color: var(--uc-context-native-tint, rgba(252, 253, 255, 0.78)) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #notification-popup
+    :is(popupnotification, .popup-notification-description, .popup-notification-origin, label, description) {
+      color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    notification-message.infobar,
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    notification-message[message-bar-type="infobar"] {
+      color-scheme: light !important;
+      color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+      --message-bar-background-color: var(--uc-infobar-surface, rgba(239, 245, 252, 0.84)) !important;
+      --message-bar-text-color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+      background-color: var(--uc-infobar-surface, rgba(239, 245, 252, 0.84)) !important;
+      border-color: var(--uc-light-border, rgba(39, 57, 79, 0.24)) !important;
+    }
+    /* The search-mode list may be moved into a top-level XUL panel. Match
+       Firefox's light toolbar/popup attributes there as well as the OS media
+       query, including the separately styled "search once" heading. */
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(.searchmode-switcher-panel, .searchmode-switcher-panel-list) {
+      color-scheme: light !important;
+      color: rgb(32, 42, 55) !important;
+      --panel-text-color: rgb(32, 42, 55) !important;
+      --button-text-color-menu-hover: rgb(32, 42, 55) !important;
+      --button-text-color-menu-active: rgb(32, 42, 55) !important;
+      --button-text-color-menu-disabled: rgb(82, 94, 110) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    .searchmode-switcher-panel-list > panel-item {
+      color: rgb(32, 42, 55) !important;
+      --button-text-color-menu-hover: rgb(32, 42, 55) !important;
+      --button-text-color-menu-active: rgb(32, 42, 55) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    .searchmode-switcher-panel-description {
+      color: rgb(82, 94, 110) !important;
+      text-shadow: none !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(#full-page-translations-panel, #select-translations-panel)
+    .translations-panel-button-group {
+      --button-text-color-primary: rgb(10, 48, 67) !important;
+      --button-text-color-primary-hover: rgb(10, 48, 67) !important;
+      --button-text-color-primary-active: rgb(10, 48, 67) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(#full-page-translations-panel, #select-translations-panel)
+    .translations-panel-button-group > button[default] {
+      color: rgb(10, 48, 67) !important;
+      background-color: rgb(107, 207, 249) !important;
+      --button-text-color-primary: rgb(10, 48, 67) !important;
+    }
+  }
+}
+
+/* The commonDialog document is loaded inside a browser dialog frame. Keep its
+   controls and text in the same light palette when the system color scheme is
+   light; the parent frame is separately keyed to Firefox's lwt attributes. */
+@-moz-document url("chrome://global/content/commonDialog.xhtml"),
+               url("chrome://mozapps/content/handling/permissionDialog.xhtml") {
+  /* The close-tabs prompt can be hosted in a dark OS while Firefox itself is
+     using its Light toolbar theme. Apply the same signal to dialog contents. */
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)) {
+    @layer liquidmica-light {
+      :root {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        --background-color-canvas: transparent !important;
+        --in-content-page-background: transparent !important;
+        --button-background-color-primary: rgba(38, 88, 146, 0.92) !important;
+        --button-background-color-primary-hover: rgb(30, 72, 123) !important;
+        --button-background-color-primary-active: rgb(24, 59, 103) !important;
+        --button-text-color-primary: white !important;
+        background: transparent !important;
+      }
+      #commonDialogWindow, #commonDialog, #dialogGrid,
+      #infoTitle, #infoBody, #checkboxContainer, #checkboxContainer label {
+        color: rgb(32, 42, 55) !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        text-shadow: none !important;
+      }
+      #commonDialog::part(dialog-button) {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.62) !important;
+        background-color: rgba(255, 255, 255, 0.62) !important;
+        border: 1px solid rgba(39, 57, 79, 0.24) !important;
+        border-radius: 10px !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+      }
+      #commonDialog::part(dialog-button):hover {
+        background: rgba(255, 255, 255, 0.82) !important;
+        background-color: rgba(255, 255, 255, 0.82) !important;
+      }
+      #commonDialog::part(dialog-button):active {
+        background: rgba(42, 68, 99, 0.14) !important;
+        background-color: rgba(42, 68, 99, 0.14) !important;
+      }
+      #commonDialog::part(dialog-button):disabled {
+        color: rgba(32, 42, 55, 0.48) !important;
+        background: rgba(39, 57, 79, 0.08) !important;
+        background-color: rgba(39, 57, 79, 0.08) !important;
+        border-color: rgba(39, 57, 79, 0.16) !important;
+        box-shadow: none !important;
+      }
+      #checkbox, #checkboxContainer checkbox {
+        color: rgb(32, 42, 55) !important;
+        accent-color: rgb(38, 88, 146) !important;
+      }
+    }
+  }
+
+  @layer liquidmica-light {
+    /* Support light themes whose root exposes the frame toolbar signal rather
+       than the popup/field signals used by the rules below. */
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) {
+      color-scheme: light !important;
+      color: rgb(32, 42, 55) !important;
+      --background-color-canvas: transparent !important;
+      --in-content-page-background: transparent !important;
+      --button-background-color-primary: rgba(38, 88, 146, 0.92) !important;
+      --button-background-color-primary-hover: rgb(30, 72, 123) !important;
+      --button-background-color-primary-active: rgb(24, 59, 103) !important;
+      --button-background-color-primary-disabled: rgba(39, 57, 79, 0.08) !important;
+      --button-border-color-primary: rgba(31, 83, 144, 0.32) !important;
+      --button-text-color-primary: white !important;
+      --button-text-color-primary-hover: white !important;
+      --button-text-color-primary-active: white !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(#commonDialogWindow, #commonDialog, #dialogGrid, #infoTitle, #infoBody,
+      #checkboxContainer, #checkboxContainer label) {
+      color: rgb(32, 42, 55) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      text-shadow: none !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #commonDialog::part(dialog-button) {
+      color: rgb(32, 42, 55) !important;
+      background: rgba(255, 255, 255, 0.62) !important;
+      background-color: rgba(255, 255, 255, 0.62) !important;
+      border: 1px solid rgba(39, 57, 79, 0.24) !important;
+      border-radius: 10px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #commonDialog::part(dialog-button):hover {
+      background: rgba(255, 255, 255, 0.82) !important;
+      background-color: rgba(255, 255, 255, 0.82) !important;
+      border-color: rgba(39, 57, 79, 0.32) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #commonDialog::part(dialog-button):active {
+      background: rgba(42, 68, 99, 0.14) !important;
+      background-color: rgba(42, 68, 99, 0.14) !important;
+    }
+    :root:is([lwt-toolbar="light"], [lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #commonDialog::part(dialog-button):disabled {
+      color: rgba(32, 42, 55, 0.42) !important;
+      background: rgba(39, 57, 79, 0.06) !important;
+      border-color: rgba(39, 57, 79, 0.12) !important;
+      box-shadow: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) {
+      color-scheme: light !important;
+      color: rgb(32, 42, 55) !important;
+      --background-color-canvas: transparent !important;
+      --in-content-page-background: transparent !important;
+      --button-background-color-primary: rgba(38, 88, 146, 0.92) !important;
+      --button-background-color-primary-hover: rgb(30, 72, 123) !important;
+      --button-background-color-primary-active: rgb(24, 59, 103) !important;
+      --button-background-color-primary-disabled: rgba(39, 57, 79, 0.08) !important;
+      --button-border-color-primary: rgba(31, 83, 144, 0.32) !important;
+      --button-text-color-primary: white !important;
+      --button-text-color-primary-hover: white !important;
+      --button-text-color-primary-active: white !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(#commonDialogWindow, #commonDialog, #dialogGrid, #infoTitle, #infoBody,
+      #checkboxContainer, #checkboxContainer label) {
+      color: rgb(32, 42, 55) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      text-shadow: none !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #commonDialog::part(dialog-button) {
+      color: rgb(32, 42, 55) !important;
+      background: rgba(255, 255, 255, 0.56) !important;
+      border: 1px solid rgba(39, 57, 79, 0.22) !important;
+      border-radius: 10px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+    }
+  }
+  @media (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        --background-color-canvas: transparent !important;
+        --in-content-page-background: transparent !important;
+        --button-background-color-primary: rgba(38, 88, 146, 0.92) !important;
+        --button-background-color-primary-hover: rgb(30, 72, 123) !important;
+        --button-background-color-primary-active: rgb(24, 59, 103) !important;
+        --button-background-color-primary-disabled: rgba(39, 57, 79, 0.08) !important;
+        --button-border-color-primary: rgba(31, 83, 144, 0.32) !important;
+        --button-border-color-primary-hover: rgba(31, 83, 144, 0.52) !important;
+        --button-text-color-primary: white !important;
+        --button-text-color-primary-hover: white !important;
+        --button-text-color-primary-active: white !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+      }
+      #commonDialogWindow,
+      #commonDialog,
+      #dialogGrid,
+      #infoTitle,
+      #infoBody,
+      #checkboxContainer,
+      #checkboxContainer label {
+        color: rgb(32, 42, 55) !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        text-shadow: none !important;
+      }
+      #infoTitle { font-weight: 650 !important; }
+      #infoBody { line-height: 1.5 !important; }
+      #checkbox,
+      #checkboxContainer checkbox {
+        accent-color: rgb(38, 88, 146) !important;
+      }
+      #commonDialog::part(dialog-button) {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.56) !important;
+        background-color: rgba(255, 255, 255, 0.56) !important;
+        border: 1px solid rgba(39, 57, 79, 0.22) !important;
+        border-radius: 10px !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+      }
+      #commonDialog::part(dialog-button):hover {
+        background: rgba(42, 68, 99, 0.10) !important;
+        border-color: rgba(39, 57, 79, 0.30) !important;
+      }
+      #commonDialog::part(dialog-button):active {
+        background: rgba(38, 96, 164, 0.16) !important;
+      }
+      #commonDialog::part(dialog-button):disabled {
+        color: rgba(32, 42, 55, 0.42) !important;
+        background: rgba(39, 57, 79, 0.06) !important;
+        border-color: rgba(39, 57, 79, 0.12) !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+}
+
+/* Final light-menu state: suppress Firefox's delayed blue native highlight
+   and let only the bright Liquid Glass row remain under the pointer. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @layer liquidmica-light {
+    @media (prefers-color-scheme: light) {
+      #appMenu-popup {
+        --uc-appmenu-hover: transparent !important;
+        --uc-appmenu-active: transparent !important;
+        --uc-subview-row-hover: transparent !important;
+        --uc-subview-row-active: transparent !important;
+        --uc-subview-row-border: transparent !important;
+        --menuitem-hover-background-color: transparent !important;
+        --menuitem-active-background-color: transparent !important;
+        --panel-menuitem-hover-bgcolor: transparent !important;
+        --panel-menuitem-active-bgcolor: transparent !important;
+        --button-background-color-hover: transparent !important;
+        --button-background-color-active: transparent !important;
+        --button-hover-bgcolor: transparent !important;
+        --button-active-bgcolor: transparent !important;
+      }
+      #appMenu-popup :is(.subviewbutton, #panelMenu_bookmarksMenu, #PanelUI-historyItems,
+        #PanelUI-recentlyClosedTabs, #PanelUI-recentlyClosedWindows):not([disabled], [aria-disabled="true"]):hover {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: var(--uc-light-text, rgb(32, 42, 55)) !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)) !important;
+        background-color: rgba(255, 255, 255, 0.60) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)) !important;
+        border-color: rgba(255, 255, 255, 0.78) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 4px 14px rgba(26, 42, 64, 0.14) !important;
+        backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+        transition: none !important;
+      }
+      #appMenu-popup .subviewbutton > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack),
+      #appMenu-popup .subviewbutton::before,
+      #appMenu-popup .subviewbutton::after {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(menupopup, panel:not(#appMenu-popup)) :is(menu, menuitem, .subviewbutton, .addon-banner-item, panel-item) {
+      --menuitem-hover-background-color: transparent !important;
+      --menuitem-active-background-color: transparent !important;
+      --panel-menuitem-hover-bgcolor: transparent !important;
+      --panel-menuitem-active-bgcolor: transparent !important;
+      --button-background-color-hover: transparent !important;
+      --button-background-color-active: transparent !important;
+      transition: none !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(menupopup, panel:not(#appMenu-popup)) :is(menu, menuitem, .subviewbutton, .addon-banner-item, panel-item):not([disabled], [aria-disabled="true"]):is(:hover, [_moz-menuactive]) {
+      appearance: none !important;
+      -moz-appearance: none !important;
+      color: var(--uc-light-text) !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)) !important;
+      background-color: rgba(255, 255, 255, 0.60) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 4px 14px rgba(26, 42, 64, 0.14) !important;
+      backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+      -webkit-backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+      transition: none !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    :is(menupopup, panel:not(#appMenu-popup)) :is(menu, menuitem, .subviewbutton, .addon-banner-item, panel-item):is([_moz-menuactive], [selected], [selected="true"], [open], :focus, :focus-visible, :active):not(:hover) {
+      appearance: none !important;
+      -moz-appearance: none !important;
+      color: var(--uc-light-text) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      outline: none !important;
+      filter: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      transition: none !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup {
+      --uc-appmenu-hover: transparent !important;
+      --uc-appmenu-active: transparent !important;
+      --uc-subview-row-hover: transparent !important;
+      --uc-subview-row-active: transparent !important;
+      --uc-subview-row-border: transparent !important;
+      --button-background-color-hover: transparent !important;
+      --button-background-color-active: transparent !important;
+      --button-hover-bgcolor: transparent !important;
+      --button-active-bgcolor: transparent !important;
+    }
+
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup :is(.subviewbutton, #panelMenu_bookmarksMenu, #PanelUI-historyItems,
+      #PanelUI-recentlyClosedTabs, #PanelUI-recentlyClosedWindows):not([disabled], [aria-disabled="true"]):hover {
+      appearance: none !important;
+      -moz-appearance: none !important;
+      --uc-appmenu-hover: transparent !important;
+      --uc-subview-row-hover: transparent !important;
+      color: var(--uc-light-text) !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)) !important;
+      background-color: rgba(255, 255, 255, 0.60) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 4px 14px rgba(26, 42, 64, 0.14) !important;
+      backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+      -webkit-backdrop-filter: blur(10px) saturate(135%) brightness(110%) !important;
+      transition: none !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup panelview.PanelUI-SubView .subviewbutton > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack),
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup panelview.PanelUI-SubView .subviewbutton::before,
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup panelview.PanelUI-SubView .subviewbutton::after {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      filter: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+    #appMenu-popup .subviewbutton:is([_moz-menuactive], [selected], [open], :focus, :focus-visible, :active):not(:hover) {
+      appearance: none !important;
+      -moz-appearance: none !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      filter: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      transition: none !important;
+    }
+  }
+}
 
 /* =====================================================================
    FIREFOX / FLOORP LIQUID GLASS
@@ -275,10 +1633,6 @@ tab-split-view-wrapper {
    가로 탭 드래그 레이아웃 안정화
    ========================================================= */
 
-#tabbrowser-tabs[orient="horizontal"] {
-    position: relative !important;
-}
-
 #tabbrowser-tabs[orient="horizontal"][movingtab] {
     overflow: visible !important;
 }
@@ -301,20 +1655,14 @@ tab-split-view-wrapper {
         none !important;
 }
 
-/* 절대 위치로 변경된 드래그 탭의 세로 위치 고정 */
-#tabbrowser-tabs[orient="horizontal"][movingtab]
-.tabbrowser-tab[dragtarget] {
-    top:
-        0 !important;
-
-    height:
-        var(--uc-tabbar-height) !important;
-
-    min-height:
-        var(--uc-tabbar-height) !important;
-
-    margin-block:
-        0 !important;
+/* Firefox positions the split wrapper itself against its offsetParent and
+   writes the measured left coordinate inline. Do not let its normal card
+   positioning (position: relative) turn that coordinate into a relative
+   offset, which shifts the dragged split tab far to the right. */
+#tabbrowser-tabs[orient="horizontal"]
+tab-split-view-wrapper[dragtarget] {
+    position:
+        absolute !important;
 }
 
 /* =========================================================
@@ -460,11 +1808,10 @@ tab-split-view-wrapper {
         none !important;
 
 
+    /* Selection should switch without the old card lingering or seeming to
+       lift while its color, edge and depth animate. */
     transition:
-        background-color 110ms ease,
-        border-color 110ms ease,
-        box-shadow 110ms ease
-        !important;
+        none !important;
 }
 
 
@@ -541,14 +1888,11 @@ tab-split-view-wrapper {
 
 
     box-shadow:
-        0 4px 12px
-        rgba(0, 0, 0, 0.18),
-
         inset 0 1px 0
         rgba(255, 255, 255, 0.36),
 
-        inset 0 -1px 0
-        rgba(255, 255, 255, 0.06)
+        inset 0 -1px 2px
+        rgba(0, 0, 0, 0.14)
         !important;
 }
 
@@ -1140,7 +2484,7 @@ tab-split-view-wrapper {
   appearance: auto !important;
   -moz-default-appearance: menupopup !important;
   color-scheme: dark !important;
-  color: rgba(255, 255, 255, 0.96) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
   --panel-padding: 0 !important;
   --panel-background: transparent !important;
   --panel-background-color: transparent !important;
@@ -1205,7 +2549,7 @@ tab-split-view-wrapper {
   min-inline-size: max-content !important;
   max-inline-size: none !important;
   padding: 6px !important;
-  color: rgba(255, 255, 255, 0.96) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
   background-color: transparent !important;
   background-image: none !important;
   border: 0 !important;
@@ -1218,7 +2562,7 @@ tab-split-view-wrapper {
 }
 
 .searchmode-switcher-panel-description {
-  color: rgba(255, 255, 255, 0.68) !important;
+  color: var(--uc-aux-panel-muted-text, rgba(255, 255, 255, 0.68)) !important;
   padding: 7px 10px 6px !important;
   margin: 0 !important;
 }
@@ -1359,6 +2703,27 @@ tab-split-view-wrapper {
     0 14px 34px rgba(0, 0, 0, 0.32) !important;
 }
 
+/* Recent Firefox versions paint the lower autocomplete surface separately
+   from .urlbar-background. Give that new half the same dark Mica treatment;
+   otherwise the native light panel color shows through under the input. */
+#urlbar:is([open], [popover-open], [breakout][breakout-extend])
+.urlbarView-background {
+  background-color: rgba(7, 10, 14, 0.72) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    0 14px 34px rgba(0, 0, 0, 0.32) !important;
+  backdrop-filter:
+    blur(var(--uc-urlbar-blur, 20px))
+    saturate(122%)
+    brightness(78%) !important;
+  -webkit-backdrop-filter:
+    blur(var(--uc-urlbar-blur, 20px))
+    saturate(122%)
+    brightness(78%) !important;
+}
+
 /*
  * In vertical-tab mode the urlbar is promoted into the titlebar popover/top
  * layer.  A backdrop filter on its child (.urlbar-background) then sees only
@@ -1383,6 +2748,14 @@ tab-split-view-wrapper {
 /* Avoid stacking two blur passes when Floorp also accepts the child filter. */
 :root:has(#vertical-tabs[visible])
 #urlbar[open][breakout][breakout-extend] > .urlbar-background {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* The promoted URL bar owns the blur in vertical-tab mode, so don't blur the
+   separately-painted results half a second time. */
+:root:has(#vertical-tabs[visible])
+#urlbar[open][breakout][breakout-extend] .urlbarView-background {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -2809,21 +4182,21 @@ toolbarseparator {
 
 /*
  * Firefox 현재 탭 미리보기는 #tab-preview-panel을 사용.
- * 패널 변수 자체를 어두운 값으로 고정해서,
- * 다른 generic panel CSS가 투명하게 만들어도 배경을 유지합니다.
+ * The outer panel is the visible surface in this Floorp build; its descendants
+ * stay clear so the preview does not render a second inset card.
  */
 #tab-preview-panel {
     color-scheme:
         dark !important;
 
     --panel-background:
-        var(--uc-tabpreview-surface) !important;
+        transparent !important;
 
     --panel-background-color:
-        var(--uc-tabpreview-surface) !important;
+        transparent !important;
 
     --arrowpanel-background:
-        var(--uc-tabpreview-surface) !important;
+        transparent !important;
 
     --panel-text-color:
         var(--uc-tabpreview-text) !important;
@@ -2832,10 +4205,10 @@ toolbarseparator {
         var(--uc-tabpreview-text) !important;
 
     --panel-border-color:
-        var(--uc-tabpreview-border) !important;
+        transparent !important;
 
     --arrowpanel-border-color:
-        var(--uc-tabpreview-border) !important;
+        transparent !important;
 
     --panel-border-radius:
         var(--uc-tabpreview-radius) !important;
@@ -2845,13 +4218,12 @@ toolbarseparator {
 
     --panel-padding:
         0 !important;
-}
 
+    appearance:
+        none !important;
 
-/* 실제 popup 표면 */
-#tab-preview-panel .panel-arrowcontent {
-    color:
-        var(--uc-tabpreview-text) !important;
+    -moz-default-appearance:
+        none !important;
 
     background:
         var(--uc-tabpreview-surface) !important;
@@ -2868,31 +4240,68 @@ toolbarseparator {
         ) !important;
 
     border:
-        1px solid
-        var(--uc-tabpreview-border) !important;
+        1px solid var(--uc-tabpreview-border) !important;
 
     border-radius:
         var(--uc-tabpreview-radius) !important;
 
     box-shadow:
-        0 14px 36px rgba(0, 0, 0, 0.40),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08)
-        !important;
+        0 14px 36px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+
+    /* Clip the XUL/native panel paint too; border-radius alone only rounds
+       the CSS card and leaves the anonymous square surface visible behind it. */
+    clip-path:
+        inset(0 round var(--uc-tabpreview-radius)) !important;
+
+    filter:
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.22)) !important;
 
     backdrop-filter:
-        blur(var(--uc-tabpreview-blur))
+        blur(var(--uc-tabpreview-blur, 24px))
         saturate(115%)
-        brightness(82%)
-        !important;
+        brightness(92%) !important;
 
     -webkit-backdrop-filter:
-        blur(var(--uc-tabpreview-blur))
+        blur(var(--uc-tabpreview-blur, 24px))
         saturate(115%)
-        brightness(82%)
-        !important;
+        brightness(92%) !important;
 
     overflow:
         clip !important;
+}
+
+
+/* The shadow part and content wrappers are clear; the outer panel owns the
+   single visible Mica surface. */
+#tab-preview-panel::part(content) {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-radius: var(--uc-tabpreview-radius) !important;
+    box-shadow: none !important;
+    overflow: clip !important;
+    clip-path: inset(0 round var(--uc-tabpreview-radius)) !important;
+}
+
+
+/* Legacy wrapper stays clear to avoid a second card inside the panel. */
+#tab-preview-panel .panel-arrowcontent {
+    color:
+        var(--uc-tabpreview-text) !important;
+
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-radius: var(--uc-tabpreview-radius) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    overflow: clip !important;
+    clip-path: inset(0 round var(--uc-tabpreview-radius)) !important;
 }
 
 
@@ -5857,8 +7266,122 @@ menuseparator {
 
 #appMenu-fxa-status2:not([fxastatus="signedin"])
 > #appMenu-fxa-label2 {
-    width: 100% !important;
+    /* Leave room for #appMenu-nova-fxa-label instead of claiming the whole row. */
+    width: auto !important;
     min-width: 0 !important;
+}
+
+/* Firefox 152+ alternates between a rich signed-out promo and the compact
+   account row when an update/add-on banner occupies the top of the menu.
+   Both variants must size from their contents; fixed row metrics otherwise
+   clip the Korean secondary line and squeeze it further beside the button. */
+#appMenu-popup #appMenu-fxa-sign-in-promo {
+    flex: none !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 54px !important;
+    max-height: none !important;
+    padding: 9px 10px !important;
+    margin: 4px 5px 7px !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+#appMenu-popup #appMenu-fxa-sign-in-promo > .fxa-menu-sign-in-promo-text {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+#appMenu-popup #appMenu-fxa-sign-in-promo
+  :is(.fxa-menu-sign-in-promo-heading, .fxa-menu-sign-in-promo-message) {
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    white-space: normal !important;
+    text-overflow: clip !important;
+    overflow: visible !important;
+    line-height: 1.28 !important;
+}
+
+#appMenu-popup #appMenu-fxa-sign-in-promo-button,
+#appMenu-popup #appMenu-nova-fxa-label {
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    align-self: center !important;
+}
+
+#appMenu-popup #appMenu-fxa-status2:not([fxastatus="signedin"]) {
+    flex: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 42px !important;
+    max-height: none !important;
+    align-items: center !important;
+    overflow: visible !important;
+}
+
+#appMenu-popup #appMenu-fxa-status2:not([fxastatus="signedin"])
+  > #appMenu-fxa-label2 {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 40px !important;
+    padding-block: 5px !important;
+}
+
+/* Add-on permission banners are real multi-line notices, not ordinary menu
+   rows.  Let them grow vertically and keep the warning glyph in its own
+   column so the following account row cannot be compressed. */
+#appMenu-popup #appMenu-addon-banners {
+    flex: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+#appMenu-popup #appMenu-addon-banners > .addon-banner-item {
+    flex: none !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 44px !important;
+    max-height: none !important;
+    margin: 2px 5px 6px !important;
+    padding: 7px 9px !important;
+    box-sizing: border-box !important;
+    align-items: flex-start !important;
+    white-space: normal !important;
+    overflow: visible !important;
+}
+
+#appMenu-popup #appMenu-addon-banners > .addon-banner-item
+  > .toolbarbutton-text {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    white-space: normal !important;
+    text-overflow: clip !important;
+    overflow: visible !important;
+    line-height: 1.35 !important;
+}
+
+#appMenu-popup #appMenu-addon-banners > .addon-banner-item::after {
+    flex: 0 0 16px !important;
+    margin-inline-start: 8px !important;
 }
 
 /* ==================================================
@@ -5997,27 +7520,27 @@ menuseparator {
         --background-color-canvas: transparent !important;
         --in-content-page-background: transparent !important;
 
-        /* 어두운 기본 버튼 */
+        /* Keep the dark dialog's primary action in Firefox's familiar blue. */
         --button-background-color-primary:
-            rgb(0 0 0 / 55%) !important;
+            rgb(0 96 223) !important;
 
         --button-background-color-primary-hover:
-            rgb(0 0 0 / 68%) !important;
+            rgb(2 80 187) !important;
 
         --button-background-color-primary-active:
-            rgb(0 0 0 / 78%) !important;
+            rgb(5 64 150) !important;
 
         --button-background-color-primary-disabled:
-            rgb(0 0 0 / 32%) !important;
+            rgb(48 92 145 / 62%) !important;
 
         --button-border-color-primary:
-            rgb(255 255 255 / 26%) !important;
+            rgb(74 145 230 / 86%) !important;
 
         --button-border-color-primary-hover:
-            rgb(255 255 255 / 40%) !important;
+            rgb(115 174 242 / 94%) !important;
 
         --button-border-color-primary-active:
-            rgb(255 255 255 / 20%) !important;
+            rgb(53 112 191 / 90%) !important;
 
         --button-text-color-primary:
             rgb(255 255 255 / 96%) !important;
@@ -6103,7 +7626,7 @@ menuseparator {
         color: rgb(255 255 255 / 82%) !important;
     }
 
-    /* 어두운 반투명 버튼 */
+    /* Secondary actions use a neutral glass surface, never a black fill. */
     #commonDialog::part(dialog-button) {
         appearance: none !important;
 
@@ -6115,15 +7638,15 @@ menuseparator {
         color: rgb(255 255 255 / 96%) !important;
         font-weight: 600 !important;
 
-        background-color: rgb(0 0 0 / 55%) !important;
+        background-color: rgb(255 255 255 / 10%) !important;
         background-image: none !important;
 
-        border: 1px solid rgb(255 255 255 / 32%) !important;
+        border: 1px solid rgb(255 255 255 / 24%) !important;
         border-radius: 10px !important;
 
         box-shadow:
-            0 5px 14px rgb(0 0 0 / 28%),
-            inset 0 1px 0 rgb(255 255 255 / 11%) !important;
+            0 4px 12px rgb(0 0 0 / 18%),
+            inset 0 1px 0 rgb(255 255 255 / 12%) !important;
 
         transition:
             background-color 120ms ease,
@@ -6135,23 +7658,51 @@ menuseparator {
 
 
     #commonDialog::part(dialog-button):hover {
-        background-color: rgb(0 0 0 / 68%) !important;
-        border-color: rgb(255 255 255 / 45%) !important;
+        background-color: rgb(255 255 255 / 16%) !important;
+        border-color: rgb(255 255 255 / 38%) !important;
 
         box-shadow:
-            0 7px 18px rgb(0 0 0 / 34%),
-            inset 0 1px 0 rgb(255 255 255 / 14%) !important;
+            0 6px 16px rgb(0 0 0 / 22%),
+            inset 0 1px 0 rgb(255 255 255 / 17%) !important;
     }
 
     #commonDialog::part(dialog-button):active {
-        background-color: rgb(0 0 0 / 78%) !important;
-        border-color: rgb(255 255 255 / 26%) !important;
+        background-color: rgb(255 255 255 / 21%) !important;
+        border-color: rgb(255 255 255 / 28%) !important;
 
         transform: translateY(1px) scale(0.98) !important;
 
         box-shadow:
-            0 2px 7px rgb(0 0 0 / 24%),
-            inset 0 1px 3px rgb(0 0 0 / 20%) !important;
+            0 2px 7px rgb(0 0 0 / 16%),
+            inset 0 1px 3px rgb(0 0 0 / 10%) !important;
+    }
+
+    #commonDialog::part(dialog-button):default {
+        color: white !important;
+        background-color: rgb(0 96 223) !important;
+        background-image: linear-gradient(180deg, rgb(26 119 240), rgb(0 96 223)) !important;
+        border-color: rgb(74 145 230 / 86%) !important;
+        box-shadow: 0 5px 14px rgb(0 65 155 / 32%), inset 0 1px 0 rgb(255 255 255 / 20%) !important;
+    }
+
+    #commonDialog::part(dialog-button):default:hover {
+        background-color: rgb(2 80 187) !important;
+        background-image: linear-gradient(180deg, rgb(35 125 236), rgb(2 80 187)) !important;
+        border-color: rgb(115 174 242 / 94%) !important;
+    }
+
+    #commonDialog::part(dialog-button):default:active {
+        background-color: rgb(5 64 150) !important;
+        background-image: linear-gradient(180deg, rgb(5 64 150), rgb(4 58 136)) !important;
+        border-color: rgb(53 112 191 / 90%) !important;
+    }
+
+    #commonDialog::part(dialog-button):default:disabled {
+        color: rgb(255 255 255 / 86%) !important;
+        background-color: rgb(48 92 145 / 62%) !important;
+        background-image: none !important;
+        border-color: rgb(98 145 198 / 58%) !important;
+        box-shadow: none !important;
     }
 
     /* External-protocol permission prompt (for example vscode: links).
@@ -6260,6 +7811,7 @@ menuseparator {
   /* Use the same native translucent tint as the working downloads panel. */
   --uc-aux-panel-bg: var(--uc-context-native-tint, rgba(8, 10, 13, 0.46));
   --uc-aux-panel-text: var(--uc-appmenu-text, rgba(255, 255, 255, 0.96));
+  --uc-aux-panel-muted-text: rgba(255, 255, 255, 0.70);
   --uc-aux-panel-border: var(--uc-panel-glass-border, rgba(255, 255, 255, 0.11));
   --uc-aux-panel-radius: var(--uc-popup-radius, 12px);
   --uc-aux-field-radius: var(--uc-field-radius, 11px);
@@ -6270,6 +7822,7 @@ menuseparator {
   --uc-aux-button-hover: var(--uc-panel-glass-hover-v34, rgba(255, 255, 255, 0.11));
   --uc-aux-button-active: var(--uc-panel-glass-active-v34, rgba(255, 255, 255, 0.17));
   --uc-aux-primary-bg: rgba(43, 48, 59, 0.90);
+  --uc-aux-primary-text: #fff;
   --uc-aux-primary-hover: rgba(64, 71, 86, 0.76);
   --uc-aux-primary-active: rgba(35, 39, 48, 0.90);
   --uc-aux-hover-border: rgba(255, 255, 255, 0.075);
@@ -6293,6 +7846,7 @@ menuseparator {
   #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
+  #notification-popup:has(> #addon-webext-permissions-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
   #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
@@ -6360,6 +7914,7 @@ menuseparator {
   #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
+  #notification-popup:has(> #addon-webext-permissions-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
   #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
@@ -6389,6 +7944,7 @@ menuseparator {
   #chat-shortcuts-options-panel,
   panel[id^="_testpilot-containers"][id$="-panel"],
   #notification-popup:has(> #password-notification:not([hidden])),
+  #notification-popup:has(> #addon-webext-permissions-notification:not([hidden])),
   #notification-popup:has(> #web-notifications-notification:not([hidden])),
   #notification-popup:has(> #geolocation-notification:not([hidden])),
   #notification-popup:has(> #loopback-network-notification:not([hidden])),
@@ -6492,7 +8048,7 @@ menuseparator {
 
 #permission-popup-menulist {
   appearance: none !important;
-  color: rgba(255, 255, 255, 0.94) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.94)) !important;
   background-color: rgba(255, 255, 255, 0.045) !important;
   background-image: none !important;
   border: 1px solid rgba(255, 255, 255, 0.11) !important;
@@ -6521,7 +8077,7 @@ menuseparator {
   appearance: auto !important;
   -moz-default-appearance: menupopup !important;
   color-scheme: dark !important;
-  color: rgba(255, 255, 255, 0.96) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
   --panel-background: transparent !important;
   --panel-background-color: transparent !important;
   --panel-border-color: transparent !important;
@@ -6641,10 +8197,11 @@ menuseparator {
 }
 
 #chat-shortcuts-options-panel .ask-chat-shortcuts-custom-prompt:focus {
-  border-color: var(--focus-outline-color, #00cad7) !important;
+  border-color: rgba(112, 178, 245, 0.54) !important;
+  background-image: linear-gradient(135deg, rgba(90, 160, 235, 0.12), rgba(190, 220, 255, 0.025) 72%) !important;
   box-shadow:
-    0 0 0 1px var(--focus-outline-color, #00cad7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    0 0 0 2px rgba(95, 160, 230, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
 #chat-shortcuts-options-panel toolbarseparator {
@@ -6678,7 +8235,7 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel
 ) :is(.footer-button, .panel-button, #editBMPanel_newFolderButton):hover {
-  color: #fff !important;
+  color: var(--uc-aux-panel-text) !important;
   background-color: var(--uc-aux-button-hover) !important;
   background-image: none !important;
   border-color: var(--uc-aux-hover-border) !important;
@@ -6703,7 +8260,7 @@ menuseparator {
   #editBookmarkPanel,
   #ssb-panel
 ) :is(.footer-button[default="true"], .footer-button.primary, #ssb-app-install-button) {
-  color: #fff !important;
+  color: var(--uc-aux-primary-text, #fff) !important;
   background: var(--uc-aux-primary-bg) !important;
 }
 
@@ -6773,7 +8330,7 @@ menuseparator {
 }
 
 #ssb-panel #ssb-content-description {
-  color: rgba(255, 255, 255, 0.70) !important;
+  color: var(--uc-aux-panel-muted-text) !important;
 }
 
 #ssb-panel #ssb-container-menu-button {
@@ -7010,7 +8567,7 @@ menuseparator {
   }
 
   #qrcode-url {
-    color: rgba(255, 255, 255, 0.76) !important;
+    color: var(--uc-aux-panel-muted-text, rgba(255, 255, 255, 0.76)) !important;
   }
 }
 
@@ -7039,7 +8596,7 @@ notification-message[message-bar-type="infobar"] {
   --message-bar-background-color: transparent !important;
   --message-bar-border-color: transparent !important;
   --message-bar-border-radius: 0 !important;
-  --message-bar-text-color: rgba(255, 255, 255, 0.94) !important;
+  --message-bar-text-color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.94)) !important;
 
   /* Variables inherited by the shadow-DOM close button. */
   --button-background-color-ghost: transparent !important;
@@ -7049,7 +8606,7 @@ notification-message[message-bar-type="infobar"] {
   --button-border-color-ghost-hover: rgba(255, 255, 255, 0.20) !important;
   --button-border-color-ghost-active: rgba(255, 255, 255, 0.28) !important;
 
-  color: rgba(255, 255, 255, 0.94) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.94)) !important;
   /* Do not draw a second dark rounded card. Use the toolbar/page strip
      underneath as the visual surface, with only a very light tint. */
   background-color: var(--uc-infobar-surface) !important;
@@ -7120,7 +8677,7 @@ notification-message[message-bar-type="infobar"]
   > .notification-button-container
   > button {
   appearance: none !important;
-  color: rgba(255, 255, 255, 0.96) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
   background-color: rgba(255, 255, 255, 0.09) !important;
   background-image: none !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
@@ -7303,7 +8860,7 @@ notification-message[message-bar-type="infobar"]
   }
 
   #editBookmarkPanelContent :is(.expander-up, .expander-down):hover {
-    color: #fff !important;
+    color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
     background-color: rgba(70, 75, 87, 0.82) !important;
     border-color: rgba(255, 255, 255, 0.23) !important;
     box-shadow:
@@ -7320,7 +8877,7 @@ notification-message[message-bar-type="infobar"]
   /* The tags expander inherited the generic raised-button surface. Keep its
      hit area, but let the bookmark dialog glass show through. */
   #editBMPanel_tagsSelectorExpander {
-    color: rgba(255, 255, 255, 0.90) !important;
+    color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.90)) !important;
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -7335,7 +8892,54 @@ notification-message[message-bar-type="infobar"]
   }
 
   :is(#tags-field-info, #keyword-field-info) {
-    color: rgba(255, 255, 255, 0.70) !important;
+    color: var(--uc-aux-panel-muted-text, rgba(255, 255, 255, 0.70)) !important;
+  }
+}
+
+/* These are separate chrome documents, so browser.xhtml's light tokens do
+   not reach them. Keep their text and controls dark on the light Mica canvas. */
+@-moz-document url("chrome://browser/content/qrcode/qrcode-dialog.html"),
+               url("chrome://browser/content/places/bookmarkProperties.xhtml"),
+               url("chrome://browser/content/browser/places/bookmarkProperties.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root {
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        --uc-aux-panel-text: rgb(32, 42, 55) !important;
+        --uc-aux-panel-muted-text: rgb(82, 94, 110) !important;
+        --uc-aux-panel-bg: rgba(252, 253, 255, 0.82) !important;
+        --uc-aux-panel-border: rgba(39, 57, 79, 0.24) !important;
+        --uc-aux-field-bg: rgba(255, 255, 255, 0.68) !important;
+        --uc-aux-button-bg: rgba(255, 255, 255, 0.60) !important;
+        --uc-aux-button-hover: rgba(255, 255, 255, 0.82) !important;
+        --uc-aux-button-active: rgba(42, 68, 99, 0.14) !important;
+        --text-color: rgb(32, 42, 55) !important;
+        --text-color-deemphasized: rgb(82, 94, 110) !important;
+        --button-text-color: rgb(32, 42, 55) !important;
+        --button-text-color-hover: rgb(32, 42, 55) !important;
+        --button-text-color-active: rgb(32, 42, 55) !important;
+        --button-background-color: rgba(255, 255, 255, 0.60) !important;
+        --button-background-color-hover: rgba(255, 255, 255, 0.82) !important;
+        --button-background-color-active: rgba(42, 68, 99, 0.14) !important;
+      }
+      html, body,
+      #editBookmarkPanelContent,
+      #editBookmarkPanelContent :is(input, menulist, richlistbox, tree),
+      #editBookmarkPanelContent :is(.expander-up, .expander-down, #editBMPanel_tagsSelectorExpander),
+      #editBookmarkPanelContent :is(#tags-field-info, #keyword-field-info) {
+        color: rgb(32, 42, 55) !important;
+      }
+      #editBookmarkPanelContent :is(input, menulist, richlistbox, tree),
+      #editBookmarkPanelContent :is(.expander-up, .expander-down) {
+        background: rgba(255, 255, 255, 0.68) !important;
+        border-color: rgba(39, 57, 79, 0.24) !important;
+      }
+      #editBookmarkPanelContent :is(.expander-up, .expander-down):hover {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(255, 255, 255, 0.84) !important;
+      }
+    }
   }
 }
 
@@ -7431,7 +9035,7 @@ notification-message[message-bar-type="infobar"]
   appearance: auto !important;
   -moz-default-appearance: menupopup !important;
   color-scheme: dark !important;
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: var(--uc-aux-panel-text, rgba(255, 255, 255, 0.95)) !important;
 
   --panel-background: transparent !important;
   --panel-background-color: transparent !important;
@@ -7504,45 +9108,76 @@ notification-message[message-bar-type="infobar"]
    --------------------------------------------------------------------- */
 
 #blockedPopupOptions {
+  /* On Windows, the native menupopup appearance supplies the Mica blur,
+     rounded edge, and shadow. Do not add a CSS frame on top of it. */
   appearance: auto !important;
   -moz-default-appearance: menupopup !important;
-  color-scheme: dark !important;
 
   --panel-background: transparent !important;
   --panel-background-color: transparent !important;
   --arrowpanel-background: transparent !important;
   --panel-border-color: transparent !important;
+  --panel-border-radius: 0px !important;
+  --panel-box-shadow: none !important;
+  --panel-box-shadow-margin: 0px !important;
+  --panel-padding: 5px !important;
   --arrowpanel-border-color: transparent !important;
   --button-background-color-hover: transparent !important;
   --button-background-color-active: transparent !important;
   --button-hover-bgcolor: transparent !important;
   --button-active-bgcolor: transparent !important;
+  --uc-blocked-popup-hover-bg: rgba(255, 255, 255, 0.14);
+  --uc-blocked-popup-hover-border: rgba(255, 255, 255, 0.24);
+  --uc-blocked-popup-hover-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.025),
+    0 4px 12px rgba(0, 0, 0, 0.18);
 
-  color: rgba(255, 255, 255, 0.95) !important;
-  /* Match the other native Mica menus instead of painting an opaque card. */
-  background: var(--uc-context-native-tint) !important;
-  background-color: var(--uc-context-native-tint) !important;
+  background: transparent !important;
+  background-color: transparent !important;
   background-image: none !important;
-  border: 1px solid var(--uc-context-native-border) !important;
-  border-radius: var(--uc-context-native-radius, 10px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  clip-path: none !important;
+}
+
+/* Keep Firefox's content part clear so the native Mica surface is visible. */
+#blockedPopupOptions::part(content) {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
   padding: 5px !important;
   overflow: clip !important;
-  clip-path: inset(0 round var(--uc-context-native-radius, 10px)) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-/* Remove the front/inner box and leave only the popup's outer surface. */
-#blockedPopupOptions::part(content),
-#blockedPopupOptions > .menupopup-arrowscrollbox {
+/* The scrolling wrappers must not paint another panel inside the content. */
+#blockedPopupOptions .menupopup-arrowscrollbox,
+#blockedPopupOptions .arrowscrollbox-scrollbox,
+#blockedPopupOptions .panel-arrowcontent {
+  appearance: none !important;
+  -moz-appearance: none !important;
   background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border: 0 !important;
-  border-radius: inherit !important;
+  outline: none !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
   padding: 0 !important;
   overflow: clip !important;
 }
 
 #blockedPopupOptions > :is(menuitem, menu) {
+  /* Avoid stacking the platform's native menu-item bevel/ring with the
+     custom hover and pressed surface below. */
+  appearance: none !important;
+  -moz-appearance: none !important;
   min-height: var(--uc-context-item-min-height, 30px) !important;
   box-sizing: border-box !important;
   margin: 1px 0 !important;
@@ -7559,23 +9194,47 @@ notification-message[message-bar-type="infobar"]
   transition: none !important;
 }
 
+/* Match the brighter, neutral glass hover used by the other light menus. */
+@media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+  #blockedPopupOptions {
+    --uc-blocked-popup-hover-bg: rgba(255, 255, 255, 0.62);
+    --uc-blocked-popup-hover-border: rgba(255, 255, 255, 0.76);
+    --uc-blocked-popup-hover-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.94),
+      0 4px 14px rgba(26, 42, 64, 0.13);
+  }
+}
+
+:root:is([lwt-popup="light"], [lwt-toolbar="light"], [lwt-toolbar-field="light"])
+#blockedPopupOptions {
+  --uc-blocked-popup-hover-bg: rgba(255, 255, 255, 0.62);
+  --uc-blocked-popup-hover-border: rgba(255, 255, 255, 0.76);
+  --uc-blocked-popup-hover-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    0 4px 14px rgba(26, 42, 64, 0.13);
+}
+
 #blockedPopupOptions
   > :is(menuitem, menu):not([disabled]):is(:hover, [_moz-menuactive="true"]) {
-  background-color: rgba(255, 255, 255, 0.14) !important;
+  appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: var(--uc-blocked-popup-hover-bg) !important;
   background-image: none !important;
-  border-color: rgba(255, 255, 255, 0.24) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.025),
-    0 4px 12px rgba(0, 0, 0, 0.18) !important;
+  border-color: var(--uc-blocked-popup-hover-border) !important;
+  box-shadow: var(--uc-blocked-popup-hover-shadow) !important;
   backdrop-filter: blur(10px) saturate(140%) !important;
 }
 
 #blockedPopupOptions
   > :is(menuitem, menu):not([disabled]):active {
+  appearance: none !important;
+  -moz-appearance: none !important;
   background-color: rgba(255, 255, 255, 0.22) !important;
   border-color: rgba(255, 255, 255, 0.32) !important;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 #blockedPopupOptions > menuseparator {
@@ -7623,7 +9282,7 @@ notification-message[message-bar-type="infobar"]
     margin: 3px 1px !important;
     padding: 0 4px !important;
 
-    color: rgba(255, 255, 255, 0.92) !important;
+    color: inherit !important;
     fill: currentColor !important;
 
     background: transparent !important;
@@ -7777,7 +9436,7 @@ notification-message[message-bar-type="infobar"]
 }
 
 #permission-popup .permission-popup-permission-remove-button:hover {
-  color: #fff !important;
+  color: var(--uc-aux-panel-text, #fff) !important;
   background-color: var(--uc-aux-button-hover) !important;
   border-color: rgba(255, 255, 255, 0.20) !important;
   box-shadow:
@@ -9067,7 +10726,7 @@ tab-split-view-wrapper
 > .tab-stack
 > .tab-background {
     background-color:
-        var(--uc-glass-selected) !important;
+        rgba(255, 255, 255, 0.20) !important;
 
     background-image:
         linear-gradient(
@@ -9078,16 +10737,22 @@ tab-split-view-wrapper
         ) !important;
 
     border:
-        1px solid var(--uc-glass-border-strong) !important;
+        0 !important;
+
+    outline:
+        none !important;
 
     border-radius:
         var(--uc-tab-radius) !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.045),
-        0 4px 12px rgba(0, 0, 0, 0.20)
+        0 2px 5px rgba(0, 0, 0, 0.34)
         !important;
+
+    /* Keep selection immediate; the shared base rule animates the glass and
+       can make the tab look like it lifts before the page changes. */
+    transition:
+        none !important;
 
     backdrop-filter:
         blur(14px) saturate(135%) !important;
@@ -9108,7 +10773,11 @@ tab-split-view-wrapper
         rgba(255, 255, 255, 0.20) !important;
 
     border-color:
-        rgba(255, 255, 255, 0.34) !important;
+        transparent !important;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.40)
+        !important;
 }
 
 /* =========================================================
@@ -10855,30 +12524,34 @@ tab-split-view-wrapper
         center !important;
 }
 
-/* Web-notification, geolocation and DRM prompts share the same native Mica outer surface;
+/* Web-notification, add-on permission, geolocation and DRM prompts share the same native Mica outer surface;
    clear their opaque inner layers so that surface remains visible. */
 #notification-popup:has(> :is(
+        #addon-webext-permissions-notification,
         #web-notifications-notification,
         #geolocation-notification,
         #drmContentPlaying-notification
       ):not([hidden]))::part(content),
 :is(
+  #addon-webext-permissions-notification,
   #web-notifications-notification,
   #geolocation-notification,
   #drmContentPlaying-notification
 ),
 :is(
+  #addon-webext-permissions-notification,
   #web-notifications-notification,
   #geolocation-notification,
   #drmContentPlaying-notification
 ) :is(
   .popup-notification-body-container,
   .popup-notification-content,
+  .addon-webext-perm-notification-content,
   .popup-notification-checkbox-container,
   .popup-notification-footer-container,
   .panel-footer
 ) {
-  color: rgb(255 255 255 / 92%) !important;
+  color: var(--uc-aux-panel-text, rgb(255 255 255 / 92%)) !important;
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
@@ -10888,6 +12561,7 @@ tab-split-view-wrapper
 
 #notification-popup
   :is(
+    #addon-webext-permissions-notification,
     #web-notifications-notification,
     #geolocation-notification,
     #drmContentPlaying-notification
@@ -10914,6 +12588,7 @@ tab-split-view-wrapper
 
 #notification-popup
   :is(
+    #addon-webext-permissions-notification,
     #web-notifications-notification,
     #geolocation-notification,
     #drmContentPlaying-notification
@@ -10928,6 +12603,7 @@ tab-split-view-wrapper
 
 #notification-popup
   :is(
+    #addon-webext-permissions-notification,
     #web-notifications-notification,
     #geolocation-notification,
     #drmContentPlaying-notification
@@ -11244,9 +12920,10 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 }
 
 
-/* Container identity is clipped by the actual tab card.  Without a positioned
-   parent Firefox can resolve the absolute context line against the tab strip,
-   stretching it across the sidebar height or window width. */
+/* Keep the card positioned so its context line stays local, but do not clip the
+   card itself: overflow: clip also cuts the selected tab's outer shadow into a
+   hard rectangle in both light and dark themes. The context line is already
+   sized to the card bounds below, so it does not need parent clipping. */
 .tabbrowser-tab[usercontextid]
 > .tab-stack
 > .tab-background {
@@ -11254,7 +12931,7 @@ panel[id^="_testpilot-containers"][id$="-panel"]
         relative !important;
 
     overflow:
-        clip !important;
+        visible !important;
 
     isolation:
         isolate !important;
@@ -11407,18 +13084,23 @@ panel[id^="_testpilot-containers"][id$="-panel"]
 > .tab-stack
 > .tab-background {
     background:
-        rgba(255, 255, 255, 0.105) !important;
+        rgba(255, 255, 255, 0.14) !important;
 
     background-image:
         none !important;
 
     border:
-        1px solid rgba(255, 255, 255, 0.20) !important;
+        0 !important;
+
+    outline:
+        none !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 3px 9px rgba(0, 0, 0, 0.14)
+        0 2px 5px rgba(0, 0, 0, 0.34)
         !important;
+
+    transition:
+        none !important;
 
     backdrop-filter:
         none !important;
@@ -11435,7 +13117,11 @@ panel[id^="_testpilot-containers"][id$="-panel"]
         rgba(255, 255, 255, 0.13) !important;
 
     border-color:
-        rgba(255, 255, 255, 0.24) !important;
+        transparent !important;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.40)
+        !important;
 }
 
 /* A selected split tab already sits inside the shared split outline. Keep its
@@ -11447,7 +13133,7 @@ tab-split-view-wrapper[hasactivetab]
 > .tab-stack
 > .tab-background {
     background-color:
-        var(--uc-glass-selected) !important;
+        rgba(255, 255, 255, 0.20) !important;
 
     border-color:
         var(--uc-glass-border-strong) !important;
@@ -11468,14 +13154,181 @@ tab-split-view-wrapper[hasactivetab]:hover {
         none !important;
 }
 
+/* Keep the dark Liquid Mica address-bar surface in dark themes. For a light
+   Firefox theme, explicitly replace the expanded URL bar surface and the
+   inherited dark result text after the shared dark rules above. */
+@media (prefers-color-scheme: light) {
+  :root:not([lwtheme-brighttext]) #urlbar > .urlbar-background {
+    background-color: rgba(252, 253, 255, 0.42) !important;
+    background-image: none !important;
+    border-color: rgba(39, 57, 79, 0.24) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.98),
+      0 7px 22px rgba(26, 42, 64, 0.10) !important;
+    backdrop-filter:
+      blur(var(--uc-urlbar-blur, 18px))
+      saturate(112%)
+      brightness(106%) !important;
+    -webkit-backdrop-filter:
+      blur(var(--uc-urlbar-blur, 18px))
+      saturate(112%)
+      brightness(106%) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar:is([focused], [open], [breakout][breakout-extend]) > .urlbar-background {
+    background-color: rgba(252, 253, 255, 0.76) !important;
+    border-color: rgba(31, 83, 144, 0.42) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar:is([open], [popover-open], [breakout][breakout-extend]) .urlbarView-background {
+    background-color: rgba(252, 253, 255, 0.76) !important;
+    background-image: none !important;
+    border-color: rgba(39, 57, 79, 0.24) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88), 0 8px 24px rgba(26, 42, 64, 0.12) !important;
+    backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+    -webkit-backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+  }
+
+  :root:has(#vertical-tabs[visible]):not([lwtheme-brighttext]) #urlbar[open][breakout][breakout-extend] .urlbarView-background {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar[open][breakout][breakout-extend] {
+    background: transparent !important;
+    backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+    -webkit-backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar[open][breakout][breakout-extend] > .urlbar-background {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar[open] .urlbarView,
+  :root:not([lwtheme-brighttext]) #urlbar[breakout][breakout-extend] .urlbarView,
+  :root:not([lwtheme-brighttext]) #urlbar :is(.urlbarView-body-outer, .urlbarView-body-inner, .urlbarView-results) {
+    color: rgb(32, 42, 55) !important;
+    background-color: transparent !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar :is(.urlbarView-title, .urlbarView-no-wrap, #urlbar-input, .urlbar-input) {
+    color: rgb(32, 42, 55) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar :is(.urlbarView-action, .urlbarView-title-separator, .urlbarView-row-inner) {
+    color: rgb(32, 42, 55) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar .urlbarView-url {
+    color: rgb(0, 103, 135) !important;
+  }
+
+  :root:not([lwtheme-brighttext]) #urlbar .urlbarView-row-inner:is(:hover, [selected]) {
+    color: rgb(32, 42, 55) !important;
+    background-color: rgba(255, 255, 255, 0.22) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05)) !important;
+    border-color: rgba(255, 255, 255, 0.48) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+    backdrop-filter: blur(8px) saturate(125%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(125%) !important;
+  }
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar > .urlbar-background {
+  background-color: rgba(252, 253, 255, 0.42) !important;
+  background-image: none !important;
+  border-color: rgba(39, 57, 79, 0.24) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    0 7px 22px rgba(26, 42, 64, 0.10) !important;
+  backdrop-filter:
+    blur(var(--uc-urlbar-blur, 18px))
+    saturate(112%)
+    brightness(106%) !important;
+  -webkit-backdrop-filter:
+    blur(var(--uc-urlbar-blur, 18px))
+    saturate(112%)
+    brightness(106%) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar:is([focused], [open], [breakout][breakout-extend]) > .urlbar-background {
+  background-color: rgba(252, 253, 255, 0.76) !important;
+  border-color: rgba(31, 83, 144, 0.42) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar:is([open], [popover-open], [breakout][breakout-extend]) .urlbarView-background {
+  background-color: rgba(252, 253, 255, 0.76) !important;
+  background-image: none !important;
+  border-color: rgba(39, 57, 79, 0.24) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88), 0 8px 24px rgba(26, 42, 64, 0.12) !important;
+  backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+  -webkit-backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+}
+
+:root:has(#vertical-tabs[visible]):is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar[open][breakout][breakout-extend] .urlbarView-background {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar[open][breakout][breakout-extend] {
+  background: transparent !important;
+  backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+  -webkit-backdrop-filter: blur(var(--uc-urlbar-blur, 18px)) saturate(112%) brightness(106%) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar[open][breakout][breakout-extend] > .urlbar-background {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar:is([open], [breakout][breakout-extend]) .urlbarView,
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar :is(.urlbarView-body-outer, .urlbarView-body-inner, .urlbarView-results) {
+  color: rgb(32, 42, 55) !important;
+  background-color: transparent !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar :is(.urlbarView-title, .urlbarView-no-wrap, #urlbar-input, .urlbar-input) {
+  color: rgb(32, 42, 55) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar :is(.urlbarView-action, .urlbarView-title-separator, .urlbarView-row-inner) {
+  color: rgb(32, 42, 55) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar .urlbarView-url {
+  color: rgb(0, 103, 135) !important;
+}
+
+:root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"])
+#urlbar .urlbarView-row-inner:is(:hover, [selected]) {
+  color: rgb(32, 42, 55) !important;
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05)) !important;
+  border-color: rgba(255, 255, 255, 0.48) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+  backdrop-filter: blur(8px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(125%) !important;
+}
+
 
 /* =====================================================================
    PASSWORD / FORM AUTOCOMPLETE — LIQUID MICA
    =====================================================================
    Password logins, generated passwords and ordinary form-history/autofill
-   results all use #PopupAutoComplete.  Keep the native popup as the only
-   outer Mica surface; the richlist and its rows stay transparent until a
-   row is hovered or selected. */
+   results all use #PopupAutoComplete. Give them the same native Windows Mica
+   surface and menu-row treatment as the browser context menus. */
 
 #PopupAutoComplete {
     appearance:
@@ -11487,8 +13340,21 @@ tab-split-view-wrapper[hasactivetab]:hover {
     color-scheme:
         dark !important;
 
+    --uc-autocomplete-text: rgba(255, 255, 255, 0.96);
+    --uc-autocomplete-muted: rgba(255, 255, 255, 0.70);
+    --uc-autocomplete-disabled: rgba(255, 255, 255, 0.42);
+    --uc-autocomplete-hover: var(--uc-context-hover, rgba(255, 255, 255, 0.095));
+    --uc-autocomplete-hover-border: var(--uc-context-border, rgba(255, 255, 255, 0.08));
+    --uc-autocomplete-hover-image: none;
+    --uc-autocomplete-hover-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.11),
+        0 2px 7px rgba(0, 0, 0, 0.08);
+    --uc-autocomplete-active: var(--uc-context-active, rgba(255, 255, 255, 0.155));
+    --uc-autocomplete-active-border: rgba(255, 255, 255, 0.11);
+    --uc-autocomplete-active-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.16);
+
     color:
-        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+        var(--uc-autocomplete-text) !important;
 
     --panel-background:
         transparent !important;
@@ -11499,39 +13365,51 @@ tab-split-view-wrapper[hasactivetab]:hover {
     --panel-border-color:
         transparent !important;
 
+    --panel-border-radius:
+        0px !important;
+
+    --panel-box-shadow:
+        none !important;
+
+    --panel-box-shadow-margin:
+        0px !important;
+
+    --panel-padding:
+        0px !important;
+
     --panel-text-color:
-        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+        var(--uc-autocomplete-text) !important;
 
     --panel-separator-color:
         var(--uc-aux-separator, rgba(255, 255, 255, 0.13)) !important;
 
     --text-color:
-        var(--uc-aux-panel-text, rgba(255, 255, 255, 0.96)) !important;
+        var(--uc-autocomplete-text) !important;
 
     --text-color-deemphasized:
-        rgba(255, 255, 255, 0.70) !important;
+        var(--uc-autocomplete-muted) !important;
 
     /* The row component inherits this into its shadow tree. */
     --border-radius-large:
         8px !important;
 
     --button-background-color-hover:
-        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+        transparent !important;
 
     --button-background-color-active:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+        transparent !important;
 
     --button-background-color-ghost-hover:
-        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+        transparent !important;
 
     --button-background-color-ghost-active:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+        transparent !important;
 
     --button-text-color-hover:
-        #fff !important;
+        var(--uc-autocomplete-text) !important;
 
     --button-text-color-active:
-        #fff !important;
+        var(--uc-autocomplete-text) !important;
 
     background:
         var(--uc-context-native-tint, rgba(8, 10, 13, 0.46)) !important;
@@ -11543,20 +13421,19 @@ tab-split-view-wrapper[hasactivetab]:hover {
         none !important;
 
     border:
-        1px solid
-        var(--uc-context-native-border, rgba(255, 255, 255, 0.11)) !important;
+        0 !important;
 
     border-radius:
-        var(--uc-context-native-radius, 10px) !important;
+        0 !important;
 
     box-shadow:
         none !important;
 
     overflow:
-        clip !important;
+        visible !important;
 
     clip-path:
-        inset(0 round var(--uc-context-native-radius, 10px)) !important;
+        none !important;
 
     backdrop-filter:
         none !important;
@@ -11609,11 +13486,25 @@ tab-split-view-wrapper[hasactivetab]:hover {
 
     box-shadow:
         none !important;
+
+    padding:
+        6px !important;
 }
 
-/* The modern item paints its hover inside a shadow tree.  A selected row is
-   painted on the host instead, so its inherited inner hover is neutralized
-   and cannot create the familiar dark, doubled layer. */
+/* The account subtitle lives in the row's shadow tree and reads inherited
+   color variables from the autocomplete-row-item host. */
+#PopupAutoComplete autocomplete-row-item {
+    --text-color-deemphasized: var(--uc-autocomplete-muted) !important;
+    --button-text-color-hover: var(--uc-autocomplete-text) !important;
+    --button-text-color-active: var(--uc-autocomplete-text) !important;
+    --button-background-color-hover: transparent !important;
+    --button-background-color-active: transparent !important;
+    --button-background-color-ghost-hover: transparent !important;
+    --button-background-color-ghost-active: transparent !important;
+}
+
+/* Paint hover and selection on the autocomplete-row-item host. Its shadow
+   row keeps a transparent background, leaving one visible menu item. */
 #PopupAutoComplete
 > .autocomplete-richlistbox
 > richlistitem.autocomplete-row-item {
@@ -11634,6 +13525,12 @@ tab-split-view-wrapper[hasactivetab]:hover {
 
     box-shadow:
         none !important;
+
+    min-height:
+        38px !important;
+
+    margin-block:
+        1px !important;
 }
 
 #PopupAutoComplete
@@ -11659,35 +13556,51 @@ tab-split-view-wrapper[hasactivetab]:hover {
         none !important;
 }
 
+/* Floorp sets [selected] as soon as the pointer enters a row. Treat hover
+   and selection as one state; otherwise the darker selection paint replaces
+   the light hover while the pointer is still over the item. */
 #PopupAutoComplete
 > .autocomplete-richlistbox
-> richlistitem.autocomplete-row-item[selected]
-> autocomplete-row-item,
+> richlistitem.autocomplete-row-item:not([disabled])
+> autocomplete-row-item:not([disabled]):is(:hover, [selected], [pointerselected]),
 #PopupAutoComplete
 > .autocomplete-richlistbox
-> richlistitem.autocomplete-row-item
-> autocomplete-row-item[selected] {
-    --button-background-color-hover:
-        transparent !important;
-
-    --button-background-color-active:
-        transparent !important;
-
+> richlistitem.autocomplete-row-item[selected]:not([disabled])
+> autocomplete-row-item:not([disabled]) {
     color:
-        #fff !important;
+        var(--uc-autocomplete-text) !important;
 
     background:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+        var(--uc-autocomplete-hover) !important;
 
-    background-color:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+    background-image:
+        var(--uc-autocomplete-hover-image) !important;
 
     border-color:
-        var(--uc-glass-border-strong, rgba(255, 255, 255, 0.30)) !important;
+        var(--uc-autocomplete-hover-border) !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 3px 9px rgba(0, 0, 0, 0.14) !important;
+        var(--uc-autocomplete-hover-shadow) !important;
+}
+
+#PopupAutoComplete
+> .autocomplete-richlistbox
+> richlistitem.autocomplete-row-item:not([disabled])
+> autocomplete-row-item:not([disabled]):active {
+    color:
+        var(--uc-autocomplete-text) !important;
+
+    background:
+        var(--uc-autocomplete-active) !important;
+
+    background-color:
+        var(--uc-autocomplete-active) !important;
+
+    border-color:
+        var(--uc-autocomplete-active-border) !important;
+
+    box-shadow:
+        var(--uc-autocomplete-active-shadow) !important;
 }
 
 /* Legacy form-history rows do not use autocomplete-row-item, so give the
@@ -11715,45 +13628,53 @@ tab-split-view-wrapper[hasactivetab]:hover {
 
     box-shadow:
         none !important;
+
+    min-height:
+        38px !important;
+
+    margin-block:
+        1px !important;
 }
 
 #PopupAutoComplete
 > .autocomplete-richlistbox
-> richlistitem:not(.autocomplete-row-item):not([disabled]):hover {
+> richlistitem:not(.autocomplete-row-item):not([disabled]):is(:hover, [selected]) {
     color:
-        #fff !important;
+        var(--uc-autocomplete-text) !important;
 
     background:
-        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+        var(--uc-autocomplete-hover) !important;
 
     background-color:
-        var(--uc-aux-button-hover, rgba(255, 255, 255, 0.11)) !important;
+        var(--uc-autocomplete-hover) !important;
+
+    background-image:
+        var(--uc-autocomplete-hover-image) !important;
 
     border-color:
-        var(--uc-aux-hover-border, rgba(255, 255, 255, 0.075)) !important;
+        var(--uc-autocomplete-hover-border) !important;
 
     box-shadow:
-        var(--uc-aux-hover-shadow) !important;
+        var(--uc-autocomplete-hover-shadow) !important;
 }
 
 #PopupAutoComplete
 > .autocomplete-richlistbox
-> richlistitem:not(.autocomplete-row-item)[selected] {
+> richlistitem:not(.autocomplete-row-item):not([disabled]):active {
     color:
-        #fff !important;
+        var(--uc-autocomplete-text) !important;
 
     background:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+        var(--uc-autocomplete-active) !important;
 
     background-color:
-        var(--uc-aux-button-active, rgba(255, 255, 255, 0.17)) !important;
+        var(--uc-autocomplete-active) !important;
 
     border-color:
-        var(--uc-glass-border-strong, rgba(255, 255, 255, 0.30)) !important;
+        var(--uc-autocomplete-active-border) !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 3px 9px rgba(0, 0, 0, 0.14) !important;
+        var(--uc-autocomplete-active-shadow) !important;
 }
 
 #PopupAutoComplete
@@ -11771,23 +13692,61 @@ tab-split-view-wrapper[hasactivetab]:hover {
 
 #PopupAutoComplete :is(.ac-title, .ac-title-text) {
     color:
-        rgba(255, 255, 255, 0.96) !important;
+        var(--uc-autocomplete-text) !important;
 }
 
 #PopupAutoComplete :is(.ac-url, .ac-url-text, .ac-action) {
     color:
-        rgba(255, 255, 255, 0.70) !important;
+        var(--uc-autocomplete-muted) !important;
 }
 
 #PopupAutoComplete richlistitem[disabled] {
     color:
-        rgba(255, 255, 255, 0.42) !important;
+        var(--uc-autocomplete-disabled) !important;
 
     background:
         transparent !important;
 
     box-shadow:
         none !important;
+}
+
+/* Match the light context menu's text and row tones. */
+@media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    #PopupAutoComplete {
+        color-scheme: light !important;
+        --uc-autocomplete-text: rgb(32, 42, 55);
+        --uc-autocomplete-muted: rgb(82, 94, 110);
+        --uc-autocomplete-disabled: rgba(32, 42, 55, 0.46);
+        --uc-autocomplete-hover: rgba(255, 255, 255, 0.56);
+        --uc-autocomplete-hover-border: rgba(255, 255, 255, 0.72);
+        --uc-autocomplete-hover-image:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30));
+        --uc-autocomplete-hover-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.94),
+            0 4px 14px rgba(26, 42, 64, 0.13);
+        --uc-autocomplete-active: rgba(76, 83, 92, 0.18);
+        --uc-autocomplete-active-border: rgba(76, 83, 92, 0.24);
+        --uc-autocomplete-active-shadow: inset 0 1px 2px rgba(30, 34, 40, 0.12);
+    }
+}
+
+:root:is([lwt-popup="light"], [lwt-toolbar="light"], [lwt-toolbar-field="light"])
+#PopupAutoComplete {
+    color-scheme: light !important;
+    --uc-autocomplete-text: rgb(32, 42, 55);
+    --uc-autocomplete-muted: rgb(82, 94, 110);
+    --uc-autocomplete-disabled: rgba(32, 42, 55, 0.46);
+    --uc-autocomplete-hover: rgba(255, 255, 255, 0.56);
+    --uc-autocomplete-hover-border: rgba(255, 255, 255, 0.72);
+    --uc-autocomplete-hover-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30));
+    --uc-autocomplete-hover-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        0 4px 14px rgba(26, 42, 64, 0.13);
+    --uc-autocomplete-active: rgba(76, 83, 92, 0.18);
+    --uc-autocomplete-active-border: rgba(76, 83, 92, 0.24);
+    --uc-autocomplete-active-shadow: inset 0 1px 2px rgba(30, 34, 40, 0.12);
 }
 
 /* Keep the remaining ancestors clear as well.  .tab-content may carry the
@@ -11901,7 +13860,7 @@ tab-split-view-wrapper[hasactivetab]
         ) !important;
 
     border:
-        1px solid var(--uc-glass-border-strong) !important;
+        0 !important;
 
     border-radius:
         var(--uc-tab-radius) !important;
@@ -11909,11 +13868,15 @@ tab-split-view-wrapper[hasactivetab]
     outline-color:
         transparent !important;
 
+    outline:
+        none !important;
+
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.045),
-        0 4px 12px rgba(0, 0, 0, 0.20)
+        0 2px 5px rgba(0, 0, 0, 0.34)
         !important;
+
+    transition:
+        none !important;
 
     backdrop-filter:
         blur(14px) saturate(135%) !important;
@@ -11936,7 +13899,11 @@ tab-split-view-wrapper[hasactivetab]
         rgba(255, 255, 255, 0.20) !important;
 
     border-color:
-        rgba(255, 255, 255, 0.34) !important;
+        transparent !important;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.40)
+        !important;
 }
 
 
@@ -12476,13 +14443,20 @@ button:is([disabled], [aria-disabled="true"]):is(:hover, :active) {
 
 .tab-group-editor-panel #tab-group-name:focus {
     border-color:
-        rgb(0, 221, 255) !important;
+    rgba(112, 178, 245, 0.58) !important;
 
     outline:
-        1px solid rgb(0, 221, 255) !important;
+        1px solid rgba(112, 178, 245, 0.22) !important;
 
     outline-offset:
         -1px !important;
+
+    background-image:
+        linear-gradient(135deg, rgba(90, 160, 235, 0.12), rgba(190, 220, 255, 0.025) 72%) !important;
+
+    box-shadow:
+        0 0 0 2px rgba(95, 160, 230, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
 
 /* 관리창의 작업 목록은 평상시 투명하고, 실제로 사용할 수 있는 항목에만
@@ -13157,3 +15131,936 @@ tab-split-view-wrapper[hasactivetab]:hover {
     -webkit-backdrop-filter:
         none !important;
 }
+
+/* Final pass for the window-level close-tabs prompt. Keep this unlayered at
+   the end of the sheet so it wins over the shared dark dialog declarations. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    .content-prompt-dialog > .dialogOverlay > .dialogBox,
+    .dialogStack:not([hidden]) > .dialogOverlay > .dialogBox,
+    #window-modal-dialog > .dialogOverlay > .dialogBox {
+      color-scheme: light !important;
+      color: rgb(32, 42, 55) !important;
+      background: rgba(248, 251, 255, 0.74) !important;
+      background-color: rgba(248, 251, 255, 0.74) !important;
+      background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.07) 58%, rgba(75, 103, 137, 0.02)) !important;
+      border-color: rgba(39, 57, 79, 0.24) !important;
+      box-shadow: 0 16px 42px rgba(26, 42, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+      backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(120%) brightness(108%) !important;
+    }
+    .content-prompt-dialog > .dialogOverlay > .dialogBox > .dialogFrame,
+    .dialogStack:not([hidden]) > .dialogOverlay > .dialogBox > .dialogFrame,
+    #window-modal-dialog > .dialogOverlay > .dialogBox > .dialogFrame {
+      color-scheme: light !important;
+    }
+    panel:has(> .panel-arrowcontainer > .panel-arrowcontent) > .panel-arrowcontainer > .panel-arrowcontent,
+    panel .panel-arrowcontent,
+    #notification-popup,
+    menupopup,
+    tooltip,
+    notification-message:is(.infobar, [message-bar-type="infobar"]) {
+      color-scheme: light !important;
+      color: rgb(32, 42, 55) !important;
+      --panel-color: rgb(32, 42, 55) !important;
+      --panel-text-color: rgb(32, 42, 55) !important;
+      --arrowpanel-color: rgb(32, 42, 55) !important;
+      --message-bar-text-color: rgb(32, 42, 55) !important;
+      --message-bar-background-color: rgba(248, 251, 255, 0.76) !important;
+      background-color: rgba(248, 251, 255, 0.76) !important;
+      border-color: rgba(39, 57, 79, 0.24) !important;
+      backdrop-filter: blur(22px) saturate(118%) brightness(108%) !important;
+      -webkit-backdrop-filter: blur(22px) saturate(118%) brightness(108%) !important;
+    }
+    #notification-popup :is(label, description, .popup-notification-description, .popup-notification-origin) {
+      color: rgb(32, 42, 55) !important;
+    }
+  }
+}
+
+/* The prompt is an iframe: explicitly remove its own dark canvas so the
+   light Mica surface on the parent dialogBox can show through. */
+@-moz-document url("chrome://global/content/commonDialog.xhtml"),
+               url("chrome://mozapps/content/handling/permissionDialog.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    :root,
+    #commonDialogWindow,
+    #commonDialog,
+    #dialogGrid,
+    body {
+      color-scheme: light !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      text-shadow: none !important;
+    }
+    :root, #commonDialog {
+      /* The primary button is painted from these tokens inside the dialog's
+         shadow tree; override the hard-coded dark palette at its source. */
+      --button-background-color-primary: rgb(107, 207, 249) !important;
+      --button-background-color-primary-hover: rgb(132, 218, 251) !important;
+      --button-background-color-primary-active: rgb(87, 188, 233) !important;
+      --button-background-color-primary-disabled: rgba(126, 202, 231, 0.78) !important;
+      --button-border-color-primary: rgba(255, 255, 255, 0.84) !important;
+      --button-border-color-primary-hover: rgba(255, 255, 255, 0.98) !important;
+      --button-border-color-primary-active: rgba(255, 255, 255, 0.72) !important;
+      --button-text-color-primary: rgb(10, 48, 67) !important;
+      --button-text-color-primary-hover: rgb(10, 48, 67) !important;
+      --button-text-color-primary-active: rgb(10, 48, 67) !important;
+    }
+    #infoTitle, #infoBody, #checkboxContainer, #checkbox {
+      color: rgb(32, 42, 55) !important;
+    }
+    #checkbox {
+      accent-color: rgb(38, 88, 146) !important;
+    }
+    #checkbox .checkbox-label {
+      color: rgb(32, 42, 55) !important;
+      text-shadow: none !important;
+    }
+    #commonDialog::part(dialog-button) {
+      color: rgb(32, 42, 55) !important;
+      background: rgba(255, 255, 255, 0.58) !important;
+      background-color: rgba(255, 255, 255, 0.58) !important;
+      border: 1px solid rgba(39, 57, 79, 0.22) !important;
+      border-radius: 10px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+    }
+    #commonDialog::part(dialog-button):hover {
+      background: rgba(255, 255, 255, 0.78) !important;
+      background-color: rgba(255, 255, 255, 0.78) !important;
+    }
+    #commonDialog::part(dialog-button):active {
+      background: rgba(42, 68, 99, 0.14) !important;
+      background-color: rgba(42, 68, 99, 0.14) !important;
+    }
+    #commonDialog::part(dialog-button):disabled {
+      color: rgba(32, 42, 55, 0.48) !important;
+      background: rgba(39, 57, 79, 0.08) !important;
+      background-color: rgba(39, 57, 79, 0.08) !important;
+      border-color: rgba(39, 57, 79, 0.16) !important;
+      box-shadow: none !important;
+    }
+    /* The accept action is the primary action (e.g. "Close tabs"). Keep it
+       clearly visible on the light glass surface, even while temporarily disabled. */
+    #commonDialog::part(dialog-button):default {
+      color: rgb(10, 48, 67) !important;
+      background: linear-gradient(180deg, rgba(142, 225, 255, 0.98), rgba(91, 199, 244, 0.96)) !important;
+      background-color: rgb(107, 207, 249) !important;
+      border-color: rgba(255, 255, 255, 0.84) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 4px 12px rgba(42, 144, 190, 0.22) !important;
+    }
+    #commonDialog::part(dialog-button):default:hover {
+      background: linear-gradient(180deg, rgba(169, 234, 255, 0.99), rgba(113, 210, 250, 0.98)) !important;
+      background-color: rgb(132, 218, 251) !important;
+      border-color: rgba(255, 255, 255, 0.98) !important;
+    }
+    #commonDialog::part(dialog-button):default:active {
+      background: linear-gradient(180deg, rgba(104, 198, 238, 0.98), rgba(75, 181, 226, 0.98)) !important;
+      background-color: rgb(87, 188, 233) !important;
+    }
+    #commonDialog::part(dialog-button):default:disabled {
+      color: rgba(10, 48, 67, 0.76) !important;
+      background: linear-gradient(180deg, rgba(166, 224, 245, 0.80), rgba(126, 202, 231, 0.78)) !important;
+      background-color: rgba(126, 202, 231, 0.78) !important;
+      border-color: rgba(255, 255, 255, 0.66) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76) !important;
+    }
+  }
+}
+
+/* Final common-dialog edge pass: soften the dark field edge and remove the
+   platform cyan focus ring from buttons, replacing it with a quiet glass halo. */
+@-moz-document url("chrome://global/content/commonDialog.xhtml"),
+               url("chrome://mozapps/content/handling/permissionDialog.xhtml") {
+  #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+    border-color: rgba(255, 255, 255, 0.20) !important;
+    background-color: rgba(255, 255, 255, 0.075) !important;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.015) 74%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+  }
+  #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):focus {
+    outline: none !important;
+    border-color: rgba(127, 181, 241, 0.48) !important;
+    background-image: linear-gradient(135deg, rgba(102, 163, 231, 0.13), rgba(255, 255, 255, 0.025) 74%) !important;
+    box-shadow: 0 0 0 2px rgba(112, 170, 231, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.075) !important;
+  }
+  #commonDialog::part(dialog-button):not(:default) {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)) !important;
+  }
+  #commonDialog::part(dialog-button):is(:focus, :focus-visible) {
+    outline: none !important;
+    border-color: rgba(139, 187, 241, 0.48) !important;
+    box-shadow: 0 0 0 2px rgba(124, 176, 235, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+  }
+  #commonDialog::part(dialog-button):default:is(:focus, :focus-visible) {
+    border-color: rgba(167, 207, 250, 0.72) !important;
+    box-shadow: 0 0 0 2px rgba(124, 176, 235, 0.20), 0 5px 14px rgba(0, 65, 155, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+  }
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+      border-color: rgba(53, 75, 100, 0.18) !important;
+      background-color: rgba(255, 255, 255, 0.44) !important;
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(228, 238, 250, 0.12) 74%) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+    }
+    #commonDialog :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select):focus {
+      border-color: rgba(75, 132, 195, 0.42) !important;
+      background-image: linear-gradient(135deg, rgba(118, 177, 235, 0.16), rgba(255, 255, 255, 0.40) 74%) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+    }
+    #commonDialog::part(dialog-button):not(:default) {
+      border-color: rgba(39, 57, 79, 0.16) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(235, 242, 250, 0.22)) !important;
+    }
+    #commonDialog::part(dialog-button):is(:focus, :focus-visible) {
+      border-color: rgba(75, 132, 195, 0.40) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+    }
+    #commonDialog::part(dialog-button):default:is(:focus, :focus-visible) {
+      border-color: rgba(255, 255, 255, 0.92) !important;
+      box-shadow: 0 0 0 2px rgba(72, 139, 207, 0.14), 0 4px 12px rgba(42, 144, 190, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+    }
+  }
+}
+
+/* Light palette for auxiliary popups: permission actions, translation choices,
+   and primary accept buttons share one clear sky-blue interaction language. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root {
+        --uc-aux-primary-bg: rgb(107, 207, 249) !important;
+        --uc-aux-primary-text: rgb(10, 48, 67) !important;
+        --uc-aux-primary-hover: rgb(137, 220, 252) !important;
+        --uc-aux-primary-active: rgb(83, 187, 232) !important;
+        --uc-aux-button-hover: rgba(255, 255, 255, 0.68) !important;
+        --uc-aux-button-active: rgba(210, 232, 251, 0.62) !important;
+        --uc-aux-hover-border: rgba(255, 255, 255, 0.80) !important;
+        --uc-aux-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 4px 12px rgba(26, 42, 64, 0.12) !important;
+      }
+
+      /* Keep row feedback easy to see on the bright glass surface without
+         layering the old dark native tint underneath it. */
+      :is(#full-page-translations-panel, #select-translations-panel, #permission-popup)
+      :is(.subviewbutton, .addon-banner-item, menuitem):not([disabled], [aria-disabled="true"]):hover {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.62) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(242, 247, 253, 0.40)) !important;
+        border-color: rgba(255, 255, 255, 0.82) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 3px 10px rgba(26, 42, 64, 0.10) !important;
+      }
+      :is(#full-page-translations-panel, #select-translations-panel, #permission-popup)
+      :is(.subviewbutton, .addon-banner-item, menuitem):not([disabled], [aria-disabled="true"]):is(:active, [selected="true"]) {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(215, 235, 252, 0.70) !important;
+        background-image: linear-gradient(180deg, rgba(235, 246, 255, 0.82), rgba(205, 228, 249, 0.62)) !important;
+        border-color: rgba(111, 164, 216, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(55, 103, 151, 0.10) !important;
+      }
+
+      :is(#full-page-translations-panel, #select-translations-panel)
+      menulist:not([disabled]):is(:hover, :focus-visible, [open], [open="true"]) {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.74) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(239, 246, 253, 0.56)) !important;
+        border-color: rgba(75, 132, 195, 0.28) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 3px 9px rgba(26, 42, 64, 0.10) !important;
+      }
+      :is(#full-page-translations-panel, #select-translations-panel)
+      menulist > menupopup :is(menuitem, richlistitem):not([disabled]):is(:hover, [_moz-menuactive="true"], [selected="true"]) {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.72) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(239, 246, 253, 0.48)) !important;
+        border-color: rgba(255, 255, 255, 0.82) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 7px rgba(26, 42, 64, 0.08) !important;
+      }
+
+      /* Firefox Translate's action button uses these shared footer classes. */
+      :is(#full-page-translations-panel, #select-translations-panel)
+      .translations-panel-button-group {
+        --button-text-color-primary: rgb(10, 48, 67) !important;
+        --button-text-color-primary-hover: rgb(10, 48, 67) !important;
+        --button-text-color-primary-active: rgb(10, 48, 67) !important;
+      }
+      #full-page-translations-panel #full-page-translations-panel-translate,
+      #select-translations-panel .translations-panel-button-group > button[default] {
+        color: rgb(10, 48, 67) !important;
+        --button-text-color-primary: rgb(10, 48, 67) !important;
+      }
+      :is(#full-page-translations-panel, #select-translations-panel)
+      :is(.footer-button[default="true"], .footer-button.primary, .panel-button[default="true"]) {
+        color: rgb(10, 48, 67) !important;
+        background-color: rgb(107, 207, 249) !important;
+        background-image: linear-gradient(180deg, rgba(160, 230, 255, 0.98), rgba(107, 207, 249, 0.98)) !important;
+        border-color: rgba(255, 255, 255, 0.82) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 3px 9px rgba(42, 144, 190, 0.16) !important;
+      }
+      :is(#full-page-translations-panel, #select-translations-panel)
+      :is(.footer-button[default="true"], .footer-button.primary, .panel-button[default="true"]):not([disabled]):hover {
+        color: rgb(10, 48, 67) !important;
+        background-color: rgb(137, 220, 252) !important;
+        background-image: linear-gradient(180deg, rgba(194, 240, 255, 0.99), rgba(137, 220, 252, 0.98)) !important;
+        border-color: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 5px 13px rgba(42, 144, 190, 0.20) !important;
+      }
+      :is(#full-page-translations-panel, #select-translations-panel)
+      :is(.footer-button[default="true"], .footer-button.primary, .panel-button[default="true"]):not([disabled]):active {
+        background-color: rgb(83, 187, 232) !important;
+        background-image: linear-gradient(180deg, rgba(111, 201, 239, 0.98), rgba(83, 187, 232, 0.98)) !important;
+        border-color: rgba(75, 145, 190, 0.42) !important;
+        box-shadow: inset 0 1px 2px rgba(24, 93, 130, 0.16) !important;
+      }
+
+      panel moz-button[type="primary"]::part(button) {
+        color: rgb(10, 48, 67) !important;
+        background-color: rgb(107, 207, 249) !important;
+        background-image: linear-gradient(180deg, rgba(160, 230, 255, 0.98), rgba(107, 207, 249, 0.98)) !important;
+        border-color: rgba(255, 255, 255, 0.82) !important;
+      }
+      panel moz-button[type="primary"]:not([disabled]):hover::part(button) {
+        color: rgb(10, 48, 67) !important;
+        background-color: rgb(137, 220, 252) !important;
+        background-image: linear-gradient(180deg, rgba(194, 240, 255, 0.99), rgba(137, 220, 252, 0.98)) !important;
+        border-color: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 5px 13px rgba(42, 144, 190, 0.20) !important;
+      }
+      panel moz-button[type="primary"]:not([disabled]):active::part(button) {
+        background-color: rgb(83, 187, 232) !important;
+        background-image: linear-gradient(180deg, rgba(111, 201, 239, 0.98), rgba(83, 187, 232, 0.98)) !important;
+      }
+
+      /* This is the XUL permission "Block" action explicitly painted dark by
+         the shared base sheet. Replace that forced fill only in light mode. */
+      #permission-popup .permission-popup-permission-remove-button:not([disabled]) {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.60) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(237, 244, 251, 0.42)) !important;
+        border-color: rgba(39, 57, 79, 0.18) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 2px 7px rgba(26, 42, 64, 0.08) !important;
+      }
+      #permission-popup .permission-popup-permission-remove-button:not([disabled]):hover {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.82) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 253, 0.72)) !important;
+        border-color: rgba(255, 255, 255, 0.96) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 4px 11px rgba(26, 42, 64, 0.12) !important;
+      }
+      #permission-popup .permission-popup-permission-remove-button:not([disabled]):active {
+        background-color: rgba(215, 235, 252, 0.72) !important;
+        background-image: linear-gradient(180deg, rgba(235, 246, 255, 0.82), rgba(205, 228, 249, 0.62)) !important;
+        border-color: rgba(111, 164, 216, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(55, 103, 151, 0.10) !important;
+      }
+    }
+  }
+}
+
+/* Keep the permission Block button light at rest. This final unlayered rule
+   wins over the dark base fill while leaving its separate hover/active states. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    #permission-popup .permission-popup-permission-remove-button:not([disabled]):not(:hover):not(:active) {
+      appearance: none !important;
+      color: rgb(32, 42, 55) !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 253, 0.82)) !important;
+      background-color: rgba(255, 255, 255, 0.88) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 253, 0.82)) !important;
+      border: 1px solid rgba(39, 57, 79, 0.16) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 2px 7px rgba(26, 42, 64, 0.08) !important;
+    }
+    #permission-popup .permission-popup-permission-remove-button:not([disabled]):not(:hover):not(:active) > .button-box {
+      color: rgb(32, 42, 55) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    #permission-popup .permission-popup-permission-remove-button:not([disabled]):hover,
+    #permission-popup .permission-popup-permission-remove-button:not([disabled]):hover > .button-box,
+    #permission-popup .permission-popup-permission-remove-button:not([disabled]):hover .button-text {
+      color: rgb(32, 42, 55) !important;
+      fill: currentColor !important;
+      text-shadow: none !important;
+    }
+  }
+}
+
+/* Keep Windows accent color off the selected-tab outline too; use a neutral
+   glass edge regardless of the titlebar accent setting. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-windows-accent-color-in-titlebar) {
+    :root[tabsintitlebar] {
+      --lwt-accent-color: transparent !important;
+      --lwt-accent-color-inactive: transparent !important;
+    }
+    :root[tabsintitlebar] .browser-titlebar,
+    :root[tabsintitlebar] .titlebar-color {
+      color: inherit !important;
+      background: var(--uc-tabbar-bg, rgba(20, 23, 29, 0.72)) !important;
+      background-color: var(--uc-tabbar-bg, rgba(20, 23, 29, 0.72)) !important;
+      background-image: none !important;
+    }
+    :root[tabsintitlebar] #titlebar {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+  }
+
+}
+
+/* Windows still paints the temporary Alt menubar with the system accent.
+   Turn off its native menubar appearance and give that row the same neutral
+   surface as the rest of the theme. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  :root[tabsintitlebar] #navigator-toolbox > #toolbar-menubar.browser-toolbar.browser-titlebar.chromeclass-menubar,
+  :root[tabsintitlebar] #navigator-toolbox > #toolbar-menubar[autohide="true"] {
+    color: inherit !important;
+    appearance: none !important;
+    -moz-appearance: none !important;
+    background: rgba(24, 27, 33, 0.96) !important;
+    background-color: rgba(24, 27, 33, 0.96) !important;
+    background-image: none !important;
+    --lwt-accent-color: transparent !important;
+    --lwt-accent-color-inactive: transparent !important;
+  }
+
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    :root[tabsintitlebar] #navigator-toolbox > #toolbar-menubar.browser-toolbar.browser-titlebar.chromeclass-menubar,
+    :root[tabsintitlebar] #navigator-toolbox > #toolbar-menubar[autohide="true"] {
+      background: rgba(248, 250, 253, 0.97) !important;
+      background-color: rgba(248, 250, 253, 0.97) !important;
+    }
+  }
+}
+
+/* Windows may paint AccentColor behind the whole titlebar area. Keep that tint
+   off the Mica tab/menubar surfaces; selected-tab edges stay neutral gray. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  :root[tabsintitlebar] :is(#TabsToolbar, #toolbar-menubar).browser-titlebar,
+  :root[tabsintitlebar] #TabsToolbar,
+  :root[tabsintitlebar] #toolbar-menubar,
+  :root[tabsintitlebar] .titlebar-color {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    color: rgb(239, 242, 248) !important;
+    background: rgba(24, 27, 33, 0.97) !important;
+    background-color: rgba(24, 27, 33, 0.97) !important;
+    background-image: none !important;
+    --lwt-accent-color: transparent !important;
+    --lwt-accent-color-inactive: transparent !important;
+  }
+
+  :root[tabsintitlebar] #TabsToolbar :is(.tabbrowser-tab, .tabbrowser-tab .tab-label,
+    .tabbrowser-tab .tab-secondary-label, .toolbarbutton-1, .toolbarbutton-icon,
+    .titlebar-button, #TabsToolbar-customization-target) {
+    color: rgb(239, 242, 248) !important;
+    fill: currentColor !important;
+  }
+
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root[tabsintitlebar] :is(#TabsToolbar, #toolbar-menubar).browser-titlebar,
+      :root[tabsintitlebar] #TabsToolbar,
+      :root[tabsintitlebar] #toolbar-menubar,
+      :root[tabsintitlebar] .titlebar-color {
+        color: rgb(32, 42, 55) !important;
+        background: rgba(248, 250, 253, 0.97) !important;
+        background-color: rgba(248, 250, 253, 0.97) !important;
+      }
+
+      :root[tabsintitlebar] #TabsToolbar :is(.tabbrowser-tab, .tabbrowser-tab .tab-label,
+        .tabbrowser-tab .tab-secondary-label, .toolbarbutton-1, .toolbarbutton-icon,
+        .titlebar-button, #TabsToolbar-customization-target) {
+        color: rgb(32, 42, 55) !important;
+        fill: currentColor !important;
+      }
+    }
+  }
+}
+
+/* All-tabs popup: neutral Mica glass, with gray rather than blue feedback. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] {
+        color-scheme: light !important;
+        color: rgb(42, 47, 54) !important;
+        --panel-background: transparent !important;
+        --panel-background-color: transparent !important;
+        --panel-border-color: transparent !important;
+        background: var(--uc-context-native-tint, rgba(252, 253, 255, 0.74)) !important;
+        background-color: var(--uc-context-native-tint, rgba(252, 253, 255, 0.74)) !important;
+        background-image: none !important;
+        border-color: var(--uc-context-native-border, rgba(75, 81, 89, 0.24)) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), 0 12px 32px rgba(30, 34, 40, 0.16) !important;
+        backdrop-filter: blur(24px) saturate(112%) brightness(106%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(112%) brightness(106%) !important;
+      }
+      #allTabsMenu-allTabsView,
+      #allTabsMenu-allTabsView::part(content),
+      #allTabsMenu-allTabsView :is(panelview, .panel-subview-body, .panel-subview-body-container) {
+        color: rgb(42, 47, 54) !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+      /* TabsPanel creates toolbaritem.all-tabs-item with three sibling
+         toolbarbuttons. Paint one context-menu-like surface on the row;
+         keep the main tab button clear so it cannot create a second hover. */
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item {
+        color: rgb(32, 42, 55) !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        outline: none !important;
+        text-shadow: none !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item:not([disabled]):is(:hover, :focus-within, [selected]) {
+        background: rgba(255, 255, 255, 0.56) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30)) !important;
+        border-color: rgba(255, 255, 255, 0.72) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 4px 14px rgba(26, 42, 64, 0.13) !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item:not([disabled]):active {
+        background: rgba(220, 223, 228, 0.52) !important;
+        border-color: rgba(76, 83, 92, 0.24) !important;
+        box-shadow: inset 0 1px 2px rgba(30, 34, 40, 0.10) !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item > .all-tabs-button,
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item > .all-tabs-button:is(:hover, :active, :focus-visible) {
+        color: inherit !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        outline: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      /* Mute and close remain independent click targets, but only these
+         small controls get an inner glass hover. */
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item > .all-tabs-secondary-button {
+        color: rgb(42, 47, 54) !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: 6px !important;
+        box-shadow: none !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item > .all-tabs-secondary-button:not([disabled]):hover {
+        background: rgba(255, 255, 255, 0.68) !important;
+        border-color: rgba(255, 255, 255, 0.78) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 2px 6px rgba(26, 42, 64, 0.10) !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] #allTabsMenu-allTabsView .all-tabs-item > .all-tabs-secondary-button:not([disabled]):active {
+        background: rgba(220, 223, 228, 0.60) !important;
+        border-color: rgba(76, 83, 92, 0.24) !important;
+        box-shadow: inset 0 1px 2px rgba(30, 34, 40, 0.10) !important;
+      }
+
+      /* Clear Firefox's selected state from the tab and stack layers. The
+         selected surface below should be the only layer painting a rim. */
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]),
+      #tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper[hasactivetab]
+      > .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]),
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack,
+      #tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper[hasactivetab]
+      > .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack {
+        background: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+      }
+
+      /* No bright outline: define the milky selected tab with one dark,
+         soft outer shadow. Suppress any native inner edge as well. */
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack > .tab-background,
+      #tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper[hasactivetab]
+      > .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack > .tab-background {
+        background-color: rgba(255, 255, 255, 0.88) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.82)) !important;
+        border: 0 !important;
+        outline: none !important;
+        box-shadow: 0 2px 5px rgba(24, 28, 34, 0.34) !important;
+        overflow: visible !important;
+        transition: none !important;
+        backdrop-filter: blur(14px) saturate(108%) brightness(104%) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(108%) brightness(104%) !important;
+      }
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack > .tab-background::before,
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]) > .tab-stack > .tab-background::after {
+        background: none !important;
+        background-image: none !important;
+        border: 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      #tabbrowser-tabs:is([orient="horizontal"], [orient="vertical"])
+      .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]):hover > .tab-stack > .tab-background,
+      #tabbrowser-tabs[orient="horizontal"] tab-split-view-wrapper[hasactivetab]
+      > .tabbrowser-tab:is([selected], [visuallyselected], [visually-selected]):hover > .tab-stack > .tab-background {
+        background-color: rgba(255, 255, 255, 0.92) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.88)) !important;
+        border-color: transparent !important;
+        box-shadow: 0 2px 6px rgba(24, 28, 34, 0.40) !important;
+        transition: none !important;
+      }
+      tab-split-view-wrapper::before {
+        border-color: rgba(90, 97, 106, 0.30) !important;
+      }
+
+      /* The menu commands live outside the generated tab rows. Match their
+         hover to the same light context-menu glass without painting the tab
+         row's inner buttons a second time. */
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] {
+        --button-background-color-hover: rgba(255, 255, 255, 0.56) !important;
+        --button-background-color-active: rgba(220, 223, 228, 0.52) !important;
+        --panel-item-hover-bgcolor: rgba(255, 255, 255, 0.56) !important;
+        --panel-item-active-bgcolor: rgba(220, 223, 228, 0.52) !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] :is(.subviewbutton, toolbarbutton, menu, menuitem, panel-item, button, [role="button"]):not([disabled], .all-tabs-button, .all-tabs-secondary-button) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: rgb(42, 47, 54) !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border-color: transparent !important;
+        text-shadow: none !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] :is(.subviewbutton, toolbarbutton, menu, menuitem, panel-item, button, [role="button"]):not([disabled], .all-tabs-button, .all-tabs-secondary-button):is(:hover, :focus-visible, [_moz-menuactive="true"]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: rgb(42, 47, 54) !important;
+        background-color: rgba(255, 255, 255, 0.56) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.30)) !important;
+        border-color: rgba(255, 255, 255, 0.72) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 4px 14px rgba(26, 42, 64, 0.13) !important;
+        backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(132%) brightness(108%) !important;
+      }
+      #customizationui-widget-panel[viewId="allTabsMenu-allTabsView"] :is(.subviewbutton, toolbarbutton, menu, menuitem, panel-item, button, [role="button"]):not([disabled], .all-tabs-button, .all-tabs-secondary-button):is(:active, [selected="true"], [current="true"], [current]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: rgb(42, 47, 54) !important;
+        background-color: rgba(220, 223, 228, 0.52) !important;
+        background-image: none !important;
+        border-color: rgba(76, 83, 92, 0.32) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62), inset 0 1px 2px rgba(30, 34, 40, 0.06) !important;
+      }
+    }
+  }
+}
+
+/* Popup-blocked infobar Options button: readable neutral light-glass states. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    notification-message.infobar > .notification-button-container > button,
+    notification-message[message-bar-type="infobar"] > .notification-button-container > button {
+      color: rgb(37, 43, 50) !important;
+      background-color: rgba(255, 255, 255, 0.48) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(231, 234, 238, 0.40)) !important;
+      border: 1px solid rgba(71, 79, 88, 0.28) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 1px 3px rgba(32, 36, 42, 0.06) !important;
+      text-shadow: none !important;
+    }
+    notification-message.infobar > .notification-button-container > button:not([disabled]):hover,
+    notification-message[message-bar-type="infobar"] > .notification-button-container > button:not([disabled]):hover {
+      color: rgb(30, 35, 41) !important;
+      background-color: rgba(255, 255, 255, 0.78) !important;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(237, 239, 242, 0.68)) !important;
+      border-color: rgba(71, 79, 88, 0.42) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 2px 5px rgba(32, 36, 42, 0.08) !important;
+    }
+    notification-message.infobar > .notification-button-container > button:not([disabled]):active,
+    notification-message[message-bar-type="infobar"] > .notification-button-container > button:not([disabled]):active {
+      color: rgb(30, 35, 41) !important;
+      background-color: rgba(222, 225, 229, 0.78) !important;
+      background-image: linear-gradient(180deg, rgba(235, 237, 240, 0.84), rgba(215, 219, 224, 0.72)) !important;
+      border-color: rgba(71, 79, 88, 0.48) !important;
+      box-shadow: inset 0 1px 2px rgba(32, 36, 42, 0.10) !important;
+    }
+  }
+}
+
+/* Neutral gray feedback for toolbar popups and chrome buttons in light mode.
+   Firefox's shared light-theme tokens are blue-tinted, so these final scoped
+   rules replace them only for the tab/profile menus and browser chrome. */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+  @media (-moz-pref("browser.theme.toolbar-theme", 1)), (prefers-color-scheme: light) {
+    @layer liquidmica-light {
+      :root {
+        --uc-light-hover: rgba(76, 83, 92, 0.10) !important;
+        --uc-light-active: rgba(76, 83, 92, 0.18) !important;
+        --uc-light-border: rgba(76, 83, 92, 0.20) !important;
+        --uc-light-strong-border: rgba(76, 83, 92, 0.44) !important;
+        --uc-glass-hover: rgba(76, 83, 92, 0.10) !important;
+        --uc-glass-active: rgba(76, 83, 92, 0.18) !important;
+        --uc-glass-border: rgba(76, 83, 92, 0.20) !important;
+        --uc-glass-border-strong: rgba(76, 83, 92, 0.44) !important;
+      }
+      :root:is([lwt-toolbar-field="light"], [lwt-toolbar-field-focus="light"], [lwt-popup="light"]) {
+        --uc-light-hover: rgba(76, 83, 92, 0.10) !important;
+        --uc-light-active: rgba(76, 83, 92, 0.18) !important;
+        --uc-light-border: rgba(76, 83, 92, 0.20) !important;
+        --uc-light-strong-border: rgba(76, 83, 92, 0.44) !important;
+        --uc-glass-hover: rgba(76, 83, 92, 0.10) !important;
+        --uc-glass-active: rgba(76, 83, 92, 0.18) !important;
+        --uc-glass-border: rgba(76, 83, 92, 0.20) !important;
+        --uc-glass-border-strong: rgba(76, 83, 92, 0.44) !important;
+      }
+
+      :is(#allTabsMenu, #appMenu-popup, #PanelUI-fxa, #profiles-button-panel, #profiles-popup) {
+        color-scheme: light !important;
+        --button-background-color-hover: rgba(255, 255, 255, 0.42) !important;
+        --button-background-color-active: rgba(220, 223, 228, 0.52) !important;
+        --panel-item-hover-bgcolor: rgba(255, 255, 255, 0.42) !important;
+        --panel-item-active-bgcolor: rgba(220, 223, 228, 0.52) !important;
+        --menuitem-hover-background-color: rgba(255, 255, 255, 0.42) !important;
+        --menuitem-active-background-color: rgba(220, 223, 228, 0.52) !important;
+      }
+
+      :is(#allTabsMenu, #appMenu-popup, #PanelUI-fxa, #profiles-button-panel, #profiles-popup)
+      :is(.subviewbutton, toolbarbutton, menu, menuitem, panel-item, button, [role="button"]):not([disabled], [aria-disabled="true"]):is(:hover, :focus-visible, [_moz-menuactive="true"]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: rgb(42, 47, 54) !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(232, 234, 237, 0.32)) !important;
+        background-color: rgba(255, 255, 255, 0.42) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(232, 234, 237, 0.32)) !important;
+        border-color: rgba(76, 83, 92, 0.24) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 3px 10px rgba(32, 36, 42, 0.08) !important;
+        backdrop-filter: blur(12px) saturate(100%) brightness(106%) !important;
+        -webkit-backdrop-filter: blur(12px) saturate(100%) brightness(106%) !important;
+      }
+
+      :is(#allTabsMenu, #appMenu-popup, #PanelUI-fxa, #profiles-button-panel, #profiles-popup)
+      :is(.subviewbutton, toolbarbutton, menu, menuitem, panel-item, button, [role="button"]):not([disabled], [aria-disabled="true"]):is(:active, [selected="true"], [checked="true"], [open="true"], [pressed="true"]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color: rgb(42, 47, 54) !important;
+        background: rgba(211, 215, 220, 0.62) !important;
+        background-color: rgba(211, 215, 220, 0.62) !important;
+        background-image: none !important;
+        border-color: rgba(76, 83, 92, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(32, 36, 42, 0.09) !important;
+        backdrop-filter: blur(10px) saturate(100%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(100%) !important;
+      }
+
+      :is(#nav-bar, #TabsToolbar, #titlebar, #PersonalToolbar)
+      .toolbarbutton-1:not(.titlebar-button, [disabled], [aria-disabled="true"]):is(:hover, :focus-visible) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        background: rgba(255, 255, 255, 0.34) !important;
+        background-color: rgba(255, 255, 255, 0.34) !important;
+        background-image: none !important;
+        border-color: rgba(76, 83, 92, 0.22) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+      }
+
+      :is(#nav-bar, #TabsToolbar, #titlebar, #PersonalToolbar)
+      .toolbarbutton-1:not(.titlebar-button, [disabled], [aria-disabled="true"]):is(:active, [open="true"], [checked="true"], [pressed="true"]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        background: rgba(211, 215, 220, 0.62) !important;
+        background-color: rgba(211, 215, 220, 0.62) !important;
+        background-image: none !important;
+        border-color: rgba(76, 83, 92, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(32, 36, 42, 0.09) !important;
+        transform: none !important;
+      }
+
+      /* Match the permission-state dropdown trigger to the light permission
+         action buttons. Target the menulist by its stable ID directly: the
+         popup's anonymous/XUL wrapper is not a reliable ancestor selector.
+         The shared panel rule sets color-scheme: dark on #permission-popup;
+         reset it here so native menulist internals do not retain dark colors. */
+      #permission-popup {
+        color-scheme: light !important;
+      }
+      #permission-popup-menulist:not([disabled]) {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        color-scheme: light !important;
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.88) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 253, 0.82)) !important;
+        border: 1px solid rgba(39, 57, 79, 0.16) !important;
+        border-radius: 8px !important;
+        padding: 3px 8px !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 2px 7px rgba(26, 42, 64, 0.08) !important;
+        text-shadow: none !important;
+      }
+      #permission-popup-menulist :is(.menulist-label, .menulist-label-box, .menulist-dropmarker) {
+        color: rgb(32, 42, 55) !important;
+        fill: currentColor !important;
+        text-shadow: none !important;
+      }
+      #permission-popup-menulist:not([disabled]):is(:hover, :focus-visible, [open], [open="true"]) {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(255, 255, 255, 0.82) !important;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 253, 0.72)) !important;
+        border-color: rgba(255, 255, 255, 0.96) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98), 0 4px 11px rgba(26, 42, 64, 0.12) !important;
+      }
+      #permission-popup-menulist:not([disabled]):active {
+        color: rgb(32, 42, 55) !important;
+        background-color: rgba(215, 235, 252, 0.72) !important;
+        background-image: linear-gradient(180deg, rgba(235, 246, 255, 0.82), rgba(205, 228, 249, 0.62)) !important;
+        border-color: rgba(111, 164, 216, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(55, 103, 151, 0.10) !important;
+      }
+
+      /* Permission-state dropdown (e.g. Block Audio): use the same translucent
+         Mica shell and inset glass rows as the other native context menus. */
+      #permission-popup #permission-popup-menulist > menupopup {
+        appearance: auto !important;
+        -moz-default-appearance: menupopup !important;
+        color-scheme: light !important;
+        color: rgb(42, 47, 54) !important;
+        --panel-background: transparent !important;
+        --panel-background-color: transparent !important;
+        --panel-border-color: transparent !important;
+        background: var(--uc-context-native-tint, rgba(252, 253, 255, 0.74)) !important;
+        background-color: var(--uc-context-native-tint, rgba(252, 253, 255, 0.74)) !important;
+        background-image: none !important;
+        border: 1px solid var(--uc-context-native-border, rgba(76, 83, 92, 0.20)) !important;
+        border-radius: var(--uc-context-native-radius, 10px) !important;
+        box-shadow: none !important;
+        padding: 5px !important;
+        overflow: clip !important;
+        clip-path: inset(0 round var(--uc-context-native-radius, 10px)) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #permission-popup #permission-popup-menulist > menupopup::part(content),
+      #permission-popup #permission-popup-menulist > menupopup > .menupopup-arrowscrollbox {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        border-radius: inherit !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      #permission-popup #permission-popup-menulist > menupopup > menuitem {
+        appearance: none !important;
+        -moz-appearance: none !important;
+        min-height: 32px !important;
+        margin: 2px 3px !important;
+        padding-inline: 10px !important;
+        color: rgb(42, 47, 54) !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 1px solid transparent !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        transition: background-color 100ms ease, border-color 100ms ease, box-shadow 100ms ease !important;
+      }
+      #permission-popup #permission-popup-menulist > menupopup > menuitem:not([disabled]):is(:active, [selected="true"]) {
+        color: rgb(42, 47, 54) !important;
+        background: rgba(211, 215, 220, 0.62) !important;
+        background-color: rgba(211, 215, 220, 0.62) !important;
+        background-image: none !important;
+        border-color: rgba(76, 83, 92, 0.34) !important;
+        box-shadow: inset 0 1px 2px rgba(32, 36, 42, 0.09) !important;
+      }
+      #permission-popup #permission-popup-menulist > menupopup > menuitem:not([disabled]):is(:hover, :focus-visible, [_moz-menuactive="true"]) {
+        color: rgb(42, 47, 54) !important;
+        background: rgba(255, 255, 255, 0.70) !important;
+        background-color: rgba(255, 255, 255, 0.70) !important;
+        background-image: none !important;
+        border-color: rgba(255, 255, 255, 0.82) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 3px 9px rgba(32, 36, 42, 0.08) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
+  }
+}
+
+/* Picture-in-Picture player window: round the video content and use neutral
+   liquid-glass feedback for its controls and tooltips. */
+@-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
+  :root:not(:has(body:fullscreen)) {
+    background-color: transparent !important;
+  }
+
+  body:not(:fullscreen) {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+
+  #controls .control-button {
+    border-radius: 9px !important;
+    transition:
+      opacity 160ms linear,
+      fill-opacity 160ms linear,
+      background-color 140ms ease,
+      border-radius 140ms ease,
+      box-shadow 140ms ease !important;
+  }
+
+  #controls :is(#close, #unpip) {
+    background-color: rgba(248, 249, 250, 0.62) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28) !important;
+    backdrop-filter: blur(10px) saturate(115%) !important;
+  }
+
+  #controls .control-button:enabled:is(:hover, :focus-visible) {
+    background-color: rgba(248, 249, 250, 0.25) !important;
+    border-radius: 11px !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62),
+      0 4px 12px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(14px) saturate(120%) !important;
+  }
+
+  #controls :is(#close, #unpip):enabled:is(:hover, :focus-visible) {
+    background-color: rgba(248, 249, 250, 0.82) !important;
+  }
+
+  #controls .control-button:enabled:active {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-radius: 10px !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.38),
+      inset 0 2px 5px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  #controls :is(#close, #unpip):enabled:active {
+    background-color: rgba(248, 249, 250, 0.68) !important;
+  }
+
+  #controls .control-button:focus-visible {
+    outline-color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  #controls .control-item:is(:hover, :focus-visible)::after {
+    color: rgb(250, 251, 253) !important;
+    background: rgba(38, 40, 44, 0.68) !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 9px !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 5px 15px rgba(0, 0, 0, 0.30) !important;
+    backdrop-filter: blur(16px) saturate(115%) !important;
+  }
+}
+
