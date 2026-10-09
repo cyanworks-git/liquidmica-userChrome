@@ -5,16 +5,16 @@
       <summary>
         <h1>Liquid Mica</h1>
       </summary>
-      <img src="https://img.shields.io/badge/Firefox-155.0.1-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
-      <img src="https://img.shields.io/badge/Firefox Developer Edition-156.0b3-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
-      <img src="https://img.shields.io/badge/Floorp-12.17.2@155.0-5309E8?style=flat&logo=floorp&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox-157.0.1-FF7139?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Firefox Developer Edition-158.0b5-0093EE?style=flat&logo=firefoxbrowser&logoColor=white"/>
+      <img src="https://img.shields.io/badge/Floorp-12.20.1@157.0.1-5309E8?style=flat&logo=floorp&logoColor=white"/>
     </ul>
     
    </div>
    
 MacOS의 리퀴드 글래스 느낌을 Windows의 Mica와 혼합한 FireFox userChrome 테마.
 
-[Read in English](./README.en.md)
+[Read in English](./README.en.md) | [업데이트 내역](./CHANGELOG.md)
 
 </div>
 
